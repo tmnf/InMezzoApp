@@ -27,7 +27,6 @@ public class SplashScreen extends AppCompatActivity {
     public void ready(){
         Intent it = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(it);
-        pb.setVisibility(View.GONE);
         finish();
     }
 }

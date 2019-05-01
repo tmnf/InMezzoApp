@@ -52,7 +52,7 @@ public class PostAdapter extends ArrayAdapter<Post> {
         if(post.getUrl().isEmpty())
             cons.removeView(post_video);
 
-        LoginUtils.getPic(pic, post.getOwner());
+        LoginUtils.putInto(pic, post.getOwner());
 
         post_name.setText(post.getOwner().getUser_name());
         post_pub_date.setText(post.getDate_pub());

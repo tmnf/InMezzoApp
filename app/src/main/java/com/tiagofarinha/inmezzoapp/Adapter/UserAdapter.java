@@ -46,7 +46,7 @@ public class UserAdapter extends ArrayAdapter<User> {
         TextView user_age = listUser.findViewById(R.id.member_age);
         TextView user_voice = listUser.findViewById(R.id.member_voice);
 
-        LoginUtils.getPic(user_pic, user);
+        LoginUtils.putInto(user_pic, user);
 
         // APAGAR ISTO //
         if(user.getUser_mode() == 1)

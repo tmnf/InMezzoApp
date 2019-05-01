@@ -1,6 +1,5 @@
 package com.tiagofarinha.inmezzoapp.Utils;
 
-import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.view.Menu;
@@ -10,18 +9,15 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-import com.squareup.picasso.Picasso;
 import com.tiagofarinha.inmezzoapp.AdminTools.User;
+import com.tiagofarinha.inmezzoapp.Cache.PicContainer;
+import com.tiagofarinha.inmezzoapp.Cache.ResourceLoader;
 import com.tiagofarinha.inmezzoapp.Fragments.LoginLogic;
 import com.tiagofarinha.inmezzoapp.MainLogic.MainActivity;
 import com.tiagofarinha.inmezzoapp.R;
@@ -90,7 +86,7 @@ public class LoginUtils {
                     admin.setVisible(true);
                 else admin.setVisible(false);
 
-                getPic(pic, user);
+                putInto(pic, user);
             }
 
             @Override
@@ -100,28 +96,11 @@ public class LoginUtils {
         });
     }
 
-    public static void getPic(final ImageView view, User user){
-        StorageReference load = FirebaseStorage.getInstance().getReference().child("profile_images").child(user.getUser_pic());
-
-        load.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                Picasso.get()
-                        .load(uri)
-                        .centerCrop()
-                        .resize(view.getWidth(),view.getHeight())
-                        .into(view);
+    public static void putInto(final ImageView view, User user){
+        for(PicContainer x : ResourceLoader.user_pics)
+            if(x.getNumber().equals(user.getUser_pic())){
+                view.setImageBitmap(x.getPic());
             }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Picasso.get()
-                        .load(R.drawable.membro_icon)
-                        .placeholder(R.drawable.membro_icon)
-                        .resize(view.getWidth(),view.getHeight())
-                        .into(view);
-            }
-        });
     }
 
 }

@@ -44,6 +44,19 @@
                 app:layout_constraintTop_toBottomOf="@+id/contactos_titulo" />
 
             <TextView
+                android:id="@+id/contacto1_textp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/bookman_old_style"
+                android:text="@string/contacto1"
+                android:textColor="#fff"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="@+id/telefone_titulo"
+                app:layout_constraintTop_toBottomOf="@+id/telefone_titulo" />
+
+            <TextView
                 android:id="@+id/contacto2_texto"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -98,18 +111,6 @@
                 app:layout_constraintTop_toBottomOf="@+id/contactos_titulo"
                 app:srcCompat="@drawable/contacts_email" />
 
-            <TextView
-                android:id="@+id/contacto1_textp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="40dp"
-                android:layout_marginTop="10dp"
-                android:fontFamily="@font/bookman_old_style"
-                android:text="@string/contacto1"
-                android:textColor="#fff"
-                android:textSize="16sp"
-                app:layout_constraintStart_toStartOf="@+id/telefone_titulo"
-                app:layout_constraintTop_toBottomOf="@+id/telefone_titulo" />
         </android.support.constraint.ConstraintLayout>
     </ScrollView>
 
