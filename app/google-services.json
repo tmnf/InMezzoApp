@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "445522539259",
+    "firebase_url": "https://inmezzoapp.firebaseio.com",
+    "project_id": "inmezzoapp",
+    "storage_bucket": "inmezzoapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:445522539259:android:598112d1c87fadc6",
+        "android_client_info": {
+          "package_name": "com.tiagofarinha.inmezzoapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "445522539259-kjdsn4nestnlmh3jb6ebspdej5jko42u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tiagofarinha.inmezzoapp",
+            "certificate_hash": "175976232eaec1ed122eb95bffc02ce6883aa238"
+          }
+        },
+        {
+          "client_id": "445522539259-gnqldgie73nrca4hhvrtqdh6ce7acmhv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBaFVV4Cjwyk1elnKRRCUq4hJmeoKBGa3s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "445522539259-gnqldgie73nrca4hhvrtqdh6ce7acmhv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

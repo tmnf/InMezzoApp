@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/menu_inicio"
+            android:icon="@drawable/home_icon"
+            android:title="@string/menu_inicio"/>
+        <item
+            android:id="@+id/menu_portfolio"
+            android:icon="@drawable/portfolio_icon"
+            android:title="@string/menu_portfolio" />
+        <item
+            android:id="@+id/menu_contactos"
+            android:icon="@drawable/contact_icon"
+            android:title="@string/menu_contactos" />
+        <item
+            android:id="@+id/menu_sobre"
+            android:icon="@drawable/sobre_icon"
+            android:title="@string/menu_sobre" />
+        <item
+            android:id="@+id/menu_membros"
+            android:icon="@drawable/membro_icon"
+            android:title="@string/menu_membros" />
+        <item
+            android:id="@+id/menu_candidaturas"
+            android:icon="@drawable/candidaturas_icon"
+            android:title="@string/menu_candidaturas" />
+        <item
+            android:id="@+id/menu_reservas"
+            android:icon="@drawable/reservas_icon"
+            android:title="@string/menu_reservas" />
+    </group>
+
+    <item android:title="Área de Membros">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/menu_login"
+                    android:icon="@drawable/login_icon"
+                    android:title="@string/menu_login" />
+                <item
+                    android:id="@+id/menu_perfil"
+                    android:icon="@drawable/perfil_icon"
+                    android:title="@string/menu_perfil" />
+                <item
+                    android:id="@+id/menu_logout"
+                    android:icon="@drawable/logout_icon"
+                    android:title="@string/menu_logout" />
+                <item
+                    android:id="@+id/menu_admin"
+                    android:icon="@drawable/sobre_icon"
+                    android:title="ADMIN" />
+            </group>
+        </menu>
+    </item>
+
+</menu>

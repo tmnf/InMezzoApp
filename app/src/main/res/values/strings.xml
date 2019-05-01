@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">InMezzo</string>
+    <string name="nav_header_desc">Navigation header</string>
+
+    <string name="menu_inicio">Início</string>
+    <string name="menu_contactos">Contactos</string>
+    <string name="menu_portfolio">Portfólio</string>
+    <string name="menu_sobre">Sobre</string>
+    <string name="menu_membros">Membros</string>
+    <string name="menu_reservas">Reservas</string>
+
+    <string name="menu_candidaturas">Candidaturas</string>
+
+    <string name="menu_membros_sec">Só para Membros</string>
+
+    <string name="menu_login">LogIn</string>
+    <string name="menu_logout">LogOut</string>
+
+    <string name="menu_perfil">Perfil</string>
+
+    <string name="about_text">
+        O InMezzo foi criado no ano de 2016, funcionando como o coro Juvenil do Orfeão de Castelo Branco, dirigido pelo maestro Rui Barata. A Setembro de 2018, o InMezzo tornou-se um coro semi-autónomo, deixando de estar dependente de um maestro. Conta com cerca de 30 membros, com idades compreendidas entre os 15 e 26 anos. Unidos pela grande paixão pela música, tentam abordar vários géneros de repertório e levar a quem os ouve algo de diferente.
+    </string>
+
+    <string name="email"> inmezzo.orfeao@gmail.com </string>
+    <string name="contacto1"> 926682071 </string>
+    <string name="contacto2"> 968818284 </string>
+</resources>
