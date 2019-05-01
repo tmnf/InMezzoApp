@@ -3,6 +3,7 @@ package com.tiagofarinha.inmezzoapp.Adapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,13 +45,12 @@ public class PostAdapter extends ArrayAdapter<Post> {
         TextView post_pub_date = postList.findViewById(R.id.post_pub_date);
         TextView post_text = postList.findViewById(R.id.post_message);
 
-        // APAGAR ISTO //
+        // APAGAR ISTO // BUG = DESAPARECE IMAGEM
         ImageView post_video = postList.findViewById(R.id.post_test_video);
 
+        ConstraintLayout cons = postList.findViewById(R.id.post_container);
         if(post.getUrl().isEmpty())
-            post_video.setVisibility(View.INVISIBLE);
-        else post_video.setVisibility(View.VISIBLE);
-
+            cons.removeView(post_video);
 
         LoginUtils.getPic(pic, post.getOwner());
 

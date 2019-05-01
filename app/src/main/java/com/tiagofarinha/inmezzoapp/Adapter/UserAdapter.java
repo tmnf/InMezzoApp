@@ -56,7 +56,6 @@ public class UserAdapter extends ArrayAdapter<User> {
         user_age.setText(MathUtils.getAge(user.getUser_birthday()) + " Anos");
         user_voice.setText(user.getUser_voice());
 
-
         return listUser;
     }
 }
