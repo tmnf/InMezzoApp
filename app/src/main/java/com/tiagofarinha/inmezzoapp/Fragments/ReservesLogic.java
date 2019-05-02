@@ -10,8 +10,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.tiagofarinha.inmezzoapp.Email.EmailHandler;
-import com.tiagofarinha.inmezzoapp.Email.EmailUtils;
+import com.tiagofarinha.inmezzoapp.Comunication.EmailHandler;
+import com.tiagofarinha.inmezzoapp.Comunication.EmailUtils;
 import com.tiagofarinha.inmezzoapp.R;
 
 public class ReservesLogic extends Fragment {

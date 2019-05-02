@@ -1,4 +1,4 @@
-package com.tiagofarinha.inmezzoapp.Email;
+package com.tiagofarinha.inmezzoapp.Comunication;
 
 public class EmailUtils {
 
