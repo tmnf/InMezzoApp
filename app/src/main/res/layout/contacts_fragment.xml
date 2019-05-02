@@ -20,14 +20,16 @@
 
             <TextView
                 android:id="@+id/email_texto"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_height="24dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="44dp"
+                android:layout_marginEnd="20dp"
                 android:fontFamily="@font/bookman_old_style"
-                android:text="@string/email"
+                android:text="@string/email_coro"
                 android:textColor="#fff"
                 android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/email_titulo"
                 app:layout_constraintTop_toBottomOf="@+id/contactos_titulo" />
 
@@ -46,35 +48,42 @@
 
             <TextView
                 android:id="@+id/contacto1_textp"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="40dp"
                 android:layout_marginTop="10dp"
+                android:layout_marginEnd="8dp"
                 android:fontFamily="@font/bookman_old_style"
                 android:text="@string/contacto1"
                 android:textColor="#fff"
                 android:textSize="16sp"
-                app:layout_constraintStart_toStartOf="@+id/telefone_titulo"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/telefone_icon"
                 app:layout_constraintTop_toBottomOf="@+id/telefone_titulo" />
 
             <TextView
                 android:id="@+id/contacto2_texto"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="40dp"
                 android:layout_marginTop="10dp"
+                android:layout_marginEnd="8dp"
                 android:fontFamily="@font/bookman_old_style"
                 android:text="@string/contacto2"
                 android:textColor="#fff"
                 android:textSize="16sp"
-                app:layout_constraintStart_toStartOf="@+id/telefone_titulo"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/telefone_icon"
                 app:layout_constraintTop_toBottomOf="@+id/contacto1_textp" />
 
             <ImageView
                 android:id="@+id/contactos_titulo"
-                android:layout_width="155dp"
+                android:layout_width="0dp"
                 android:layout_height="32dp"
                 android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:scaleType="fitStart"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/contacts_title" />
@@ -84,9 +93,9 @@
                 android:layout_width="56dp"
                 android:layout_height="51dp"
                 android:layout_marginStart="40dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="20dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/email_icon"
+                app:layout_constraintTop_toBottomOf="@+id/email_texto"
                 app:srcCompat="@drawable/contacts_phone"
                 tools:ignore="VectorDrawableCompat" />
 
@@ -95,13 +104,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="36dp"
+                android:layout_marginTop="30dp"
                 android:fontFamily="@font/bookman_bold"
                 android:text="Telefone:"
                 android:textColor="#fff"
                 android:textSize="18sp"
                 app:layout_constraintStart_toEndOf="@+id/telefone_icon"
-                app:layout_constraintTop_toBottomOf="@+id/email_titulo" />
+                app:layout_constraintTop_toBottomOf="@+id/email_texto" />
 
             <ImageView
                 android:id="@+id/email_icon"

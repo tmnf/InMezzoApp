@@ -9,14 +9,14 @@
     android:background="@drawable/background">
 
     <ImageView
-        android:id="@+id/main_title"
+        android:id="@+id/title_bar"
         android:layout_width="0dp"
         android:layout_height="107dp"
-        android:scaleType="fitStart"
+        android:scaleType="fitXY"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/title"
+        app:srcCompat="@drawable/title_bar"
         tools:ignore="ContentDescription" />
 
     <Button
@@ -36,7 +36,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:background="@drawable/post_button"
-        app:layout_constraintEnd_toEndOf="@+id/main_title"
+        app:layout_constraintEnd_toEndOf="@+id/title_bar"
         app:layout_constraintTop_toTopOf="parent" />
 
     <FrameLayout
@@ -46,8 +46,23 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/main_title">
+        app:layout_constraintTop_toBottomOf="@+id/title_bar">
 
     </FrameLayout>
+
+    <ImageView
+        android:id="@+id/title"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/fragment_container"
+        app:layout_constraintEnd_toStartOf="@+id/post_button"
+        app:layout_constraintStart_toEndOf="@+id/menu_button"
+        app:layout_constraintTop_toTopOf="@+id/title_bar"
+        app:layout_constraintVertical_bias="0.232"
+        app:srcCompat="@drawable/title" />
 
 </android.support.constraint.ConstraintLayout>

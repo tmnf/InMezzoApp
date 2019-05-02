@@ -6,9 +6,12 @@
 
     <ImageView
         android:id="@+id/candidaturas_title"
-        android:layout_width="179dp"
+        android:layout_width="0dp"
         android:layout_height="32dp"
         android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:scaleType="fitStart"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/candidaturas_title" />
