@@ -18,7 +18,8 @@
         android:cropToPadding="true"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@tools:sample/avatars[0]" />
+        tools:srcCompat="@tools:sample/avatars[0]"
+        tools:ignore="ContentDescription" />
 
     <TextView
         android:id="@+id/member_name"
@@ -27,7 +28,6 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
         android:fontFamily="@font/bookman_old_style"
-        android:text="Name"
         android:textColor="@color/white"
         android:textSize="18sp"
         app:layout_constraintStart_toEndOf="@+id/member_pic"
@@ -40,11 +40,11 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
         android:fontFamily="@font/bookman_old_style"
-        android:text="Age"
         android:textColor="@color/white"
         android:textSize="14sp"
         app:layout_constraintStart_toEndOf="@+id/member_pic"
-        app:layout_constraintTop_toBottomOf="@+id/member_name" />
+        app:layout_constraintTop_toBottomOf="@+id/member_name"
+        tools:ignore="ContentDescription"/>
 
     <TextView
         android:id="@+id/member_voice"
@@ -53,7 +53,6 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
         android:fontFamily="@font/bookman_old_style"
-        android:text="Voice"
         android:textColor="@color/white"
         android:textSize="14sp"
         app:layout_constraintStart_toEndOf="@+id/member_pic"

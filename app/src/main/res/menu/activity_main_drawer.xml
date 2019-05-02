@@ -34,7 +34,7 @@
             android:title="@string/menu_reservas" />
     </group>
 
-    <item android:title="Área de Membros">
+    <item android:title="@string/menu_membros_sec">
         <menu>
             <group android:checkableBehavior="single">
                 <item
@@ -52,7 +52,7 @@
                 <item
                     android:id="@+id/menu_admin"
                     android:icon="@drawable/sobre_icon"
-                    android:title="ADMIN" />
+                    android:title="@string/menu_admin" />
             </group>
         </menu>
     </item>

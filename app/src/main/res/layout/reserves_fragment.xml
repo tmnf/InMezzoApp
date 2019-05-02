@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -25,7 +26,7 @@
                 android:background="@drawable/login_button"
                 android:fontFamily="@font/bookman_bold"
                 android:paddingBottom="5dp"
-                android:text="Reservar"
+                android:text="@string/reserve_button"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/mensagem_reserva_field" />
 
@@ -36,7 +37,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="40dp"
                 android:fontFamily="@font/bookman_bold"
-                android:text="Nome"
+                android:text="@string/name"
                 android:textColor="#fff"
                 android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -59,7 +60,8 @@
                 android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/nome_reservas_texto" />
+                app:layout_constraintTop_toBottomOf="@+id/nome_reservas_texto"
+                tools:ignore="Autofill,LabelFor" />
 
             <TextView
                 android:id="@+id/email_reserva_texto"
@@ -68,7 +70,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="10dp"
                 android:fontFamily="@font/bookman_bold"
-                android:text="Email"
+                android:text="@string/email"
                 android:textColor="#fff"
                 android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -81,7 +83,8 @@
                 android:layout_marginStart="20dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/reservas_title" />
+                app:srcCompat="@drawable/reservas_title"
+                tools:ignore="ContentDescription" />
 
             <TextView
                 android:id="@+id/local_reserva_texto"
@@ -90,7 +93,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="10dp"
                 android:fontFamily="@font/bookman_bold"
-                android:text="Local"
+                android:text="@string/local"
                 android:textColor="#fff"
                 android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -113,7 +116,8 @@
                 android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/local_reserva_texto" />
+                app:layout_constraintTop_toBottomOf="@+id/local_reserva_texto"
+                tools:ignore="Autofill,LabelFor" />
 
             <EditText
                 android:id="@+id/data_reserva_field"
@@ -132,7 +136,8 @@
                 android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/data_reserva_texto" />
+                app:layout_constraintTop_toBottomOf="@+id/data_reserva_texto"
+                tools:ignore="Autofill,LabelFor"/>
 
             <TextView
                 android:id="@+id/mensagem_reserva_texto"
@@ -141,7 +146,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="40dp"
                 android:fontFamily="@font/bookman_bold"
-                android:text="Mensagem"
+                android:text="@string/mensagem"
                 android:textColor="#fff"
                 android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -170,7 +175,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/mensagem_reserva_texto" />
+                app:layout_constraintTop_toBottomOf="@+id/mensagem_reserva_texto"
+                tools:ignore="RtlHardcoded, Autofill, LabelFor" />
 
             <TextView
                 android:id="@+id/data_reserva_texto"
@@ -179,7 +185,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="10dp"
                 android:fontFamily="@font/bookman_bold"
-                android:text="Data"
+                android:text="@string/data"
                 android:textColor="#fff"
                 android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -202,7 +208,8 @@
                 android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/email_reserva_texto" />
+                app:layout_constraintTop_toBottomOf="@+id/email_reserva_texto"
+                tools:ignore="Autofill,LabelFor"/>
         </android.support.constraint.ConstraintLayout>
     </ScrollView>
 

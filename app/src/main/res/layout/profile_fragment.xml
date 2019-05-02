@@ -18,7 +18,8 @@
         android:padding="1dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@tools:sample/avatars[1]" />
+        tools:srcCompat="@tools:sample/avatars[1]"
+        tools:ignore="ContentDescription" />
 
     <TextView
         android:id="@+id/profile_name"
@@ -28,7 +29,6 @@
         android:layout_marginTop="75dp"
         android:layout_marginEnd="8dp"
         android:fontFamily="@font/bookman_bold"
-        android:text="TextView"
         android:textColor="@color/white"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -42,7 +42,7 @@
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="40dp"
         android:fontFamily="@font/bookman_bold"
-        android:text="Configurações"
+        android:text="@string/configs"
         android:textColor="@color/white"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -55,7 +55,6 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
         android:fontFamily="@font/bookman_old_style"
-        android:text="TextView"
         android:textColor="@color/white"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -68,7 +67,6 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="40dp"
         android:fontFamily="@font/bookman_old_style"
-        android:text="TextView"
         android:textColor="@color/white"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
