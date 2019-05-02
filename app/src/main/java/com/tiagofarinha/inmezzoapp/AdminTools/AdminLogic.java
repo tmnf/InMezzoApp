@@ -53,17 +53,17 @@ public class AdminLogic extends Fragment {
         fields.add(phone);fields.add(mode);
 
 
-        Button submit = view.findViewById(R.id.admin_button);
-        submit.setOnClickListener(new View.OnClickListener() {
+        Button add_button = view.findViewById(R.id.admin_button);
+        add_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 MainActivity.getInstance().closeKeyboard();
-                creatUser(fields);
+                createUser(fields);
             }
         });
     }
 
-    private void creatUser(ArrayList<EditText> fields){
+    private void createUser(ArrayList<EditText> fields) {
         String email_text = email.getText().toString();
         String name_text = name.getText().toString();
         String birth_text = birth.getText().toString();
