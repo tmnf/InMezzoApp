@@ -1,9 +1,8 @@
-package com.tiagofarinha.inmezzoapp.Adapter;
+package com.tiagofarinha.inmezzoapp.Cache;
 
 import android.net.Uri;
 
 import com.squareup.picasso.Picasso;
-import com.tiagofarinha.inmezzoapp.Cache.ResourceLoader;
 
 public class PicDownloader extends Thread {
 

@@ -12,7 +12,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.tiagofarinha.inmezzoapp.Adapter.PicDownloader;
 import com.tiagofarinha.inmezzoapp.Adapter.Post;
 import com.tiagofarinha.inmezzoapp.AdminTools.User;
 import com.tiagofarinha.inmezzoapp.MainLogic.SplashScreen;

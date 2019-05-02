@@ -14,6 +14,8 @@
         android:layout_marginTop="10dp"
         android:background="@color/white"
         android:padding="1dp"
+        android:scaleType="centerCrop"
+        android:cropToPadding="true"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@tools:sample/avatars[0]" />
