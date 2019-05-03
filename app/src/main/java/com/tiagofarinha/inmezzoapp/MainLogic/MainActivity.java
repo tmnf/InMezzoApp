@@ -19,6 +19,7 @@ import com.tiagofarinha.inmezzoapp.Fragments.FeedLogic;
 import com.tiagofarinha.inmezzoapp.Fragments.PostLogic;
 import com.tiagofarinha.inmezzoapp.R;
 import com.tiagofarinha.inmezzoapp.Utils.LoginUtils;
+import com.tiagofarinha.inmezzoapp.Utils.MenuUtils;
 import com.tiagofarinha.inmezzoapp.Utils.Utils;
 
 public class MainActivity extends AppCompatActivity
@@ -26,16 +27,20 @@ public class MainActivity extends AppCompatActivity
 
     public static final int MODE_LOGIN = 1, MODE_LOGOUT = 0;
 
+    private static MainActivity INSTANCE;
+
     private DrawerLayout drawer;
     private NavigationView navigationView;
-
-    private static MainActivity INSTANCE;
 
     private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
 
     private Button post_button;
-    private Fragment currenFrag;
+    private Fragment currentFrag;
+
+    public static MainActivity getInstance() {
+        return INSTANCE;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,26 +60,18 @@ public class MainActivity extends AppCompatActivity
         initComps();
 
         /* Starts Initial Fragment */
-        if(savedInstanceState == null)
+        if (savedInstanceState == null)
             startFrag();
 
-        handleUser();
+        LoginUtils.updateGuiAccording(mAuth, currentUser, navigationView);
     }
 
-    public static MainActivity getInstance(){
-        return INSTANCE;
-    }
-
-    private void handleUser(){
-        LoginUtils.handleUser(mAuth, currentUser, navigationView);
-    }
-
-    private void startFrag(){
-        changeFrag(new FeedLogic(), R.id.menu_inicio);
+    private void startFrag() {
+        goToMainPage();
         navigationView.setCheckedItem(R.id.menu_inicio);
     }
 
-    private void initComps(){
+    private void initComps() {
         Button menu_button = findViewById(R.id.menu_button);
         post_button = findViewById(R.id.post_button);
 
@@ -101,8 +98,8 @@ public class MainActivity extends AppCompatActivity
     public void onBackPressed() {
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else if (!(currenFrag instanceof FeedLogic)){
-              changeFrag(new FeedLogic(), R.id.menu_inicio);
+        } else if (!(currentFrag instanceof FeedLogic)) {
+            goToMainPage();
         } else {
             super.onBackPressed();
         }
@@ -112,15 +109,19 @@ public class MainActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        Utils.filterMenuItem(item.getItemId());
+        MenuUtils.filterMenuItem(item.getItemId());
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
-    public void changeFrag(Fragment frag, int id){
+    public void goToMainPage() {
+        changeFrag(new FeedLogic(), R.id.menu_inicio);
+    }
+
+    public void changeFrag(Fragment frag, int id) {
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, frag).commit();
 
-        currenFrag = frag;
+        currentFrag = frag;
 
         navigationView.setCheckedItem(id);
         closeKeyboard();
@@ -130,50 +131,43 @@ public class MainActivity extends AppCompatActivity
         else post_button.setVisibility(View.VISIBLE);
     }
 
-    public void handleLog(int mode){
+    public void handleLog(int mode) {
 
-        switch (mode){
+        switch (mode) {
             case MODE_LOGOUT:
                 logOut();
                 break;
             case MODE_LOGIN:
                 logIn();
                 break;
-
-            default: break;
+            default:
+                break;
         }
 
-        handleUser();
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new FeedLogic()).commit();
+        LoginUtils.updateGuiAccording(mAuth, currentUser, navigationView);
+        goToMainPage();
     }
 
-    private boolean logOut(){
-        if(LoginUtils.logOutUser(mAuth)){
+    private void logOut() {
+        if (LoginUtils.logOutUser(mAuth))
             Utils.showMessage(this, "Sessão Terminada");
-            return true;
-        }
-
-        Utils.showMessage(this,"Erro ao tentar terminar sessão!");
-        return false;
+        else
+            Utils.showMessage(this, "Erro ao tentar terminar sessão!");
     }
 
-    private void logIn(){
+    private void logIn() {
         closeKeyboard();
         Utils.showMessage(this, "Sessão Iniciada");
     }
 
-    public void closeKeyboard(){
+    public void closeKeyboard() {
         View view = this.getCurrentFocus();
 
-        if(view!=null){
-            InputMethodManager inm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (view != null) {
+            InputMethodManager inm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             inm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
 
-    }
-
-    public Button getPost_button(){
-        return post_button;
     }
 
 }

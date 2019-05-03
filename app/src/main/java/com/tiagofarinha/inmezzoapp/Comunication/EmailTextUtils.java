@@ -1,6 +1,6 @@
 package com.tiagofarinha.inmezzoapp.Comunication;
 
-public class EmailUtils {
+public class EmailTextUtils {
 
     public static final int RESERVE = 0, CANDIDATURE = 1;
 

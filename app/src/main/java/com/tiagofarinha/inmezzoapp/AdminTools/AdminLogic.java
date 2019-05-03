@@ -49,8 +49,12 @@ public class AdminLogic extends Fragment {
         phone = view.findViewById(R.id.admin_phone);
         mode = view.findViewById(R.id.admin_mode);
 
-        fields.add(email);fields.add(name);fields.add(birth);fields.add(voice);
-        fields.add(phone);fields.add(mode);
+        fields.add(email);
+        fields.add(name);
+        fields.add(birth);
+        fields.add(voice);
+        fields.add(phone);
+        fields.add(mode);
 
 
         Button add_button = view.findViewById(R.id.admin_button);
@@ -82,10 +86,6 @@ public class AdminLogic extends Fragment {
 
         for(EditText x : fields)
             x.setText("");
-    }
-
-    public void onFailure(String e){
-        Utils.showMessage(MainActivity.getInstance(), e);
     }
 
     public static AdminLogic getInstance(){

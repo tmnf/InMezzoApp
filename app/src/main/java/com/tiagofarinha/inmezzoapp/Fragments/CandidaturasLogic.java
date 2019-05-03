@@ -11,7 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.tiagofarinha.inmezzoapp.Comunication.EmailHandler;
-import com.tiagofarinha.inmezzoapp.Comunication.EmailUtils;
+import com.tiagofarinha.inmezzoapp.Comunication.EmailTextUtils;
 import com.tiagofarinha.inmezzoapp.R;
 
 public class CandidaturasLogic extends Fragment {
@@ -40,15 +40,15 @@ public class CandidaturasLogic extends Fragment {
     }
 
     public void sendMail(){
-        String subject = EmailUtils.getFormatedSubject(name.getText().toString(), EmailUtils.CANDIDATURE);
-        String message = EmailUtils.getFormatedCandidatureBody(name.getText().toString(), birth.getText().toString(), email.getText().toString(), phone.getText().toString());
+        String subject = EmailTextUtils.getFormatedSubject(name.getText().toString(), EmailTextUtils.CANDIDATURE);
+        String message = EmailTextUtils.getFormatedCandidatureBody(name.getText().toString(), birth.getText().toString(), email.getText().toString(), phone.getText().toString());
 
         new EmailHandler(subject,message).start();
 
-        cleanScreen();
+        clearFields();
     }
 
-    private void cleanScreen() {
+    private void clearFields() {
         name.setText("");
         birth.setText("");
         email.setText("");

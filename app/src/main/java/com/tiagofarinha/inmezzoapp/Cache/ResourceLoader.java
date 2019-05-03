@@ -17,10 +17,11 @@ import com.tiagofarinha.inmezzoapp.AdminTools.User;
 import com.tiagofarinha.inmezzoapp.MainLogic.SplashScreen;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class ResourceLoader extends Thread {
 
-    private static final int TASKS = 2;
+    private static final int TOTAL_TASKS = 2;
 
     public static FirebaseDatabase database = FirebaseDatabase.getInstance();
 
@@ -35,10 +36,10 @@ public class ResourceLoader extends Thread {
     private SplashScreen splash;
     private boolean active;
 
-    private int loadMethods, done;
+    private int tasks_remaining, pics_remaining;
 
     public ResourceLoader(SplashScreen splash) {
-        loadMethods = TASKS;
+        tasks_remaining = TOTAL_TASKS;
         this.splash = splash;
 
         loadResources();
@@ -47,10 +48,10 @@ public class ResourceLoader extends Thread {
     @Override
     public synchronized void run() {
         try {
-            while (loadMethods > 0)
+            while (tasks_remaining > 0)
                 wait();
 
-            done = users.size();
+            pics_remaining = users.size();
             loadPics();
 
         } catch (Exception e) {
@@ -84,9 +85,9 @@ public class ResourceLoader extends Thread {
             user_pics.add(new PicContainer(num, pic));
         }
 
-        done--;
+        pics_remaining--;
 
-        if (done == 0) {
+        if (pics_remaining == 0) {
             active = true;
             splash.ready();
         }
@@ -99,12 +100,10 @@ public class ResourceLoader extends Thread {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 posts.clear();
-                ArrayList<Post> aux = new ArrayList<>();
                 for (DataSnapshot x : dataSnapshot.getChildren())
-                    aux.add(x.getValue(Post.class));
+                    posts.add(x.getValue(Post.class));
 
-                for (int i = aux.size() - 1; i >= 0; i--)
-                    posts.add(aux.get(i));
+                Collections.reverse(posts);
 
                 taskOver();
             }
@@ -138,7 +137,7 @@ public class ResourceLoader extends Thread {
 
     public synchronized void taskOver() {
         if (!active) {
-            loadMethods--;
+            tasks_remaining--;
             notify();
         }
     }

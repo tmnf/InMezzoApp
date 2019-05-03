@@ -13,8 +13,8 @@ import android.widget.TextView;
 
 import com.tiagofarinha.inmezzoapp.AdminTools.User;
 import com.tiagofarinha.inmezzoapp.R;
+import com.tiagofarinha.inmezzoapp.Utils.DateUtils;
 import com.tiagofarinha.inmezzoapp.Utils.LoginUtils;
-import com.tiagofarinha.inmezzoapp.Utils.MathUtils;
 
 import java.util.ArrayList;
 
@@ -53,7 +53,7 @@ public class UserAdapter extends ArrayAdapter<User> {
             user_name.setTextColor(Color.YELLOW);
 
         user_name.setText(user.getUser_name());
-        user_age.setText(MathUtils.getAge(user.getUser_birthday()) + " Anos");
+        user_age.setText(DateUtils.getAge(user.getUser_birthday()) + " Anos");
         user_voice.setText(user.getUser_voice());
 
         return listUser;

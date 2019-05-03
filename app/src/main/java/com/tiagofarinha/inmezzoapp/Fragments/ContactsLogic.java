@@ -21,6 +21,13 @@ public class ContactsLogic extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.contacts_fragment, container, false);
 
+        getComps(view);
+
+        return view;
+    }
+
+    private void getComps(View view) {
+
         final TextView email, phone1, phone2;
 
         email = view.findViewById(R.id.email_texto);
@@ -74,8 +81,6 @@ public class ContactsLogic extends Fragment {
                 return true;
             }
         });
-
-        return view;
     }
 
     private void changeTexture(TextView txt, int mode) {

@@ -20,7 +20,6 @@ public class ClientImporter {
 
         final User us = new User(user_name,user_birthday,user_voice,user_phone, email, pic_url, mode);
 
-        auth.signOut();
         auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {

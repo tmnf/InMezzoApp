@@ -4,7 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-public class MathUtils {
+public class DateUtils {
 
     public static int getAge(String birthday){
         Calendar cal = Calendar.getInstance();

@@ -21,7 +21,7 @@ import com.tiagofarinha.inmezzoapp.Adapter.Post;
 import com.tiagofarinha.inmezzoapp.AdminTools.User;
 import com.tiagofarinha.inmezzoapp.MainLogic.MainActivity;
 import com.tiagofarinha.inmezzoapp.R;
-import com.tiagofarinha.inmezzoapp.Utils.MathUtils;
+import com.tiagofarinha.inmezzoapp.Utils.DateUtils;
 import com.tiagofarinha.inmezzoapp.Utils.Utils;
 
 public class PostLogic extends Fragment {
@@ -50,17 +50,17 @@ public class PostLogic extends Fragment {
 
                 String ur = url.getText().toString();
 
-                if(!ur.isEmpty() && !ur.contains("youtube.com"))
-                    Utils.showMessage(getContext(), "O Url é inválido!");
-                else if(!post_text.getText().toString().isEmpty())
+                if (!ur.isEmpty() && !ur.contains("youtube.com"))
+                    Utils.showMessage(getContext(), "O URL é inválido!");
+                else if (!post_text.getText().toString().isEmpty())
                     createPost();
                 else
-                    Utils.showMessage(getContext(), "Campo mensagem não preenchido!");
+                    Utils.showMessage(getContext(), "Campo *Mensagem* não preenchido!");
             }
         });
     }
 
-    private void createPost(){
+    private void createPost() {
         Utils.showMessage(getContext(), "A publicar...");
         final DatabaseReference postsRef = FirebaseDatabase.getInstance().getReference().child("posts");
 
@@ -70,9 +70,9 @@ public class PostLogic extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
-                Post aux = new Post(post_text.getText().toString(), url.getText().toString(), MathUtils.getCurrentDate(), user);
+                Post aux = new Post(post_text.getText().toString(), url.getText().toString(), DateUtils.getCurrentDate(), user);
                 postsRef.push().setValue(aux);
-                clearReturn();
+                onSuccess();
             }
 
             @Override
@@ -82,8 +82,8 @@ public class PostLogic extends Fragment {
         });
     }
 
-    public void clearReturn(){
-        MainActivity.getInstance().changeFrag(new FeedLogic(), R.id.menu_inicio);
+    public void onSuccess() {
+        MainActivity.getInstance().goToMainPage();
         Utils.showMessage(getContext(), "Publicado com sucesso!");
     }
 }

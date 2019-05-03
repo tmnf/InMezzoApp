@@ -38,7 +38,7 @@ public class LoginUtils {
         }
     }
 
-    public static void handleUser(FirebaseAuth mAuth, FirebaseUser currentUser, NavigationView navigationView){
+    public static void updateGuiAccording(FirebaseAuth mAuth, FirebaseUser currentUser, NavigationView navigationView) {
         Menu menu = navigationView.getMenu();
         View header = navigationView.getHeaderView(0);
 
@@ -72,11 +72,11 @@ public class LoginUtils {
             pic.setVisibility(View.VISIBLE);
             post_button.setVisibility(View.VISIBLE);
 
-            checkPicAndPerms(currentUser, admin, pic);
+            getPicAndTools(currentUser, admin, pic);
         }
     }
 
-    private static void checkPicAndPerms(FirebaseUser currentUser, final MenuItem admin, final ImageView pic) {
+    private static void getPicAndTools(FirebaseUser currentUser, final MenuItem admin, final ImageView pic) {
         FirebaseDatabase.getInstance().getReference().child("users").child(currentUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

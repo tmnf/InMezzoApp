@@ -12,7 +12,7 @@ import android.widget.ListView;
 import com.tiagofarinha.inmezzoapp.Adapter.PostAdapter;
 import com.tiagofarinha.inmezzoapp.Cache.ResourceLoader;
 import com.tiagofarinha.inmezzoapp.R;
-import com.tiagofarinha.inmezzoapp.Utils.MathUtils;
+import com.tiagofarinha.inmezzoapp.Utils.DateUtils;
 
 public class FeedLogic extends Fragment {
 
@@ -28,7 +28,7 @@ public class FeedLogic extends Fragment {
 
         getPosts();
 
-        MathUtils.getCurrentDate();
+        DateUtils.getCurrentDate();
 
         return view;
     }

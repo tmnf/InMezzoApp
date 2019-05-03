@@ -11,7 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.tiagofarinha.inmezzoapp.Comunication.EmailHandler;
-import com.tiagofarinha.inmezzoapp.Comunication.EmailUtils;
+import com.tiagofarinha.inmezzoapp.Comunication.EmailTextUtils;
 import com.tiagofarinha.inmezzoapp.R;
 
 public class ReservesLogic extends Fragment {
@@ -41,15 +41,15 @@ public class ReservesLogic extends Fragment {
     }
 
     public void sendEmail(){
-        String subject = EmailUtils.getFormatedSubject(name.getText().toString(), EmailUtils.RESERVE);
-        String body = EmailUtils.getFormatedReserveBody(name.getText().toString(), email.getText().toString(), local.getText().toString(), data.getText().toString(), msg.getText().toString());
+        String subject = EmailTextUtils.getFormatedSubject(name.getText().toString(), EmailTextUtils.RESERVE);
+        String body = EmailTextUtils.getFormatedReserveBody(name.getText().toString(), email.getText().toString(), local.getText().toString(), data.getText().toString(), msg.getText().toString());
 
         new EmailHandler(subject, body).start();
 
-        cleanScreen();
+        clearFields();
     }
 
-    public void cleanScreen(){
+    public void clearFields() {
         name.setText("");
         email.setText("");
         local.setText("");

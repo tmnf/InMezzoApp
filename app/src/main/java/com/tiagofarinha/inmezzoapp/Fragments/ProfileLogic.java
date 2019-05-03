@@ -18,8 +18,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.tiagofarinha.inmezzoapp.AdminTools.User;
 import com.tiagofarinha.inmezzoapp.R;
+import com.tiagofarinha.inmezzoapp.Utils.DateUtils;
 import com.tiagofarinha.inmezzoapp.Utils.LoginUtils;
-import com.tiagofarinha.inmezzoapp.Utils.MathUtils;
 
 public class ProfileLogic extends Fragment {
 
@@ -60,7 +60,7 @@ public class ProfileLogic extends Fragment {
     public void refreshGUI(User user){
         LoginUtils.putInto(pic, user);
         name.setText(user.getUser_name());
-        age.setText("Idade: " + MathUtils.getAge(user.getUser_birthday()) + " Anos");
+        age.setText("Idade: " + DateUtils.getAge(user.getUser_birthday()) + " Anos");
         voice.setText("Voz: " + user.getUser_voice());
     }
 
