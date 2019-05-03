@@ -8,12 +8,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.youtube.player.YouTubePlayerSupportFragment;
+import com.tiagofarinha.inmezzoapp.MainLogic.MainActivity;
 import com.tiagofarinha.inmezzoapp.Models.Post;
 import com.tiagofarinha.inmezzoapp.R;
 import com.tiagofarinha.inmezzoapp.Utils.LoginUtils;
+import com.tiagofarinha.inmezzoapp.Youtube.YoutubeListener;
+import com.tiagofarinha.inmezzoapp.Youtube.YoutubeMain;
 
 import java.util.ArrayList;
 
@@ -34,6 +39,7 @@ public class PostAdapter extends ArrayAdapter<Post> {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         View postList = convertView;
+
         if(postList == null)
             postList = LayoutInflater.from(mContext).inflate(R.layout.post_row,parent,false);
 
@@ -46,12 +52,21 @@ public class PostAdapter extends ArrayAdapter<Post> {
         TextView post_pub_date = postList.findViewById(R.id.post_pub_date);
         TextView post_text = postList.findViewById(R.id.post_message);
 
-        // APAGAR ISTO // BUG = DESAPARECE IMAGEM
-        ImageView post_video = postList.findViewById(R.id.post_test_video);
+        // YOUTUBE HANDLING \\
 
-        ConstraintLayout cons = postList.findViewById(R.id.post_container);
-        if(post.getUrl().isEmpty())
-            cons.removeView(post_video);
+        YouTubePlayerSupportFragment youTubePlayerFragment = YouTubePlayerSupportFragment.newInstance();
+        MainActivity.getInstance().getSupportFragmentManager().beginTransaction().replace(R.id.frame_fragment, youTubePlayerFragment).commit();
+
+        if (post.getUrl().isEmpty()) {
+            ConstraintLayout cons = postList.findViewById(R.id.post_container);
+            FrameLayout fl = postList.findViewById(R.id.frame_fragment);
+
+            cons.removeView(fl);
+        } else {
+            String[] video = post.getUrl().split("=");
+            youTubePlayerFragment.initialize(YoutubeMain.getApiKey(), new YoutubeListener("gjp0EVM4oHI"));
+        }
+
 
         LoginUtils.putInto(pic, post.getOwner());
 
