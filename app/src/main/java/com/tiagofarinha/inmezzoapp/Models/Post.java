@@ -1,6 +1,4 @@
-package com.tiagofarinha.inmezzoapp.Adapter;
-
-import com.tiagofarinha.inmezzoapp.AdminTools.User;
+package com.tiagofarinha.inmezzoapp.Models;
 
 public class Post {
 

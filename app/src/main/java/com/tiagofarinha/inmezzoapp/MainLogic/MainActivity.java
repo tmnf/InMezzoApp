@@ -170,4 +170,8 @@ public class MainActivity extends AppCompatActivity
 
     }
 
+    public Button getPost_button() {
+        return post_button;
+    }
+
 }

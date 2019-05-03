@@ -22,10 +22,11 @@
 
     <string name="menu_membros_sec"> Área de Membros </string>
 
-    <string name="menu_login">LogIn</string>
-    <string name="menu_logout">LogOut</string>
+    <string name="menu_login"> LogIn </string>
+    <string name="menu_logout"> LogOut </string>
 
-    <string name="menu_perfil">Perfil</string>
+    <string name="menu_perfil"> Perfil </string>
+    <string name="menu_ensaios"> Ensaios </string>
     <string name="menu_admin"> ADMIN TOOLS </string>
 
 

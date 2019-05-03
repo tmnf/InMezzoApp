@@ -1,4 +1,4 @@
-package com.tiagofarinha.inmezzoapp.AdminTools;
+package com.tiagofarinha.inmezzoapp.Models;
 
 public class User {
 
