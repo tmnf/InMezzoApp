@@ -2,12 +2,12 @@ package com.tiagofarinha.inmezzoapp.Models;
 
 public class User {
 
-    public static final int USER = 0, ADMIN = 1;
+    public static final int USER = 0, ADMIN = 1, COORD = 2;
 
     private String user_name, user_birthday, user_voice, user_email, user_pic;
     private int user_phone, user_mode;
 
-    public User(){
+    public User() {
     }
 
     public User(String user_name, String user_birthday, String user_voice, int user_phone, String user_email, String user_pic, int user_mode){

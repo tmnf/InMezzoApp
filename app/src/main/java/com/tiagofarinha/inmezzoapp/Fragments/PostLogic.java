@@ -17,9 +17,12 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.tiagofarinha.inmezzoapp.Cache.ResourceLoader;
+import com.tiagofarinha.inmezzoapp.Cache.VideoDownloader;
 import com.tiagofarinha.inmezzoapp.MainLogic.MainActivity;
 import com.tiagofarinha.inmezzoapp.Models.Post;
 import com.tiagofarinha.inmezzoapp.Models.User;
+import com.tiagofarinha.inmezzoapp.Models.YoutubeContainer;
 import com.tiagofarinha.inmezzoapp.R;
 import com.tiagofarinha.inmezzoapp.Utils.DateUtils;
 import com.tiagofarinha.inmezzoapp.Utils.Utils;
@@ -50,7 +53,7 @@ public class PostLogic extends Fragment {
 
                 String ur = url.getText().toString();
 
-                if (!ur.isEmpty() && !ur.contains("youtube.com"))
+                if (!ur.isEmpty() && !(ur.contains("youtube.com") || ur.contains("youtu.be")))
                     Utils.showMessage(getContext(), "O URL é inválido!");
                 else if (!post_text.getText().toString().isEmpty())
                     createPost();
@@ -71,6 +74,10 @@ public class PostLogic extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
                 Post aux = new Post(post_text.getText().toString(), url.getText().toString(), DateUtils.getCurrentDate(), user);
+
+                if (!url.getText().toString().isEmpty())
+                    saveVideo(url.getText().toString());
+
                 postsRef.push().setValue(aux);
                 onSuccess();
             }
@@ -80,6 +87,15 @@ public class PostLogic extends Fragment {
                 Utils.showMessage(getContext(), "Erro ao publicar!");
             }
         });
+    }
+
+    public void saveVideo(String url) {
+        YoutubeContainer video = new YoutubeContainer(url);
+
+        DatabaseReference videosRef = FirebaseDatabase.getInstance().getReference().child("videos");
+        videosRef.push().setValue(video);
+
+        new VideoDownloader(ResourceLoader.getInstance(), url, video.getId()).start();
     }
 
     public void onSuccess() {

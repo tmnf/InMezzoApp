@@ -14,7 +14,10 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.tiagofarinha.inmezzoapp.MainLogic.SplashScreen;
 import com.tiagofarinha.inmezzoapp.Models.Post;
+import com.tiagofarinha.inmezzoapp.Models.ProfilePic;
 import com.tiagofarinha.inmezzoapp.Models.User;
+import com.tiagofarinha.inmezzoapp.Models.YoutubeContainer;
+import com.tiagofarinha.inmezzoapp.Models.YoutubeVideo;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -22,6 +25,9 @@ import java.util.Collections;
 public class ResourceLoader extends Thread {
 
     private static final int TOTAL_TASKS = 2;
+    private static final int MAX_POSTS = 15;
+
+    public static ResourceLoader INSTANCE;
 
     public static FirebaseDatabase database = FirebaseDatabase.getInstance();
 
@@ -31,16 +37,19 @@ public class ResourceLoader extends Thread {
 
     public static ArrayList<Post> posts = new ArrayList<>();
     public static ArrayList<User> users = new ArrayList<>();
-    public static ArrayList<PicContainer> user_pics = new ArrayList<>();
+    public static ArrayList<ProfilePic> user_pics = new ArrayList<>();
+    public static ArrayList<YoutubeVideo> videos = new ArrayList<>();
 
     private SplashScreen splash;
     private boolean active;
 
-    private int tasks_remaining, pics_remaining;
+    private int tasks_remaining, pics_remaining, videos_remaining;
 
     public ResourceLoader(SplashScreen splash) {
         tasks_remaining = TOTAL_TASKS;
         this.splash = splash;
+
+        INSTANCE = this;
 
         loadResources();
     }
@@ -59,9 +68,20 @@ public class ResourceLoader extends Thread {
         }
     }
 
-    public void loadResources() {
-        loadUsers();
-        loadPosts();
+    public static YoutubeVideo findVideoWithUrl(String url) {
+        YoutubeVideo aux = null;
+
+        for (YoutubeVideo x : videos)
+            if (x.getUrl().equals(url)) {
+                aux = x;
+                break;
+            }
+
+        return aux;
+    }
+
+    public static ResourceLoader getInstance() {
+        return INSTANCE;
     }
 
     private void loadPics() {
@@ -80,32 +100,32 @@ public class ResourceLoader extends Thread {
         }
     }
 
-    public void addToPicList(String num, Bitmap pic) {
-        synchronized (user_pics) {
-            user_pics.add(new PicContainer(num, pic));
-        }
-
-        pics_remaining--;
-
-        if (pics_remaining == 0) {
-            active = true;
-            splash.ready();
-        }
+    public void loadResources() {
+        loadUsers();
+        loadPosts();
+        loadVideos();
     }
 
-    private void loadPosts() {
-        post_ref = database.getReference().child("posts");
+    public void loadVideos() {
+        final DatabaseReference videosRef = FirebaseDatabase.getInstance().getReference().child("videos");
 
-        post_ref.addValueEventListener(new ValueEventListener() {
+        videosRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                posts.clear();
-                for (DataSnapshot x : dataSnapshot.getChildren())
-                    posts.add(x.getValue(Post.class));
+                videos.clear();
 
-                Collections.reverse(posts);
+                ArrayList<VideoDownloader> videoTasks = new ArrayList<>();
 
-                taskOver();
+                for (DataSnapshot x : dataSnapshot.getChildren()) {
+                    YoutubeContainer aux = x.getValue(YoutubeContainer.class);
+
+                    videoTasks.add(new VideoDownloader(ResourceLoader.this, aux.getUrl(), aux.getId()));
+                }
+
+                videos_remaining = videoTasks.size();
+
+                for (VideoDownloader x : videoTasks)
+                    x.start();
             }
 
             @Override
@@ -113,6 +133,12 @@ public class ResourceLoader extends Thread {
 
             }
         });
+    }
+
+    public void addToVideoList(YoutubeVideo video) {
+        synchronized (videos) {
+            videos.add(video);
+        }
     }
 
     private void loadUsers() {
@@ -140,6 +166,48 @@ public class ResourceLoader extends Thread {
             tasks_remaining--;
             notify();
         }
+    }
+
+    public void addToPicList(String num, Bitmap pic) {
+        synchronized (user_pics) {
+            user_pics.add(new ProfilePic(num, pic));
+        }
+
+        pics_remaining--;
+
+        if (pics_remaining == 0) {
+            active = true;
+            splash.ready();
+        }
+    }
+
+    private void loadPosts() {
+        post_ref = database.getReference().child("posts");
+
+        post_ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                posts.clear();
+
+                int i = 0;
+                for (DataSnapshot x : dataSnapshot.getChildren()) {
+                    if (i > MAX_POSTS)
+                        break;
+
+                    posts.add(x.getValue(Post.class));
+                    i++;
+                }
+
+                Collections.reverse(posts);
+
+                taskOver();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
 }

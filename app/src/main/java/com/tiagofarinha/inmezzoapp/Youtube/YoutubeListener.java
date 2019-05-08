@@ -14,7 +14,7 @@ public class YoutubeListener implements YouTubePlayer.OnInitializedListener {
     @Override
     public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
         try {
-            youTubePlayer.cueVideo(url);
+            youTubePlayer.loadVideo(url);
         } catch (Exception e) {
             e.printStackTrace();
         }

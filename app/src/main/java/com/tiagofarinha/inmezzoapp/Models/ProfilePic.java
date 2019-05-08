@@ -1,13 +1,13 @@
-package com.tiagofarinha.inmezzoapp.Cache;
+package com.tiagofarinha.inmezzoapp.Models;
 
 import android.graphics.Bitmap;
 
-public class PicContainer {
+public class ProfilePic {
 
     private String number;
     private Bitmap pic;
 
-    public PicContainer(String number, Bitmap pic) {
+    public ProfilePic(String number, Bitmap pic) {
         this.number = number;
         this.pic = pic;
     }

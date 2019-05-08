@@ -11,13 +11,15 @@
         android:roundIcon="@mipmap/inmezzo_icon_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <activity android:name=".MainLogic.MainActivity" android:screenOrientation="portrait"></activity>
+        <activity android:name=".MainLogic.YoutubeActivity"></activity>
+        <activity
+            android:name=".MainLogic.MainActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".MainLogic.SplashScreen"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

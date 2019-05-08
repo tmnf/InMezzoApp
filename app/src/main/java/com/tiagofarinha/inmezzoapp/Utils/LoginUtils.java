@@ -15,10 +15,10 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.tiagofarinha.inmezzoapp.Cache.PicContainer;
 import com.tiagofarinha.inmezzoapp.Cache.ResourceLoader;
 import com.tiagofarinha.inmezzoapp.Fragments.LoginLogic;
 import com.tiagofarinha.inmezzoapp.MainLogic.MainActivity;
+import com.tiagofarinha.inmezzoapp.Models.ProfilePic;
 import com.tiagofarinha.inmezzoapp.Models.User;
 import com.tiagofarinha.inmezzoapp.R;
 import com.tiagofarinha.inmezzoapp.UserClasses.LoginHandler;
@@ -48,6 +48,7 @@ public class LoginUtils {
         MenuItem perfil = menu.findItem(R.id.menu_perfil);
         MenuItem logout = menu.findItem(R.id.menu_logout);
         MenuItem admin = menu.findItem(R.id.menu_admin);
+        MenuItem ensaios = menu.findItem(R.id.menu_ensaios);
 
         TextView user_name = header.findViewById(R.id.menu_name);
         ImageView pic = header.findViewById(R.id.menu_pic);
@@ -59,14 +60,17 @@ public class LoginUtils {
             perfil.setVisible(false);
             logout.setVisible(false);
             admin.setVisible(false);
+            ensaios.setVisible(false);
 
             user_name.setText("Menu");
             pic.setVisibility(View.INVISIBLE);
-            post_button.setVisibility(View.INVISIBLE);
+            post_button.setVisibility(View.INVISIBLE); // BUG AQUI
+
         } else {
             login.setVisible(false);
             perfil.setVisible(true);
             logout.setVisible(true);
+            ensaios.setVisible(true);
 
             user_name.setText(currentUser.getDisplayName());
             pic.setVisibility(View.VISIBLE);
@@ -97,7 +101,7 @@ public class LoginUtils {
     }
 
     public static void putInto(final ImageView view, User user){
-        for(PicContainer x : ResourceLoader.user_pics)
+        for (ProfilePic x : ResourceLoader.user_pics)
             if(x.getNumber().equals(user.getUser_pic())){
                 view.setImageBitmap(x.getPic());
             }

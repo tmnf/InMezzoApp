@@ -8,17 +8,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.android.youtube.player.YouTubePlayerSupportFragment;
-import com.tiagofarinha.inmezzoapp.MainLogic.MainActivity;
+import com.tiagofarinha.inmezzoapp.Cache.ResourceLoader;
 import com.tiagofarinha.inmezzoapp.Models.Post;
+import com.tiagofarinha.inmezzoapp.Models.YoutubeVideo;
 import com.tiagofarinha.inmezzoapp.R;
 import com.tiagofarinha.inmezzoapp.Utils.LoginUtils;
-import com.tiagofarinha.inmezzoapp.Youtube.YoutubeListener;
-import com.tiagofarinha.inmezzoapp.Youtube.YoutubeMain;
 
 import java.util.ArrayList;
 
@@ -38,35 +35,38 @@ public class PostAdapter extends ArrayAdapter<Post> {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        View postList = convertView;
+        View postListView = convertView;
 
-        if(postList == null)
-            postList = LayoutInflater.from(mContext).inflate(R.layout.post_row,parent,false);
+        if (postListView == null)
+            postListView = LayoutInflater.from(mContext).inflate(R.layout.post_row, parent, false);
 
         Post post = posts.get(position);
 
         /*Enviar dados para Layout*/
 
-        ImageView pic = postList.findViewById(R.id.post_pic);
-        TextView post_name = postList.findViewById(R.id.post_name);
-        TextView post_pub_date = postList.findViewById(R.id.post_pub_date);
-        TextView post_text = postList.findViewById(R.id.post_message);
+        ImageView pic = postListView.findViewById(R.id.post_pic);
+        TextView post_name = postListView.findViewById(R.id.post_name);
+        TextView post_pub_date = postListView.findViewById(R.id.post_pub_date);
+        TextView post_text = postListView.findViewById(R.id.post_message);
+
+        TextView hidden_url = postListView.findViewById(R.id.hidden_url);
+        hidden_url.setVisibility(View.INVISIBLE);
 
         // YOUTUBE HANDLING \\
-
-        YouTubePlayerSupportFragment youTubePlayerFragment = YouTubePlayerSupportFragment.newInstance();
-        MainActivity.getInstance().getSupportFragmentManager().beginTransaction().replace(R.id.frame_fragment, youTubePlayerFragment).commit();
+        ImageView thumb = postListView.findViewById(R.id.youtube_tumbnail);
 
         if (post.getUrl().isEmpty()) {
-            ConstraintLayout cons = postList.findViewById(R.id.post_container);
-            FrameLayout fl = postList.findViewById(R.id.frame_fragment);
-
-            cons.removeView(fl);
+            ConstraintLayout container = postListView.findViewById(R.id.post_container);
+            ImageView play = postListView.findViewById(R.id.play_button);
+            container.removeView(play);
+            container.removeView(thumb);
         } else {
-            String[] video = post.getUrl().split("=");
-            youTubePlayerFragment.initialize(YoutubeMain.getApiKey(), new YoutubeListener("gjp0EVM4oHI"));
+            YoutubeVideo video = ResourceLoader.findVideoWithUrl(post.getUrl());
+            if (video != null && thumb != null) {
+                hidden_url.setText(video.getId());
+                thumb.setImageBitmap(video.getThumbnail());
+            }
         }
-
 
         LoginUtils.putInto(pic, post.getOwner());
 
@@ -74,7 +74,6 @@ public class PostAdapter extends ArrayAdapter<Post> {
         post_pub_date.setText(post.getDate_pub());
         post_text.setText(post.getPost_text());
 
-
-        return postList;
+        return postListView;
     }
 }
