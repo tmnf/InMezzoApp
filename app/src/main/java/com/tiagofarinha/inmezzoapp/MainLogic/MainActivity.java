@@ -75,6 +75,9 @@ public class MainActivity extends AppCompatActivity
         Button menu_button = findViewById(R.id.menu_button);
         post_button = findViewById(R.id.post_button);
 
+        // START FRAG MANAGER
+        new FragManager();
+
         menu_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -128,7 +131,7 @@ public class MainActivity extends AppCompatActivity
         FragmentTransaction trans = getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, frag);
 
         if (!found)
-            trans.addToBackStack("Frag:" + id);
+            FragManager.getInstance().addToFragList(frag, "Frag:" + id);
 
         trans.commit();
 

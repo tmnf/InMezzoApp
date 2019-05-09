@@ -14,6 +14,10 @@ public class SplashScreen extends AppCompatActivity {
     private ProgressBar pb;
     private static SplashScreen INSTANCE;
 
+    public SplashScreen() {
+        INSTANCE = this;
+    }
+
     public static SplashScreen getInstance() {
         return INSTANCE;
     }
