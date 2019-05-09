@@ -40,17 +40,22 @@ public class UserAdapter extends ArrayAdapter<User> {
 
         User user = users.get(position);
 
-        ImageView user_pic = listUser.findViewById(R.id.member_pic);
+        /* REFERENCES */
 
+        ImageView user_pic = listUser.findViewById(R.id.member_pic);
         TextView user_name = listUser.findViewById(R.id.member_name);
         TextView user_age = listUser.findViewById(R.id.member_age);
         TextView user_voice = listUser.findViewById(R.id.member_voice);
+
+        /* Data Handle */
 
         LoginUtils.putInto(user_pic, user);
 
         // APAGAR ISTO //
         if(user.getUser_mode() == 1)
             user_name.setTextColor(Color.YELLOW);
+        else if (user.getUser_mode() == 2)
+            user_name.setTextColor(Color.BLUE);
 
         user_name.setText(user.getUser_name());
         user_age.setText(DateUtils.getAge(user.getUser_birthday()) + " Anos");

@@ -68,7 +68,6 @@ public class MainActivity extends AppCompatActivity
 
     private void startFrag() {
         goToMainPage();
-        navigationView.setCheckedItem(R.id.menu_inicio);
     }
 
     private void initComps() {

@@ -64,5 +64,4 @@ public class ProfileLogic extends Fragment {
         voice.setText("Voz: " + user.getUser_voice());
     }
 
-
 }

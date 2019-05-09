@@ -29,30 +29,55 @@ public class ResourceLoader extends Thread {
 
     public static ResourceLoader INSTANCE;
 
-    public static FirebaseDatabase database = FirebaseDatabase.getInstance();
-
-    public static DatabaseReference post_ref;
-    public static DatabaseReference user_ref;
-    public static StorageReference pic_ref;
-
     public static ArrayList<Post> posts = new ArrayList<>();
     public static ArrayList<User> users = new ArrayList<>();
     public static ArrayList<ProfilePic> user_pics = new ArrayList<>();
     public static ArrayList<YoutubeVideo> videos = new ArrayList<>();
 
-    private SplashScreen splash;
     private boolean active;
 
     private int tasks_remaining, pics_remaining, videos_remaining;
 
-    public ResourceLoader(SplashScreen splash) {
+    public ResourceLoader() {
         tasks_remaining = TOTAL_TASKS;
-        this.splash = splash;
 
         INSTANCE = this;
 
         loadResources();
     }
+
+    public static ResourceLoader getInstance() {
+        return INSTANCE;
+    }
+
+    /* ================ General Methods ================ */
+
+    public static YoutubeVideo findVideoWithUrl(String url) {
+        YoutubeVideo aux = null;
+
+        for (YoutubeVideo x : videos)
+            if (x.getUrl().equals(url)) {
+                aux = x;
+                break;
+            }
+
+        return aux;
+    }
+
+    public void loadResources() {
+        loadUsers();
+        loadPosts();
+        loadVideos();
+    }
+
+    public synchronized void taskOver() {
+        if (!active) {
+            tasks_remaining--;
+            notify();
+        }
+    }
+
+    /* ================ Load Profile Pics ================ */
 
     @Override
     public synchronized void run() {
@@ -68,42 +93,37 @@ public class ResourceLoader extends Thread {
         }
     }
 
-    public static YoutubeVideo findVideoWithUrl(String url) {
-        YoutubeVideo aux = null;
-
-        for (YoutubeVideo x : videos)
-            if (x.getUrl().equals(url)) {
-                aux = x;
-                break;
-            }
-
-        return aux;
-    }
-
-    public static ResourceLoader getInstance() {
-        return INSTANCE;
-    }
-
     private void loadPics() {
-        pic_ref = FirebaseStorage.getInstance().getReference().child("profile_images");
+        StorageReference pic_ref = FirebaseStorage.getInstance().getReference().child("profile_images");
 
         user_pics.clear();
         for (User x : users) {
-            final User us = x;
-            StorageReference ref = pic_ref.child(us.getUser_pic());
+
+            final String user_pic = x.getUser_pic();
+
+            StorageReference ref = pic_ref.child(user_pic);
             ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                 @Override
                 public void onSuccess(Uri uri) {
-                    new PicDownloader(ResourceLoader.this, us.getUser_pic(), uri).start();
+                    new PicDownloader(ResourceLoader.this, user_pic, uri).start();
                 }
             });
         }
     }
 
-    public void loadResources() {
-        loadUsers();
-        loadPosts();
-        loadVideos();
+    /* ================ Load Videos ================ */
+
+    public void addToPicList(String num, Bitmap pic) {
+        synchronized (user_pics) {
+            user_pics.add(new ProfilePic(num, pic));
+
+            pics_remaining--;
+
+            if (pics_remaining == 0) {
+                active = true;
+                SplashScreen.getInstance().ready();
+            }
+        }
     }
 
     public void loadVideos() {
@@ -141,8 +161,10 @@ public class ResourceLoader extends Thread {
         }
     }
 
+    /* ================ Load Users ================ */
+
     private void loadUsers() {
-        user_ref = database.getReference().child("users");
+        DatabaseReference user_ref = FirebaseDatabase.getInstance().getReference().child("users");
 
         user_ref.addValueEventListener(new ValueEventListener() {
             @Override
@@ -161,28 +183,10 @@ public class ResourceLoader extends Thread {
         });
     }
 
-    public synchronized void taskOver() {
-        if (!active) {
-            tasks_remaining--;
-            notify();
-        }
-    }
-
-    public void addToPicList(String num, Bitmap pic) {
-        synchronized (user_pics) {
-            user_pics.add(new ProfilePic(num, pic));
-        }
-
-        pics_remaining--;
-
-        if (pics_remaining == 0) {
-            active = true;
-            splash.ready();
-        }
-    }
+    /* ================ Load Posts ================ */
 
     private void loadPosts() {
-        post_ref = database.getReference().child("posts");
+        DatabaseReference post_ref = FirebaseDatabase.getInstance().getReference().child("posts");
 
         post_ref.addValueEventListener(new ValueEventListener() {
             @Override

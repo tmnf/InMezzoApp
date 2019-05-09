@@ -42,7 +42,7 @@ public class PostAdapter extends ArrayAdapter<Post> {
 
         Post post = posts.get(position);
 
-        /*Enviar dados para Layout*/
+        /* REFERENCES */
 
         ImageView pic = postListView.findViewById(R.id.post_pic);
         TextView post_name = postListView.findViewById(R.id.post_name);
@@ -50,9 +50,21 @@ public class PostAdapter extends ArrayAdapter<Post> {
         TextView post_text = postListView.findViewById(R.id.post_message);
 
         TextView hidden_url = postListView.findViewById(R.id.hidden_url);
-        hidden_url.setVisibility(View.INVISIBLE);
 
-        // YOUTUBE HANDLING \\
+        /* Data Handle */
+
+        hidden_url.setVisibility(View.INVISIBLE);
+        youtubeViewHandle(postListView, post, hidden_url);
+
+        LoginUtils.putInto(pic, post.getOwner());
+        post_name.setText(post.getOwner().getUser_name());
+        post_pub_date.setText(post.getDate_pub());
+        post_text.setText(post.getPost_text());
+
+        return postListView;
+    }
+
+    private void youtubeViewHandle(View postListView, Post post, TextView hidden_url) {
         ImageView thumb = postListView.findViewById(R.id.youtube_tumbnail);
 
         if (post.getUrl().isEmpty()) {
@@ -67,13 +79,6 @@ public class PostAdapter extends ArrayAdapter<Post> {
                 thumb.setImageBitmap(video.getThumbnail());
             }
         }
-
-        LoginUtils.putInto(pic, post.getOwner());
-
-        post_name.setText(post.getOwner().getUser_name());
-        post_pub_date.setText(post.getDate_pub());
-        post_text.setText(post.getPost_text());
-
-        return postListView;
     }
+
 }

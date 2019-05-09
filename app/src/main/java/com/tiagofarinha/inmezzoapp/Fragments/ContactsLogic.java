@@ -1,5 +1,6 @@
 package com.tiagofarinha.inmezzoapp.Fragments;
 
+import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -11,7 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.tiagofarinha.inmezzoapp.Comunication.IntentHandler;
+import com.tiagofarinha.inmezzoapp.Comunication.ContactsIntentHandler;
 import com.tiagofarinha.inmezzoapp.R;
 
 public class ContactsLogic extends Fragment {
@@ -26,6 +27,7 @@ public class ContactsLogic extends Fragment {
         return view;
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private void getComps(View view) {
 
         final TextView email, phone1, phone2;
@@ -37,15 +39,7 @@ public class ContactsLogic extends Fragment {
         email.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        changeTexture(email, 1);
-                        break;
-                    case MotionEvent.ACTION_UP:
-                        changeTexture(email, 0);
-                        new IntentHandler(email.getText().toString(), IntentHandler.EMAIL).start();
-                        break;
-                }
+                actionHandler(event, email, ContactsIntentHandler.EMAIL);
                 return true;
             }
         });
@@ -53,15 +47,7 @@ public class ContactsLogic extends Fragment {
         phone1.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        changeTexture(phone1, 1);
-                        break;
-                    case MotionEvent.ACTION_UP:
-                        changeTexture(phone1, 0);
-                        new IntentHandler(phone1.getText().toString(), IntentHandler.PHONE).start();
-                        break;
-                }
+                actionHandler(event, phone1, ContactsIntentHandler.PHONE);
                 return true;
             }
         });
@@ -69,18 +55,22 @@ public class ContactsLogic extends Fragment {
         phone2.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        changeTexture(phone2, 1);
-                        break;
-                    case MotionEvent.ACTION_UP:
-                        changeTexture(phone2, 0);
-                        new IntentHandler(phone2.getText().toString(), IntentHandler.PHONE).start();
-                        break;
-                }
+                actionHandler(event, phone2, ContactsIntentHandler.PHONE);
                 return true;
             }
         });
+    }
+
+    private void actionHandler(MotionEvent event, TextView contact, int intent_type) {
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                changeTexture(contact, 1);
+                break;
+            case MotionEvent.ACTION_UP:
+                changeTexture(contact, 0);
+                new ContactsIntentHandler(contact.getText().toString(), intent_type).start();
+                break;
+        }
     }
 
     private void changeTexture(TextView txt, int mode) {

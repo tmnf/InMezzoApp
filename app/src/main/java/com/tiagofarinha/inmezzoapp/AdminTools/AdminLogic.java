@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.tiagofarinha.inmezzoapp.AdminTools.UserCreation.UserCreator;
 import com.tiagofarinha.inmezzoapp.MainLogic.MainActivity;
 import com.tiagofarinha.inmezzoapp.R;
 import com.tiagofarinha.inmezzoapp.Utils.Utils;
@@ -56,7 +57,6 @@ public class AdminLogic extends Fragment {
         fields.add(phone);
         fields.add(mode);
 
-
         Button add_button = view.findViewById(R.id.admin_button);
         add_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,20 +67,28 @@ public class AdminLogic extends Fragment {
         });
     }
 
+    // Creates A New user
     private void createUser(ArrayList<EditText> fields) {
-        String email_text = email.getText().toString();
-        String name_text = name.getText().toString();
-        String birth_text = birth.getText().toString();
-        String voice_text = voice.getText().toString();
-        String phone_text = phone.getText().toString();
-        String mode_text = mode.getText().toString();
+        ArrayList<String> info = new ArrayList<>();
 
-        if(!(email_text.isEmpty() && name_text.isEmpty() && birth_text.isEmpty() && voice_text.isEmpty() && phone_text.isEmpty() && mode_text.isEmpty())){
+        for (EditText x : fields)
+            info.add(x.getText().toString());
+
+        boolean empty = false;
+        for (String x : info)
+            if (x.isEmpty())
+                empty = true;
+
+        if (!empty) {
             Utils.showMessage(getContext(), "A criar user...");
-            new UserCreator(email_text, DEFAULT_PASSWORD, name_text, birth_text, voice_text, phone_text, mode_text).start();
+
+            new UserCreator(info.get(0), DEFAULT_PASSWORD, info.get(1), info.get(2),
+                    info.get(3), info.get(4), info.get(5)).start();
+
         } else Utils.showMessage(getContext(), "Campos Vazios");
     }
 
+    // Code After Operation Success
     public void onSucess(){
         Utils.showMessage(getContext(), "User Created");
 

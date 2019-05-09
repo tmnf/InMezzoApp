@@ -1,4 +1,4 @@
-package com.tiagofarinha.inmezzoapp.AdminTools;
+package com.tiagofarinha.inmezzoapp.AdminTools.UserCreation;
 
 import android.support.annotation.NonNull;
 
@@ -9,10 +9,12 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.FirebaseDatabase;
+import com.tiagofarinha.inmezzoapp.AdminTools.AdminLogic;
 import com.tiagofarinha.inmezzoapp.Models.User;
 
 public class ClientImporter {
 
+    // Creates User In Database
     public static void createClient(final String email, final String password, final String user_name, String user_birthday, String user_voice, int user_phone, int mode){
         final FirebaseAuth auth = FirebaseAuth.getInstance();
         final FirebaseDatabase myRef = FirebaseDatabase.getInstance();
@@ -30,6 +32,7 @@ public class ClientImporter {
 
     }
 
+    // Associates Auth User To Model User
     private static void createObject(String email, String user_name, User us, FirebaseUser user){
         UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder().setDisplayName(user_name).build();
         user.updateProfile(profileUpdates);

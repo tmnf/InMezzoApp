@@ -7,6 +7,8 @@ import java.io.IOException;
 
 public class VideoDownloader extends Thread {
 
+    /* Handles Video Info Download */
+
     private ResourceLoader rl;
     private String url, id;
 

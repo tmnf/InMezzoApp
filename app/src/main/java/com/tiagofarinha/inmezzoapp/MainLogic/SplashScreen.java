@@ -12,6 +12,17 @@ import com.tiagofarinha.inmezzoapp.R;
 public class SplashScreen extends AppCompatActivity {
 
     private ProgressBar pb;
+    private static SplashScreen INSTANCE;
+
+    public static SplashScreen getInstance() {
+        return INSTANCE;
+    }
+
+    public void ready() {
+        Intent it = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(it);
+        finish();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,12 +32,6 @@ public class SplashScreen extends AppCompatActivity {
         pb = findViewById(R.id.splash_progress);
         pb.setVisibility(View.VISIBLE);
 
-        new ResourceLoader(this).start();
-    }
-
-    public void ready(){
-        Intent it = new Intent(getApplicationContext(), MainActivity.class);
-        startActivity(it);
-        finish();
+        new ResourceLoader().start();
     }
 }

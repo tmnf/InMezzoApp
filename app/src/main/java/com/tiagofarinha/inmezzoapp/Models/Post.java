@@ -1,15 +1,17 @@
 package com.tiagofarinha.inmezzoapp.Models;
 
+import com.tiagofarinha.inmezzoapp.Utils.DateUtils;
+
 public class Post {
 
     private String post_text, url, date_pub;
 
     private User owner;
 
-    public Post(String post_text, String url, String date_pub, User owner){
+    public Post(String post_text, String url, User owner) {
         this.post_text = post_text;
         this.url = url;
-        this.date_pub = date_pub;
+        this.date_pub = DateUtils.getCurrentDate();
         this.owner = owner;
     }
 

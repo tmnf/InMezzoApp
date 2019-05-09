@@ -12,7 +12,6 @@ public class YoutubeContainer {
     public YoutubeContainer() {
     }
 
-
     private String generateID() {
         String[] split_url;
         String res = "";
@@ -27,7 +26,6 @@ public class YoutubeContainer {
 
         return res;
     }
-
 
     public String getUrl() {
         return url;

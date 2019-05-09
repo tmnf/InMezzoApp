@@ -24,7 +24,6 @@ import com.tiagofarinha.inmezzoapp.Models.Post;
 import com.tiagofarinha.inmezzoapp.Models.User;
 import com.tiagofarinha.inmezzoapp.Models.YoutubeContainer;
 import com.tiagofarinha.inmezzoapp.R;
-import com.tiagofarinha.inmezzoapp.Utils.DateUtils;
 import com.tiagofarinha.inmezzoapp.Utils.Utils;
 
 public class PostLogic extends Fragment {
@@ -53,12 +52,17 @@ public class PostLogic extends Fragment {
 
                 String ur = url.getText().toString();
 
-                if (!ur.isEmpty() && !(ur.contains("youtube.com") || ur.contains("youtu.be")))
+                if (!ur.isEmpty() && !(ur.contains("youtube.com") || ur.contains("youtu.be"))) {
                     Utils.showMessage(getContext(), "O URL é inválido!");
-                else if (!post_text.getText().toString().isEmpty())
-                    createPost();
-                else
+                    return;
+                }
+
+                if (post_text.getText().toString().isEmpty()) {
                     Utils.showMessage(getContext(), "Campo *Mensagem* não preenchido!");
+                    return;
+                }
+
+                createPost();
             }
         });
     }
@@ -73,7 +77,7 @@ public class PostLogic extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
-                Post aux = new Post(post_text.getText().toString(), url.getText().toString(), DateUtils.getCurrentDate(), user);
+                Post aux = new Post(post_text.getText().toString(), url.getText().toString(), user);
 
                 if (!url.getText().toString().isEmpty())
                     saveVideo(url.getText().toString());

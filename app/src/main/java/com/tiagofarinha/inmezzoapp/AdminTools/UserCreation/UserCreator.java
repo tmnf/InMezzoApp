@@ -1,6 +1,8 @@
-package com.tiagofarinha.inmezzoapp.AdminTools;
+package com.tiagofarinha.inmezzoapp.AdminTools.UserCreation;
 
 public class UserCreator extends Thread {
+
+    /* Handles User Creation */
 
     private String email, pass, name, birth, voice, phone, mode;
 

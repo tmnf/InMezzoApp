@@ -6,6 +6,8 @@ import com.squareup.picasso.Picasso;
 
 public class PicDownloader extends Thread {
 
+    /* Handles Profile Pic Download */
+
     private ResourceLoader rl;
     private String num;
     private Uri uri;
@@ -16,6 +18,7 @@ public class PicDownloader extends Thread {
         this.uri = uri;
     }
 
+    @Override
     public void run() {
         getPic();
     }

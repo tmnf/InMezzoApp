@@ -10,13 +10,17 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.tiagofarinha.inmezzoapp.Comunication.EmailHandler;
-import com.tiagofarinha.inmezzoapp.Comunication.EmailTextUtils;
+import com.tiagofarinha.inmezzoapp.Comunication.ClientEmailHandler;
+import com.tiagofarinha.inmezzoapp.Comunication.ClienteEmailUtils;
 import com.tiagofarinha.inmezzoapp.R;
+import com.tiagofarinha.inmezzoapp.Utils.Utils;
+
+import java.util.ArrayList;
 
 public class CandidaturasLogic extends Fragment {
 
     private EditText name, birth, email, phone;
+    private ArrayList<String> info;
 
     @Nullable
     @Override
@@ -28,10 +32,22 @@ public class CandidaturasLogic extends Fragment {
         email = view.findViewById(R.id.email_candi_field);
         phone = view.findViewById(R.id.telemovel_candi_field);
 
+        info = new ArrayList<>();
+        info.add(name.getText().toString());
+        info.add(birth.getText().toString());
+        info.add(email.getText().toString());
+        info.add(phone.getText().toString());
+
         Button submit  = view.findViewById(R.id.candidaturas_button);
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                for (String x : info)
+                    if (x.isEmpty()) {
+                        Utils.showMessage(getContext(), "Campos vazios ou inválidos!");
+                        return;
+                    }
+
                 sendMail();
             }
         });
@@ -40,10 +56,10 @@ public class CandidaturasLogic extends Fragment {
     }
 
     public void sendMail(){
-        String subject = EmailTextUtils.getFormatedSubject(name.getText().toString(), EmailTextUtils.CANDIDATURE);
-        String message = EmailTextUtils.getFormatedCandidatureBody(name.getText().toString(), birth.getText().toString(), email.getText().toString(), phone.getText().toString());
+        String subject = ClienteEmailUtils.getFormatedSubject(info.get(0), ClienteEmailUtils.CANDIDATURE);
+        String message = ClienteEmailUtils.getFormatedCandidatureBody(info.get(0), info.get(1), info.get(2), info.get(3));
 
-        new EmailHandler(subject,message).start();
+        new ClientEmailHandler(subject, message).start();
 
         clearFields();
     }

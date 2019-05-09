@@ -10,13 +10,17 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.tiagofarinha.inmezzoapp.Comunication.EmailHandler;
-import com.tiagofarinha.inmezzoapp.Comunication.EmailTextUtils;
+import com.tiagofarinha.inmezzoapp.Comunication.ClientEmailHandler;
+import com.tiagofarinha.inmezzoapp.Comunication.ClienteEmailUtils;
 import com.tiagofarinha.inmezzoapp.R;
+import com.tiagofarinha.inmezzoapp.Utils.Utils;
+
+import java.util.ArrayList;
 
 public class ReservesLogic extends Fragment {
 
     private EditText name, email, local, data, msg;
+    private ArrayList<String> info;
 
     @Nullable
     @Override
@@ -29,10 +33,22 @@ public class ReservesLogic extends Fragment {
         data = view.findViewById(R.id.data_reserva_field);
         msg = view.findViewById(R.id.mensagem_reserva_field);
 
+        info = new ArrayList<>();
+        info.add(name.getText().toString());
+        info.add(email.getText().toString());
+        info.add(local.getText().toString());
+        info.add(data.getText().toString());
+        info.add(msg.getText().toString());
+
         Button submit = view.findViewById(R.id.reserve_button);
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                for (String x : info)
+                    if (x.isEmpty()) {
+                        Utils.showMessage(getContext(), "Campos vazios ou inválidos");
+                        return;
+                    }
                 sendEmail();
             }
         });
@@ -41,10 +57,10 @@ public class ReservesLogic extends Fragment {
     }
 
     public void sendEmail(){
-        String subject = EmailTextUtils.getFormatedSubject(name.getText().toString(), EmailTextUtils.RESERVE);
-        String body = EmailTextUtils.getFormatedReserveBody(name.getText().toString(), email.getText().toString(), local.getText().toString(), data.getText().toString(), msg.getText().toString());
+        String subject = ClienteEmailUtils.getFormatedSubject(info.get(0), ClienteEmailUtils.RESERVE);
+        String body = ClienteEmailUtils.getFormatedReserveBody(info.get(0), info.get(1), info.get(2), info.get(3), info.get(4));
 
-        new EmailHandler(subject, body).start();
+        new ClientEmailHandler(subject, body).start();
 
         clearFields();
     }

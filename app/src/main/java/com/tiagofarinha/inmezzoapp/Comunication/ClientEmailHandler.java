@@ -4,13 +4,15 @@ import android.content.Intent;
 
 import com.tiagofarinha.inmezzoapp.MainLogic.MainActivity;
 
-public class EmailHandler extends Thread {
+public class ClientEmailHandler extends Thread {
 
-    private static final String[] EMAIL = {"tiagomnf1999@gmail.com"};
+    /* Handles Client Email Service */
+
+    private static final String[] EMAIL = {"inmezzo.orfeao@gmail.com"};
 
     private String subject, body;
 
-    public EmailHandler(String subject, String body){
+    public ClientEmailHandler(String subject, String body) {
         this.subject = subject;
         this.body = body;
     }

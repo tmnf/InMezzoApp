@@ -1,6 +1,8 @@
 package com.tiagofarinha.inmezzoapp.Comunication;
 
-public class EmailTextUtils {
+public class ClienteEmailUtils {
+
+    /* Generates Text To Client Emails*/
 
     public static final int RESERVE = 0, CANDIDATURE = 1;
 

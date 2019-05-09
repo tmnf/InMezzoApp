@@ -39,13 +39,14 @@ public class LoginLogic extends Fragment {
             @Override
             public void onClick(View v) {
                 MainActivity.getInstance().closeKeyboard();
-                Utils.showMessage(getContext(), "A Iniciar Sessão...");
                 tryLogin(email.getText().toString(), pass.getText().toString());
             }
         });
     }
 
     private void tryLogin(String email, String password) {
+        Utils.showMessage(getContext(), "A Iniciar Sessão...");
+
         if(email.isEmpty() || password.isEmpty()){
             Utils.showMessage(getContext(), "Campos em branco");
             return;
