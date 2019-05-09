@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -85,7 +86,7 @@ public class MainActivity extends AppCompatActivity
         post_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                changeFrag(new PostLogic(), R.id.menu_inicio);
+                changeFrag(new PostLogic(), R.id.menu_inicio, true);
             }
         });
 
@@ -114,11 +115,22 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void goToMainPage() {
-        changeFrag(new FeedLogic(), R.id.menu_inicio);
+        Fragment fragment = getSupportFragmentManager().findFragmentByTag("Frag:" + R.id.menu_inicio);
+
+        if (fragment == null) {
+            changeFrag(new FeedLogic(), R.id.menu_inicio, false);
+            return;
+        }
+        changeFrag(fragment, R.id.menu_inicio, true);
     }
 
-    public void changeFrag(Fragment frag, int id) {
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, frag).commit();
+    public void changeFrag(Fragment frag, int id, boolean found) {
+        FragmentTransaction trans = getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, frag);
+
+        if (!found)
+            trans.addToBackStack("Frag:" + id);
+
+        trans.commit();
 
         currentFrag = frag;
 

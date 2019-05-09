@@ -22,7 +22,7 @@ public class MenuUtils {
 
         MainActivity m = MainActivity.getInstance();
 
-        Fragment frag = null;
+        Fragment frag = m.getSupportFragmentManager().findFragmentByTag("Frag:" + id);
 
         switch (id) {
             case R.id.menu_inicio:

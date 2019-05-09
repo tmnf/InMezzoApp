@@ -19,16 +19,12 @@ public class DateUtils {
         int month = Integer.parseInt(birth[1]);
         int year = Integer.parseInt(birth[2]);
 
-        if(curr_month > month)
-            return curr_year - year;
+        int before = 0;
 
-        if(curr_month < month)
-            return (curr_year - year) - 1;
+        if (curr_month < month || (curr_month == month && curr_day < day))
+            before = 1;
 
-        if(curr_day >= day)
-            return curr_year - year;
-
-        return (curr_year - year) - 1;
+        return curr_year - year - before;
     }
 
     public static String getCurrentDate(){

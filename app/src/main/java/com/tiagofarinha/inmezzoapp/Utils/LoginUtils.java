@@ -85,12 +85,11 @@ public class LoginUtils {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
+                putInto(pic, user);
 
                 if(user.getUser_mode() == User.ADMIN)
                     admin.setVisible(true);
                 else admin.setVisible(false);
-
-                putInto(pic, user);
             }
 
             @Override

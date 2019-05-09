@@ -6,8 +6,8 @@ import android.os.Bundle;
 import com.google.android.youtube.player.YouTubeBaseActivity;
 import com.google.android.youtube.player.YouTubePlayerView;
 import com.tiagofarinha.inmezzoapp.R;
+import com.tiagofarinha.inmezzoapp.Youtube.YoutubeConfig;
 import com.tiagofarinha.inmezzoapp.Youtube.YoutubeListener;
-import com.tiagofarinha.inmezzoapp.Youtube.YoutubeMain;
 
 public class YoutubeActivity extends YouTubeBaseActivity {
 
@@ -21,7 +21,7 @@ public class YoutubeActivity extends YouTubeBaseActivity {
         video = findViewById(R.id.youtube_viewer);
 
         String url = getIntent().getStringExtra("url");
-        video.initialize(YoutubeMain.getApiKey(), new YoutubeListener(url));
+        video.initialize(YoutubeConfig.getApiKey(), new YoutubeListener(url));
     }
 
     @Override
