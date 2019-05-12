@@ -21,6 +21,10 @@
             android:icon="@drawable/sobre_icon"
             android:title="@string/menu_sobre" />
         <item
+            android:id="@+id/menu_concertos"
+            android:icon="@drawable/concertos_icon"
+            android:title="@string/menu_concertos" />
+        <item
             android:id="@+id/menu_membros"
             android:icon="@drawable/membro_icon"
             android:title="@string/menu_membros" />

@@ -6,45 +6,59 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/post_title"
+        android:id="@+id/music_add_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:fontFamily="@font/bookman_bold"
-        android:text="@string/post_inserir"
+        android:text="@string/music_inserir"
         android:textColor="@color/white"
         android:textSize="30sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/post_text"
+        android:id="@+id/music_name"
         android:layout_width="0dp"
-        android:layout_height="160dp"
+        android:layout_height="49dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
         android:background="@drawable/field_background"
         android:ems="10"
         android:fontFamily="@font/bookman_bold"
-        android:gravity="top|left"
-        android:hint="@string/mensagem_must"
-        android:inputType="textMultiLine"
-        android:overScrollMode="always"
+        android:hint="@string/name"
+        android:inputType="text"
         android:paddingLeft="15dp"
-        android:paddingTop="15dp"
-        android:paddingRight="20dp"
-        android:paddingBottom="40dp"
-        android:scrollbarStyle="insideInset"
-        android:scrollbars="vertical"
-        android:scrollHorizontally="false"
-        android:textColor="#000000"
+        android:paddingRight="15dp"
+        android:paddingBottom="5dp"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/music_add_title"
+        tools:ignore="Autofill" />
+
+    <EditText
+        android:id="@+id/music_artist"
+        android:layout_width="0dp"
+        android:layout_height="49dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/field_background"
+        android:ems="10"
+        android:fontFamily="@font/bookman_bold"
+        android:hint="@string/artist"
+        android:inputType="text"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingBottom="5dp"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/post_title"
-        tools:ignore="Autofill,LabelFor,RtlHardcoded" />
+        app:layout_constraintTop_toBottomOf="@+id/music_name"
+        tools:ignore="Autofill" />
 
     <Button
         android:id="@+id/music_button"
@@ -55,28 +69,8 @@
         android:background="@drawable/login_button"
         android:fontFamily="@font/bookman_bold"
         android:paddingBottom="5dp"
-        android:text="@string/post_button"
+        android:text="@string/add_button"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/concert_date" />
+        app:layout_constraintTop_toBottomOf="@+id/music_artist" />
 
-    <EditText
-        android:id="@+id/post_url"
-        android:layout_width="0dp"
-        android:layout_height="49dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:background="@drawable/field_background"
-        android:ems="10"
-        android:fontFamily="@font/bookman_bold"
-        android:hint="@string/youtube"
-        android:inputType="textUri"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
-        android:paddingBottom="5dp"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ensaio_descr"
-        tools:ignore="Autofill" />
 </android.support.constraint.ConstraintLayout>

@@ -16,7 +16,13 @@ import android.widget.Button;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.tiagofarinha.inmezzoapp.Fragments.AddConcert;
+import com.tiagofarinha.inmezzoapp.Fragments.AddEnsaio;
+import com.tiagofarinha.inmezzoapp.Fragments.AddMusic;
+import com.tiagofarinha.inmezzoapp.Fragments.ConcertsLogic;
+import com.tiagofarinha.inmezzoapp.Fragments.EnsaiosLogic;
 import com.tiagofarinha.inmezzoapp.Fragments.FeedLogic;
+import com.tiagofarinha.inmezzoapp.Fragments.PortfolioLogic;
 import com.tiagofarinha.inmezzoapp.Fragments.PostLogic;
 import com.tiagofarinha.inmezzoapp.R;
 import com.tiagofarinha.inmezzoapp.Utils.LoginUtils;
@@ -89,7 +95,14 @@ public class MainActivity extends AppCompatActivity
         post_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                changeFrag(new PostLogic(), R.id.menu_inicio, true);
+                if (currentFrag instanceof FeedLogic)
+                    changeFrag(new PostLogic(), R.id.menu_inicio, true);
+                else if (currentFrag instanceof PortfolioLogic)
+                    changeFrag(new AddMusic(), R.id.menu_portfolio, true);
+                else if (currentFrag instanceof ConcertsLogic)
+                    changeFrag(new AddConcert(), R.id.menu_concertos, true);
+                else if (currentFrag instanceof EnsaiosLogic)
+                    changeFrag(new AddEnsaio(), R.id.menu_ensaios, true);
             }
         });
 
@@ -140,7 +153,7 @@ public class MainActivity extends AppCompatActivity
         navigationView.setCheckedItem(id);
         closeKeyboard();
 
-        if (!(frag instanceof FeedLogic))
+        if (!(frag instanceof FeedLogic || frag instanceof ConcertsLogic || frag instanceof EnsaiosLogic || frag instanceof PortfolioLogic))
             post_button.setVisibility(View.INVISIBLE);
         else post_button.setVisibility(View.VISIBLE);
     }

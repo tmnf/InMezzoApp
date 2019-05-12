@@ -6,19 +6,19 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/post_title"
+        android:id="@+id/ensaio_add_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:fontFamily="@font/bookman_bold"
-        android:text="@string/post_inserir"
+        android:text="@string/ensaio_inserir"
         android:textColor="@color/white"
         android:textSize="30sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/post_text"
+        android:id="@+id/ensaio_descr"
         android:layout_width="0dp"
         android:layout_height="160dp"
         android:layout_marginStart="20dp"
@@ -28,7 +28,7 @@
         android:ems="10"
         android:fontFamily="@font/bookman_bold"
         android:gravity="top|left"
-        android:hint="@string/mensagem_must"
+        android:hint="@string/descr"
         android:inputType="textMultiLine"
         android:overScrollMode="always"
         android:paddingLeft="15dp"
@@ -43,33 +43,21 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/post_title"
+        app:layout_constraintTop_toBottomOf="@+id/ensaio_date"
         tools:ignore="Autofill,LabelFor,RtlHardcoded" />
 
-    <Button
-        android:id="@+id/music_button"
-        android:layout_width="159dp"
-        android:layout_height="52dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
-        android:background="@drawable/login_button"
-        android:fontFamily="@font/bookman_bold"
-        android:paddingBottom="5dp"
-        android:text="@string/post_button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/concert_date" />
-
     <EditText
-        android:id="@+id/post_url"
+        android:id="@+id/ensaio_date"
         android:layout_width="0dp"
         android:layout_height="49dp"
         android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
         android:background="@drawable/field_background"
         android:ems="10"
         android:fontFamily="@font/bookman_bold"
-        android:hint="@string/youtube"
-        android:inputType="textUri"
+        android:hint="@string/data"
+        android:inputType="datetime"
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
         android:paddingBottom="5dp"
@@ -77,6 +65,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ensaio_descr"
+        app:layout_constraintTop_toBottomOf="@+id/ensaio_add_title"
         tools:ignore="Autofill" />
+
+    <Button
+        android:id="@+id/ensaio_button"
+        android:layout_width="159dp"
+        android:layout_height="52dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/login_button"
+        android:fontFamily="@font/bookman_bold"
+        android:paddingBottom="5dp"
+        android:text="@string/add_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ensaio_descr" />
 </android.support.constraint.ConstraintLayout>

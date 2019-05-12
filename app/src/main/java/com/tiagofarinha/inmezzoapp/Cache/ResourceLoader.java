@@ -13,6 +13,9 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.tiagofarinha.inmezzoapp.MainLogic.SplashScreen;
+import com.tiagofarinha.inmezzoapp.Models.Concert;
+import com.tiagofarinha.inmezzoapp.Models.Ensaio;
+import com.tiagofarinha.inmezzoapp.Models.Music;
 import com.tiagofarinha.inmezzoapp.Models.Post;
 import com.tiagofarinha.inmezzoapp.Models.ProfilePic;
 import com.tiagofarinha.inmezzoapp.Models.User;
@@ -24,7 +27,7 @@ import java.util.Collections;
 
 public class ResourceLoader extends Thread {
 
-    private static final int TOTAL_TASKS = 2;
+    private static final int TOTAL_TASKS = 5;
     private static final int MAX_POSTS = 15;
 
     public static ResourceLoader INSTANCE;
@@ -33,6 +36,10 @@ public class ResourceLoader extends Thread {
     public static ArrayList<User> users = new ArrayList<>();
     public static ArrayList<ProfilePic> user_pics = new ArrayList<>();
     public static ArrayList<YoutubeVideo> videos = new ArrayList<>();
+
+    public static ArrayList<Music> portfolio = new ArrayList<>();
+    public static ArrayList<Concert> concerts = new ArrayList<>();
+    public static ArrayList<Ensaio> ensaios = new ArrayList<>();
 
     private boolean active;
 
@@ -67,6 +74,9 @@ public class ResourceLoader extends Thread {
     public void loadResources() {
         loadUsers();
         loadPosts();
+        loadConcerts();
+        loadEnsaios();
+        loadPortfolio();
         loadVideos();
     }
 
@@ -214,4 +224,69 @@ public class ResourceLoader extends Thread {
         });
     }
 
+    /* ================ Load Portfolio ================ */
+
+    private void loadPortfolio() {
+        DatabaseReference portfolio_ref = FirebaseDatabase.getInstance().getReference().child("porfolio");
+
+        portfolio_ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                portfolio.clear();
+                for (DataSnapshot x : dataSnapshot.getChildren())
+                    portfolio.add(x.getValue(Music.class));
+
+                taskOver();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    /* ================ Load Concerts ================ */
+
+    private void loadConcerts() {
+        DatabaseReference concerts_ref = FirebaseDatabase.getInstance().getReference().child("concerts");
+
+        concerts_ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                concerts.clear();
+                for (DataSnapshot x : dataSnapshot.getChildren())
+                    concerts.add(x.getValue(Concert.class));
+
+                taskOver();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    /* ================ Load Ensaios ================ */
+
+    private void loadEnsaios() {
+        DatabaseReference ensaios_ref = FirebaseDatabase.getInstance().getReference().child("ensaios");
+
+        ensaios_ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                ensaios.clear();
+                for (DataSnapshot x : dataSnapshot.getChildren())
+                    ensaios.add(x.getValue(Ensaio.class));
+
+                taskOver();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
 }

@@ -8,35 +8,35 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 
-import com.tiagofarinha.inmezzoapp.Models.Ensaio;
+import com.tiagofarinha.inmezzoapp.Models.Concert;
 import com.tiagofarinha.inmezzoapp.R;
 
 import java.util.ArrayList;
 
 
-public class EnsaioAdapter extends ArrayAdapter<Ensaio> {
+public class ConcertsAdapter extends ArrayAdapter<Concert> {
 
     private Context mContext;
-    private ArrayList<Ensaio> ensaios;
+    private ArrayList<Concert> concerts;
 
-    public EnsaioAdapter(@NonNull Context mContext, ArrayList<Ensaio> ensaios) {
-        super(mContext, 0, ensaios);
+    public ConcertsAdapter(@NonNull Context mContext, ArrayList<Concert> concerts) {
+        super(mContext, 0, concerts);
 
         this.mContext = mContext;
-        this.ensaios = ensaios;
+        this.concerts = concerts;
     }
 
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        View ensaiosView = convertView;
-        if (ensaiosView == null)
-            ensaiosView = LayoutInflater.from(mContext).inflate(R.layout.ensaio_row, parent, false);
+        View concertsView = convertView;
+        if (concertsView == null)
+            concertsView = LayoutInflater.from(mContext).inflate(R.layout.concert_row, parent, false);
 
-        Ensaio ensaio = ensaios.get(position);
+        Concert ensaio = concerts.get(position);
 
         // METER DADOS NA VIEW //
 
-        return ensaiosView;
+        return concertsView;
     }
 }

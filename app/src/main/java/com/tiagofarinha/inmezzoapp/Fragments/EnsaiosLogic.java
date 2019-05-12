@@ -9,29 +9,29 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
-import com.tiagofarinha.inmezzoapp.Adapter.PortfolioAdapter;
+import com.tiagofarinha.inmezzoapp.Adapter.EnsaioAdapter;
 import com.tiagofarinha.inmezzoapp.Cache.ResourceLoader;
 import com.tiagofarinha.inmezzoapp.R;
 
-public class PortfolioLogic extends Fragment {
+public class EnsaiosLogic extends Fragment {
 
     private ListView listView;
-    private PortfolioAdapter portfolioAdapter;
+    private EnsaioAdapter ensaiosAdapter;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.portfolio_fragment, container, false);
+        View view = inflater.inflate(R.layout.ensaios_fragment, container, false);
 
-        listView = view.findViewById(R.id.portfolio_list);
+        listView = view.findViewById(R.id.concerts_list);
 
-        getPortfolio();
+        getEnsaios();
 
         return view;
     }
 
-    private void getPortfolio() {
-        portfolioAdapter = new PortfolioAdapter(getContext(), ResourceLoader.portfolio);
-        listView.setAdapter(portfolioAdapter);
+    private void getEnsaios() {
+        ensaiosAdapter = new EnsaioAdapter(getContext(), ResourceLoader.ensaios);
+        listView.setAdapter(ensaiosAdapter);
     }
 }

@@ -8,35 +8,35 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 
-import com.tiagofarinha.inmezzoapp.Models.Ensaio;
+import com.tiagofarinha.inmezzoapp.Models.Music;
 import com.tiagofarinha.inmezzoapp.R;
 
 import java.util.ArrayList;
 
 
-public class EnsaioAdapter extends ArrayAdapter<Ensaio> {
+public class PortfolioAdapter extends ArrayAdapter<Music> {
 
     private Context mContext;
-    private ArrayList<Ensaio> ensaios;
+    private ArrayList<Music> portfolio;
 
-    public EnsaioAdapter(@NonNull Context mContext, ArrayList<Ensaio> ensaios) {
-        super(mContext, 0, ensaios);
+    public PortfolioAdapter(@NonNull Context mContext, ArrayList<Music> portfolio) {
+        super(mContext, 0, portfolio);
 
         this.mContext = mContext;
-        this.ensaios = ensaios;
+        this.portfolio = portfolio;
     }
 
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        View ensaiosView = convertView;
-        if (ensaiosView == null)
-            ensaiosView = LayoutInflater.from(mContext).inflate(R.layout.ensaio_row, parent, false);
+        View portfolioView = convertView;
+        if (portfolioView == null)
+            portfolioView = LayoutInflater.from(mContext).inflate(R.layout.portfolio_row, parent, false);
 
-        Ensaio ensaio = ensaios.get(position);
+        Music music = portfolio.get(position);
 
         // METER DADOS NA VIEW //
 
-        return ensaiosView;
+        return portfolioView;
     }
 }

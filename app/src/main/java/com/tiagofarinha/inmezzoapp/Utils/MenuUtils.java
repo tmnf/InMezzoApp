@@ -5,8 +5,9 @@ import android.support.v4.app.Fragment;
 import com.tiagofarinha.inmezzoapp.AdminTools.AdminLogic;
 import com.tiagofarinha.inmezzoapp.Fragments.AboutLogic;
 import com.tiagofarinha.inmezzoapp.Fragments.CandidaturasLogic;
+import com.tiagofarinha.inmezzoapp.Fragments.ConcertsLogic;
 import com.tiagofarinha.inmezzoapp.Fragments.ContactsLogic;
-import com.tiagofarinha.inmezzoapp.Fragments.EnsaioLogic;
+import com.tiagofarinha.inmezzoapp.Fragments.EnsaiosLogic;
 import com.tiagofarinha.inmezzoapp.Fragments.FeedLogic;
 import com.tiagofarinha.inmezzoapp.Fragments.LoginLogic;
 import com.tiagofarinha.inmezzoapp.Fragments.MembersLogic;
@@ -39,6 +40,9 @@ public class MenuUtils {
                 case R.id.menu_sobre:
                     frag = new AboutLogic();
                     break;
+                case R.id.menu_concertos:
+                    frag = new ConcertsLogic();
+                    break;
                 case R.id.menu_membros:
                     frag = new MembersLogic();
                     break;
@@ -58,7 +62,7 @@ public class MenuUtils {
                     frag = new ProfileLogic();
                     break;
                 case R.id.menu_ensaios:
-                    frag = new EnsaioLogic();
+                    frag = new EnsaiosLogic();
                     break;
                 case R.id.menu_admin:
                     frag = new AdminLogic();

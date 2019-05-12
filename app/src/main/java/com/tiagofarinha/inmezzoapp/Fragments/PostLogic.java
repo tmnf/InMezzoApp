@@ -45,7 +45,7 @@ public class PostLogic extends Fragment {
         post_text = view.findViewById(R.id.post_text);
         url = view.findViewById(R.id.post_url);
 
-        Button publish = view.findViewById(R.id.post_submit);
+        Button publish = view.findViewById(R.id.ensaio_button);
         publish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
