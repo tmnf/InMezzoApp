@@ -10,14 +10,19 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.tiagofarinha.inmezzoapp.Models.Ensaio;
 import com.tiagofarinha.inmezzoapp.R;
+import com.tiagofarinha.inmezzoapp.Utils.MenuUtils;
+import com.tiagofarinha.inmezzoapp.Utils.Utils;
+
+import java.util.ArrayList;
 
 public class AddEnsaio extends Fragment {
 
-    private EditText date, descr;
+    private EditText date, hour, descr;
 
     @Nullable
     @Override
@@ -30,25 +35,47 @@ public class AddEnsaio extends Fragment {
     }
 
     private void getComps(View view) {
-        EditText date, descr;
-
         date = view.findViewById(R.id.ensaio_date);
+        hour = view.findViewById(R.id.ensaio_hour);
         descr = view.findViewById(R.id.ensaio_descr);
+
+        final ArrayList<EditText> fields = new ArrayList<>();
+        fields.add(date);
+        fields.add(hour);
+        fields.add(descr);
 
         Button add = view.findViewById(R.id.ensaio_button);
 
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addInfo();
+                addInfo(fields);
             }
         });
     }
 
-    private void addInfo() {
-        Ensaio ensaio = new Ensaio(date.getText().toString(), descr.getText().toString());
+    private void addInfo(ArrayList<EditText> fields) {
+        for (EditText x : fields)
+            if (x.getText().toString().isEmpty()) {
+                Utils.showMessage(getContext(), "Por favor preencha todos os campos");
+                return;
+            }
+
+        String date_formated = date.getText().toString() + "," + hour.getText().toString();
+
+        Ensaio ensaio = new Ensaio(date_formated, descr.getText().toString());
+
         DatabaseReference ensaio_ref = FirebaseDatabase.getInstance().getReference().child("ensaios");
-        ensaio_ref.push().setValue(ensaio);
+
+        Utils.showMessage(getContext(), "A adicionar ensaio...");
+
+        ensaio_ref.push().setValue(ensaio).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                MenuUtils.filterMenuItem(R.id.menu_ensaios);
+                Utils.showMessage(getContext(), "Ensaio Adicionado com Sucesso!");
+            }
+        });
     }
 
 }

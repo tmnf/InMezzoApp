@@ -40,6 +40,11 @@
     <string name="email_coro"> inmezzo.orfeao@gmail.com </string>
     <string name="contacto1"> 926682071 </string>
     <string name="contacto2"> 968818284 </string>
+    <string name="facebook"> "@InMezzoCoro" </string>
+    <string name="instagram"> "@inmezzo.orfeao" </string>
+    <string name="youtube_account"> Coro InMezzo </string>
+
+    <string name="bio_dummy"> Biografia Fica Aqui </string>
 
     ====== Button Info ======
 
@@ -54,7 +59,8 @@
     <string name="local"> Local </string>
     <string name="mensagem"> Mensagem </string>
     <string name="mensagem_must"> Mensagem </string>
-    <string name="data"> Data </string>
+    <string name="data"> Data (dd/mm/yyyy) </string>
+    <string name="hour"> Hora (hh:mm) </string>
     <string name="youtube"> Youtube Url </string>
     <string name="configs"> Configurações </string>
     <string name="descr"> Descrição </string>

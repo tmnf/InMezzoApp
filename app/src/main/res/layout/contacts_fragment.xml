@@ -22,7 +22,7 @@
                 android:id="@+id/email_texto"
                 android:layout_width="0dp"
                 android:layout_height="24dp"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="20dp"
                 android:layout_marginTop="44dp"
                 android:layout_marginEnd="20dp"
                 android:clickable="true"
@@ -31,19 +31,6 @@
                 android:textColor="#fff"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/email_titulo"
-                app:layout_constraintTop_toBottomOf="@+id/contactos_titulo" />
-
-            <TextView
-                android:id="@+id/email_titulo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="44dp"
-                android:fontFamily="@font/bookman_bold"
-                android:text="Email:"
-                android:textColor="#fff"
-                android:textSize="18sp"
                 app:layout_constraintStart_toEndOf="@+id/email_icon"
                 app:layout_constraintTop_toBottomOf="@+id/contactos_titulo" />
 
@@ -51,8 +38,7 @@
                 android:id="@+id/contacto1_texto"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="40dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginStart="20dp"
                 android:layout_marginEnd="8dp"
                 android:clickable="true"
                 android:fontFamily="@font/bookman_old_style"
@@ -61,13 +47,61 @@
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/telefone_icon"
-                app:layout_constraintTop_toBottomOf="@+id/telefone_titulo" />
+                app:layout_constraintTop_toTopOf="@+id/telefone_icon" />
 
             <TextView
-                android:id="@+id/contacto2_texto"
+                android:id="@+id/facebook_texto"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="40dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="20dp"
+                android:clickable="true"
+                android:fontFamily="@font/bookman_old_style"
+                android:text="@string/facebook"
+                android:textColor="#fff"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/facebook_icon"
+                app:layout_constraintTop_toTopOf="@+id/facebook_icon" />
+
+            <TextView
+                android:id="@+id/instagram_texto"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="20dp"
+                android:clickable="true"
+                android:fontFamily="@font/bookman_old_style"
+                android:text="@string/instagram"
+                android:textColor="#fff"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/instagram_icon"
+                app:layout_constraintTop_toTopOf="@+id/instagram_icon" />
+
+            <TextView
+                android:id="@+id/youtube_texto"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="20dp"
+                android:clickable="true"
+                android:fontFamily="@font/bookman_old_style"
+                android:text="@string/youtube_account"
+                android:textColor="#fff"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imageView4"
+                app:layout_constraintTop_toTopOf="@+id/imageView4" />
+
+            <TextView
+                android:id="@+id/contacto2_texto2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="8dp"
                 android:clickable="true"
@@ -102,22 +136,9 @@
                 app:srcCompat="@drawable/contacts_phone"
                 tools:ignore="VectorDrawableCompat" />
 
-            <TextView
-                android:id="@+id/telefone_titulo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="30dp"
-                android:fontFamily="@font/bookman_bold"
-                android:text="Telefone:"
-                android:textColor="#fff"
-                android:textSize="18sp"
-                app:layout_constraintStart_toEndOf="@+id/telefone_icon"
-                app:layout_constraintTop_toBottomOf="@+id/email_texto" />
-
             <ImageView
                 android:id="@+id/email_icon"
-                android:layout_width="55dp"
+                android:layout_width="56dp"
                 android:layout_height="44dp"
                 android:layout_marginStart="40dp"
                 android:layout_marginTop="30dp"
@@ -125,6 +146,36 @@
                 app:layout_constraintTop_toBottomOf="@+id/contactos_titulo"
                 app:srcCompat="@drawable/contacts_email"
                 tools:ignore="VectorDrawableCompat" />
+
+            <ImageView
+                android:id="@+id/facebook_icon"
+                android:layout_width="56dp"
+                android:layout_height="52dp"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="30dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/contacto2_texto2"
+                app:srcCompat="@drawable/facebook_icon" />
+
+            <ImageView
+                android:id="@+id/instagram_icon"
+                android:layout_width="56dp"
+                android:layout_height="57dp"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="20dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/facebook_icon"
+                app:srcCompat="@drawable/instagram_icon" />
+
+            <ImageView
+                android:id="@+id/imageView4"
+                android:layout_width="56dp"
+                android:layout_height="41dp"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="20dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/instagram_icon"
+                app:srcCompat="@drawable/youtube_icon" />
 
         </android.support.constraint.ConstraintLayout>
     </ScrollView>

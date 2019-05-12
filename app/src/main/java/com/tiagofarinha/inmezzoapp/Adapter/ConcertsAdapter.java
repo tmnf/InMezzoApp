@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.TextView;
 
 import com.tiagofarinha.inmezzoapp.Models.Concert;
 import com.tiagofarinha.inmezzoapp.R;
@@ -33,9 +34,24 @@ public class ConcertsAdapter extends ArrayAdapter<Concert> {
         if (concertsView == null)
             concertsView = LayoutInflater.from(mContext).inflate(R.layout.concert_row, parent, false);
 
-        Concert ensaio = concerts.get(position);
+        Concert concert = concerts.get(position);
 
         // METER DADOS NA VIEW //
+
+        TextView descr, date, hour, local;
+
+        descr = concertsView.findViewById(R.id.concert_title_show);
+        local = concertsView.findViewById(R.id.concert_local_show);
+        date = concertsView.findViewById(R.id.concert_date_show);
+        hour = concertsView.findViewById(R.id.concert_hour_show);
+
+        descr.setText(concert.getDescr());
+        local.setText("Local: " + concert.getLocal());
+
+        String[] datetime = concert.getDate().split(",");
+
+        date.setText("Dia: " + datetime[0]);
+        hour.setText("Hora: " + datetime[1]);
 
         return concertsView;
     }

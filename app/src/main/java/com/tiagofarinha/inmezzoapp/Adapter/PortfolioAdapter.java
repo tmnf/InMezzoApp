@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.TextView;
 
 import com.tiagofarinha.inmezzoapp.Models.Music;
 import com.tiagofarinha.inmezzoapp.R;
@@ -36,6 +37,14 @@ public class PortfolioAdapter extends ArrayAdapter<Music> {
         Music music = portfolio.get(position);
 
         // METER DADOS NA VIEW //
+
+        TextView title, artist;
+
+        title = portfolioView.findViewById(R.id.portfolio_title_show);
+        artist = portfolioView.findViewById(R.id.portfolio_artist_show);
+
+        title.setText(music.getName());
+        artist.setText("- " + music.getArtist());
 
         return portfolioView;
     }

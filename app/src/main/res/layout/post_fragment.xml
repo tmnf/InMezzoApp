@@ -47,7 +47,7 @@
         tools:ignore="Autofill,LabelFor,RtlHardcoded" />
 
     <Button
-        android:id="@+id/music_button"
+        android:id="@+id/post_button"
         android:layout_width="159dp"
         android:layout_height="52dp"
         android:layout_marginTop="20dp"
@@ -57,7 +57,7 @@
         android:paddingBottom="5dp"
         android:text="@string/post_button"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/concert_date" />
+        app:layout_constraintTop_toBottomOf="@+id/post_url" />
 
     <EditText
         android:id="@+id/post_url"
@@ -75,8 +75,7 @@
         android:paddingBottom="5dp"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ensaio_descr"
+        app:layout_constraintTop_toBottomOf="@+id/post_text"
         tools:ignore="Autofill" />
 </android.support.constraint.ConstraintLayout>

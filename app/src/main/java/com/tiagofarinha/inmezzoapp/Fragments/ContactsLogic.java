@@ -34,7 +34,7 @@ public class ContactsLogic extends Fragment {
 
         email = view.findViewById(R.id.email_texto);
         phone1 = view.findViewById(R.id.contacto1_texto);
-        phone2 = view.findViewById(R.id.contacto2_texto);
+        phone2 = view.findViewById(R.id.facebook_texto);
 
         email.setOnTouchListener(new View.OnTouchListener() {
             @Override

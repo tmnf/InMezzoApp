@@ -227,7 +227,7 @@ public class ResourceLoader extends Thread {
     /* ================ Load Portfolio ================ */
 
     private void loadPortfolio() {
-        DatabaseReference portfolio_ref = FirebaseDatabase.getInstance().getReference().child("porfolio");
+        DatabaseReference portfolio_ref = FirebaseDatabase.getInstance().getReference().child("portfolio");
 
         portfolio_ref.addValueEventListener(new ValueEventListener() {
             @Override

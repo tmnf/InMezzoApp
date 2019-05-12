@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/splash"
-    tools:context=".MainLogic.SplashScreen" >
+    android:background="@drawable/splash_background"
+    tools:context=".MainLogic.SplashScreen">
 
     <ProgressBar
         android:id="@+id/splash_progress"
@@ -13,6 +13,7 @@
         android:layout_width="81dp"
         android:layout_height="76dp"
         android:layout_marginStart="20dp"
+        android:layout_marginTop="150dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="200dp"
         android:indeterminate="true"
@@ -20,5 +21,28 @@
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/splash_title" />
+
+    <ImageView
+        android:id="@+id/splash_title"
+        android:layout_width="0dp"
+        android:layout_height="209dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="110dp"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/inmezzo_name" />
+
+    <ImageView
+        android:id="@+id/splash_prog"
+        android:layout_width="150dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/inmezzo_prog" />
 </android.support.constraint.ConstraintLayout>

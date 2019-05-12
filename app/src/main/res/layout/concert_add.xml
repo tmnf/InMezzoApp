@@ -17,34 +17,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/concert_descr"
-        android:layout_width="0dp"
-        android:layout_height="160dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:background="@drawable/field_background"
-        android:ems="10"
-        android:fontFamily="@font/bookman_bold"
-        android:gravity="top|left"
-        android:hint="@string/descr"
-        android:inputType="textMultiLine"
-        android:overScrollMode="always"
-        android:paddingLeft="15dp"
-        android:paddingTop="15dp"
-        android:paddingRight="20dp"
-        android:paddingBottom="40dp"
-        android:scrollbarStyle="insideInset"
-        android:scrollbars="vertical"
-        android:scrollHorizontally="false"
-        android:textColor="#000000"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/concert_local"
-        tools:ignore="Autofill,LabelFor,RtlHardcoded" />
-
     <Button
         android:id="@+id/concert_button"
         android:layout_width="159dp"
@@ -68,7 +40,7 @@
         android:ems="10"
         android:fontFamily="@font/bookman_bold"
         android:hint="@string/local"
-        android:inputType="textUri"
+        android:inputType="text"
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
         android:paddingBottom="5dp"
@@ -76,7 +48,28 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/concert_date"
+        app:layout_constraintTop_toBottomOf="@+id/concert_hour"
+        tools:ignore="Autofill" />
+
+    <EditText
+        android:id="@+id/concert_descr"
+        android:layout_width="0dp"
+        android:layout_height="49dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/field_background"
+        android:ems="10"
+        android:fontFamily="@font/bookman_bold"
+        android:hint="@string/descr"
+        android:inputType="text"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingBottom="5dp"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/concert_local"
         tools:ignore="Autofill" />
 
     <EditText
@@ -90,7 +83,7 @@
         android:ems="10"
         android:fontFamily="@font/bookman_bold"
         android:hint="@string/data"
-        android:inputType="textUri"
+        android:inputType="date"
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
         android:paddingBottom="5dp"
@@ -99,5 +92,26 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/concert_add_title"
+        tools:ignore="Autofill" />
+
+    <EditText
+        android:id="@+id/concert_hour"
+        android:layout_width="0dp"
+        android:layout_height="49dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/field_background"
+        android:ems="10"
+        android:fontFamily="@font/bookman_bold"
+        android:hint="@string/hour"
+        android:inputType="time"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingBottom="5dp"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/concert_date"
         tools:ignore="Autofill" />
 </android.support.constraint.ConstraintLayout>

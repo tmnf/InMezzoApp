@@ -10,10 +10,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.tiagofarinha.inmezzoapp.Models.Music;
 import com.tiagofarinha.inmezzoapp.R;
+import com.tiagofarinha.inmezzoapp.Utils.MenuUtils;
+import com.tiagofarinha.inmezzoapp.Utils.Utils;
 
 public class AddMusic extends Fragment {
 
@@ -23,6 +26,8 @@ public class AddMusic extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.music_add, container, false);
+
+        getComps(view);
 
         return view;
     }
@@ -42,8 +47,21 @@ public class AddMusic extends Fragment {
     }
 
     private void addInfo() {
-        Music music = new Music(name.getText().toString(), artist.getText().toString());
-        DatabaseReference port_ref = FirebaseDatabase.getInstance().getReference().child("portfolio");
-        port_ref.push().setValue(music);
+        if (!(name.getText().toString().isEmpty() && artist.getText().toString().isEmpty())) {
+            Music music = new Music(name.getText().toString(), artist.getText().toString());
+            DatabaseReference port_ref = FirebaseDatabase.getInstance().getReference().child("portfolio");
+
+            Utils.showMessage(getContext(), "A adicionar música...");
+            port_ref.push().setValue(music).addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    MenuUtils.filterMenuItem(R.id.menu_portfolio);
+                    Utils.showMessage(getContext(), "Música Adicionada Com Sucesso");
+                }
+            });
+
+        } else {
+            Utils.showMessage(getContext(), "Campos vazios!");
+        }
     }
 }
