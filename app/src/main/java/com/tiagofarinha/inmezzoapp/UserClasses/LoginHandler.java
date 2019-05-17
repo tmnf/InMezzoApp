@@ -13,7 +13,7 @@ public class LoginHandler extends Thread {
     private String email, password;
     private LoginLogic ll;
 
-    public LoginHandler(String email, String password, LoginLogic ll){
+    public LoginHandler(String email, String password, LoginLogic ll) {
         this.email = email;
         this.password = password;
         this.ll = ll;
@@ -21,14 +21,14 @@ public class LoginHandler extends Thread {
 
 
     @Override
-    public void run(){
+    public void run() {
         FirebaseAuth auth = FirebaseAuth.getInstance();
 
         auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                if(task.isSuccessful()){
-                    ll.checkLoginSucess(true,"");
+                if (task.isSuccessful()) {
+                    ll.checkLoginSucess(true, "");
                 } else
                     ll.checkLoginSucess(false, task.getException().getMessage());
             }

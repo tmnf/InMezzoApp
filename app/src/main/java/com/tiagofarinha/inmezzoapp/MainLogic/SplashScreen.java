@@ -11,8 +11,8 @@ import com.tiagofarinha.inmezzoapp.R;
 
 public class SplashScreen extends AppCompatActivity {
 
-    private ProgressBar pb;
     private static SplashScreen INSTANCE;
+    private ProgressBar pb;
 
     public SplashScreen() {
         INSTANCE = this;

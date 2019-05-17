@@ -29,7 +29,7 @@ public class LoginLogic extends Fragment {
         return view;
     }
 
-    private void getComponents(View view){
+    private void getComponents(View view) {
         email = view.findViewById(R.id.email_login_field);
         pass = view.findViewById(R.id.password_login_field);
 
@@ -47,7 +47,7 @@ public class LoginLogic extends Fragment {
     private void tryLogin(String email, String password) {
         Utils.showMessage(getContext(), "A Iniciar Sessão...");
 
-        if(email.isEmpty() || password.isEmpty()){
+        if (email.isEmpty() || password.isEmpty()) {
             Utils.showMessage(getContext(), "Campos em branco");
             return;
         }
@@ -55,8 +55,8 @@ public class LoginLogic extends Fragment {
         LoginUtils.logInUser(email, password, this);
     }
 
-    public void checkLoginSucess(boolean sucess, String message){
-        if(sucess)
+    public void checkLoginSucess(boolean sucess, String message) {
+        if (sucess)
             MainActivity.getInstance().handleLog(1);
         else
             Utils.showMessage(getContext(), "Erro: " + message);

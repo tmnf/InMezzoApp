@@ -38,7 +38,7 @@ public class CandidaturasLogic extends Fragment {
         info.add(email.getText().toString());
         info.add(phone.getText().toString());
 
-        Button submit  = view.findViewById(R.id.candidaturas_button);
+        Button submit = view.findViewById(R.id.candidaturas_button);
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -55,7 +55,7 @@ public class CandidaturasLogic extends Fragment {
         return view;
     }
 
-    public void sendMail(){
+    public void sendMail() {
         String subject = ClienteEmailUtils.getFormatedSubject(info.get(0), ClienteEmailUtils.CANDIDATURE);
         String message = ClienteEmailUtils.getFormatedCandidatureBody(info.get(0), info.get(1), info.get(2), info.get(3));
 

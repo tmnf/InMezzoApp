@@ -6,7 +6,7 @@ import java.util.Date;
 
 public class DateUtils {
 
-    public static int getAge(String birthday){
+    public static int getAge(String birthday) {
         Calendar cal = Calendar.getInstance();
 
         int curr_day = cal.get(Calendar.DAY_OF_MONTH);
@@ -27,7 +27,7 @@ public class DateUtils {
         return curr_year - year - before;
     }
 
-    public static String getCurrentDate(){
+    public static String getCurrentDate() {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
         Date date = new Date();

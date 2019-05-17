@@ -18,6 +18,7 @@ import com.tiagofarinha.inmezzoapp.Utils.LoginUtils;
 
 import java.util.ArrayList;
 
+/* This class handles member row fulfilling */
 
 public class UserAdapter extends ArrayAdapter<User> {
 
@@ -35,8 +36,8 @@ public class UserAdapter extends ArrayAdapter<User> {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         View listUser = convertView;
-        if(listUser == null)
-            listUser = LayoutInflater.from(mContext).inflate(R.layout.user_row,parent,false);
+        if (listUser == null)
+            listUser = LayoutInflater.from(mContext).inflate(R.layout.user_row, parent, false);
 
         User user = users.get(position);
 
@@ -52,7 +53,7 @@ public class UserAdapter extends ArrayAdapter<User> {
         LoginUtils.putInto(user_pic, user);
 
         // APAGAR ISTO //
-        if(user.getUser_mode() == 1)
+        if (user.getUser_mode() == 1)
             user_name.setTextColor(Color.YELLOW);
         else if (user.getUser_mode() == 2)
             user_name.setTextColor(Color.BLUE);

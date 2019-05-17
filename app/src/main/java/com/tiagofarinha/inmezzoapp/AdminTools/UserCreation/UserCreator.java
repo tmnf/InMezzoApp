@@ -6,7 +6,7 @@ public class UserCreator extends Thread {
 
     private String email, pass, name, birth, voice, phone, mode;
 
-    public UserCreator(String email, String pass, String name, String birth, String voice, String phone, String mode){
+    public UserCreator(String email, String pass, String name, String birth, String voice, String phone, String mode) {
         this.email = email;
         this.pass = pass;
         this.name = name;
@@ -16,10 +16,10 @@ public class UserCreator extends Thread {
         this.mode = mode;
     }
 
-    public void run(){
+    public void run() {
         try {
             ClientImporter.createClient(email, pass, name, birth, voice, Integer.parseInt(phone), Integer.parseInt(mode));
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

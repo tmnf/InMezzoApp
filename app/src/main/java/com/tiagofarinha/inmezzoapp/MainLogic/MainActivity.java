@@ -16,14 +16,15 @@ import android.widget.Button;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.tiagofarinha.inmezzoapp.Cache.FragManager;
 import com.tiagofarinha.inmezzoapp.Fragments.AddConcert;
 import com.tiagofarinha.inmezzoapp.Fragments.AddEnsaio;
 import com.tiagofarinha.inmezzoapp.Fragments.AddMusic;
+import com.tiagofarinha.inmezzoapp.Fragments.AddPost;
 import com.tiagofarinha.inmezzoapp.Fragments.ConcertsLogic;
 import com.tiagofarinha.inmezzoapp.Fragments.EnsaiosLogic;
 import com.tiagofarinha.inmezzoapp.Fragments.FeedLogic;
 import com.tiagofarinha.inmezzoapp.Fragments.PortfolioLogic;
-import com.tiagofarinha.inmezzoapp.Fragments.PostLogic;
 import com.tiagofarinha.inmezzoapp.R;
 import com.tiagofarinha.inmezzoapp.Utils.LoginUtils;
 import com.tiagofarinha.inmezzoapp.Utils.MenuUtils;
@@ -96,7 +97,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 if (currentFrag instanceof FeedLogic)
-                    changeFrag(new PostLogic(), R.id.menu_inicio, true);
+                    changeFrag(new AddPost(), R.id.menu_inicio, true);
                 else if (currentFrag instanceof PortfolioLogic)
                     changeFrag(new AddMusic(), R.id.menu_portfolio, true);
                 else if (currentFrag instanceof ConcertsLogic)

@@ -17,15 +17,18 @@ import com.tiagofarinha.inmezzoapp.Utils.Utils;
 
 import java.util.ArrayList;
 
+/* Admin Tools Fragment */
+
 public class AdminLogic extends Fragment {
 
     public static final String DEFAULT_PASSWORD = "pass123";
-
+    private static AdminLogic INSTANCE;
     private EditText email, name, birth, voice, phone, mode;
-
     private ArrayList<EditText> fields;
 
-    private static AdminLogic INSTANCE;
+    public static AdminLogic getInstance() {
+        return INSTANCE;
+    }
 
     @Nullable
     @Override
@@ -39,7 +42,8 @@ public class AdminLogic extends Fragment {
         return view;
     }
 
-    private void getComps(View view){
+    // Gets components references
+    private void getComps(View view) {
 
         fields = new ArrayList<>();
 
@@ -89,15 +93,11 @@ public class AdminLogic extends Fragment {
     }
 
     // Code After Operation Success
-    public void onSucess(){
+    public void onSucess() {
         Utils.showMessage(getContext(), "User Created");
 
-        for(EditText x : fields)
+        for (EditText x : fields)
             x.setText("");
-    }
-
-    public static AdminLogic getInstance(){
-        return INSTANCE;
     }
 
 }

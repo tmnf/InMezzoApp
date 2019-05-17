@@ -14,14 +14,14 @@ import com.tiagofarinha.inmezzoapp.Models.User;
 
 public class ClientImporter {
 
-    // Creates User In Database
-    public static void createClient(final String email, final String password, final String user_name, String user_birthday, String user_voice, int user_phone, int mode){
+    // Creates User in Database
+    public static void createClient(final String email, final String password, final String user_name, String user_birthday, String user_voice, int user_phone, int mode) {
         final FirebaseAuth auth = FirebaseAuth.getInstance();
         final FirebaseDatabase myRef = FirebaseDatabase.getInstance();
 
         String pic_url = user_phone + ".jpg";
 
-        final User us = new User(user_name,user_birthday,user_voice,user_phone, email, pic_url, mode);
+        final User us = new User(user_name, user_birthday, user_voice, user_phone, email, pic_url, mode);
 
         auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
@@ -33,7 +33,7 @@ public class ClientImporter {
     }
 
     // Associates Auth User To Model User
-    private static void createObject(String email, String user_name, User us, FirebaseUser user){
+    private static void createObject(String email, String user_name, User us, FirebaseUser user) {
         UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder().setDisplayName(user_name).build();
         user.updateProfile(profileUpdates);
 

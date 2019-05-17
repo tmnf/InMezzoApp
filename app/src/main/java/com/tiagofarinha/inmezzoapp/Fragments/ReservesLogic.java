@@ -56,7 +56,7 @@ public class ReservesLogic extends Fragment {
         return view;
     }
 
-    public void sendEmail(){
+    public void sendEmail() {
         String subject = ClienteEmailUtils.getFormatedSubject(info.get(0), ClienteEmailUtils.RESERVE);
         String body = ClienteEmailUtils.getFormatedReserveBody(info.get(0), info.get(1), info.get(2), info.get(3), info.get(4));
 

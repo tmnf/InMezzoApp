@@ -30,7 +30,7 @@ public class MembersLogic extends Fragment {
         return view;
     }
 
-    private void getUsers(){
+    private void getUsers() {
         mAdapter = new UserAdapter(getContext(), ResourceLoader.users);
         listView.setAdapter(mAdapter);
     }

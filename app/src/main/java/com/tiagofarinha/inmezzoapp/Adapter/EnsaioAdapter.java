@@ -20,6 +20,8 @@ public class EnsaioAdapter extends ArrayAdapter<Ensaio> {
     private Context mContext;
     private ArrayList<Ensaio> ensaios;
 
+    /* This class handles member row fulfilling */
+
     public EnsaioAdapter(@NonNull Context mContext, ArrayList<Ensaio> ensaios) {
         super(mContext, 0, ensaios);
 
@@ -36,13 +38,15 @@ public class EnsaioAdapter extends ArrayAdapter<Ensaio> {
 
         Ensaio ensaio = ensaios.get(position);
 
-        // METER DADOS NA VIEW //
+        /* REFERENCES */
 
         TextView date, hour, descr;
 
         date = ensaiosView.findViewById(R.id.ensaio_date_show);
         hour = ensaiosView.findViewById(R.id.ensaio_hour_show);
         descr = ensaiosView.findViewById(R.id.ensaio_descr_show);
+
+        /* DATA HANDLE */
 
         String[] datetime = ensaio.getDate().split(",");
 

@@ -15,7 +15,8 @@ public class Post {
         this.owner = owner;
     }
 
-    public Post(){}
+    public Post() {
+    }
 
     public String getPost_text() {
         return post_text;

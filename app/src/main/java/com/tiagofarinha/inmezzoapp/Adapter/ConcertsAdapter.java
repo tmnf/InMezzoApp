@@ -20,6 +20,8 @@ public class ConcertsAdapter extends ArrayAdapter<Concert> {
     private Context mContext;
     private ArrayList<Concert> concerts;
 
+    /* This class handles concerts row fulfilling */
+
     public ConcertsAdapter(@NonNull Context mContext, ArrayList<Concert> concerts) {
         super(mContext, 0, concerts);
 
@@ -36,7 +38,7 @@ public class ConcertsAdapter extends ArrayAdapter<Concert> {
 
         Concert concert = concerts.get(position);
 
-        // METER DADOS NA VIEW //
+        /* REFERENCES */
 
         TextView descr, date, hour, local;
 
@@ -44,6 +46,8 @@ public class ConcertsAdapter extends ArrayAdapter<Concert> {
         local = concertsView.findViewById(R.id.concert_local_show);
         date = concertsView.findViewById(R.id.concert_date_show);
         hour = concertsView.findViewById(R.id.concert_hour_show);
+
+        /* DATA HANDLE */
 
         descr.setText(concert.getDescr());
         local.setText("Local: " + concert.getLocal());

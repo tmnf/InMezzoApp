@@ -27,22 +27,25 @@ import java.util.Collections;
 
 public class ResourceLoader extends Thread {
 
+    // CLASS CONSTANTS
     private static final int TOTAL_TASKS = 5;
     private static final int MAX_POSTS = 15;
 
+
+    // CLASS INSTANCE
     public static ResourceLoader INSTANCE;
 
+    // PUBLIC OBJECT LISTS
     public static ArrayList<Post> posts = new ArrayList<>();
     public static ArrayList<User> users = new ArrayList<>();
     public static ArrayList<ProfilePic> user_pics = new ArrayList<>();
     public static ArrayList<YoutubeVideo> videos = new ArrayList<>();
-
     public static ArrayList<Music> portfolio = new ArrayList<>();
     public static ArrayList<Concert> concerts = new ArrayList<>();
     public static ArrayList<Ensaio> ensaios = new ArrayList<>();
 
+    // CONTROL VARIABLES
     private boolean active;
-
     private int tasks_remaining, pics_remaining, videos_remaining;
 
     public ResourceLoader() {
@@ -144,17 +147,17 @@ public class ResourceLoader extends Thread {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 videos.clear();
 
-                ArrayList<VideoDownloader> videoTasks = new ArrayList<>();
+                ArrayList<ThumbnailDownloader> videoTasks = new ArrayList<>();
 
                 for (DataSnapshot x : dataSnapshot.getChildren()) {
                     YoutubeContainer aux = x.getValue(YoutubeContainer.class);
 
-                    videoTasks.add(new VideoDownloader(ResourceLoader.this, aux.getUrl(), aux.getId()));
+                    videoTasks.add(new ThumbnailDownloader(ResourceLoader.this, aux.getUrl(), aux.getId()));
                 }
 
                 videos_remaining = videoTasks.size();
 
-                for (VideoDownloader x : videoTasks)
+                for (ThumbnailDownloader x : videoTasks)
                     x.start();
             }
 

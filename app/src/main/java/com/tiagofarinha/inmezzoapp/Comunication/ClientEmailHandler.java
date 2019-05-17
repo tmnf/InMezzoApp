@@ -18,7 +18,7 @@ public class ClientEmailHandler extends Thread {
     }
 
     @Override
-    public void run(){
+    public void run() {
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.putExtra(Intent.EXTRA_EMAIL, EMAIL);
         intent.putExtra(Intent.EXTRA_SUBJECT, subject);

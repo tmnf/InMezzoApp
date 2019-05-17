@@ -5,16 +5,16 @@ import com.google.android.youtube.player.YouTubePlayer;
 
 public class YoutubeListener implements YouTubePlayer.OnInitializedListener {
 
-    private String url;
+    private String video_id;
 
     public YoutubeListener(String url) {
-        this.url = url;
+        this.video_id = url;
     }
 
     @Override
     public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
         try {
-            youTubePlayer.loadVideo(url);
+            youTubePlayer.loadVideo(video_id);
         } catch (Exception e) {
             e.printStackTrace();
         }

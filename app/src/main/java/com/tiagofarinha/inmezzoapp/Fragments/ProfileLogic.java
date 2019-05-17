@@ -42,7 +42,7 @@ public class ProfileLogic extends Fragment {
     }
 
 
-    public void getUser(){
+    public void getUser() {
         FirebaseUser aut = FirebaseAuth.getInstance().getCurrentUser();
         FirebaseDatabase.getInstance().getReference().child("users").child(aut.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -57,7 +57,7 @@ public class ProfileLogic extends Fragment {
         });
     }
 
-    public void refreshGUI(User user){
+    public void refreshGUI(User user) {
         LoginUtils.putInto(pic, user);
         name.setText(user.getUser_name());
         age.setText("Idade: " + DateUtils.getAge(user.getUser_birthday()) + " Anos");

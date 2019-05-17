@@ -25,15 +25,15 @@ import com.tiagofarinha.inmezzoapp.UserClasses.LoginHandler;
 
 public class LoginUtils {
 
-    public static void logInUser(String email, String password, LoginLogic ll){
-        new LoginHandler(email,password, ll).start();
+    public static void logInUser(String email, String password, LoginLogic ll) {
+        new LoginHandler(email, password, ll).start();
     }
 
-    public static boolean logOutUser(FirebaseAuth auth){
-        try{
+    public static boolean logOutUser(FirebaseAuth auth) {
+        try {
             auth.signOut();
             return true;
-        } catch (Exception e){
+        } catch (Exception e) {
             return false;
         }
     }
@@ -55,7 +55,7 @@ public class LoginUtils {
 
         Button post_button = MainActivity.getInstance().getPost_button();
 
-        if(currentUser == null){
+        if (currentUser == null) {
             login.setVisible(true);
             perfil.setVisible(false);
             logout.setVisible(false);
@@ -87,7 +87,7 @@ public class LoginUtils {
                 User user = dataSnapshot.getValue(User.class);
                 putInto(pic, user);
 
-                if(user.getUser_mode() == User.ADMIN)
+                if (user.getUser_mode() == User.ADMIN)
                     admin.setVisible(true);
                 else admin.setVisible(false);
             }
@@ -99,9 +99,9 @@ public class LoginUtils {
         });
     }
 
-    public static void putInto(final ImageView view, User user){
+    public static void putInto(final ImageView view, User user) {
         for (ProfilePic x : ResourceLoader.user_pics)
-            if(x.getNumber().equals(user.getUser_pic())){
+            if (x.getNumber().equals(user.getUser_pic())) {
                 view.setImageBitmap(x.getPic());
             }
     }

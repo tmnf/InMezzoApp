@@ -14,6 +14,7 @@ import com.tiagofarinha.inmezzoapp.R;
 
 import java.util.ArrayList;
 
+/* This class handles music row fulfilling */
 
 public class PortfolioAdapter extends ArrayAdapter<Music> {
 
@@ -36,12 +37,15 @@ public class PortfolioAdapter extends ArrayAdapter<Music> {
 
         Music music = portfolio.get(position);
 
-        // METER DADOS NA VIEW //
+
+        /* REFERENCES */
 
         TextView title, artist;
 
         title = portfolioView.findViewById(R.id.portfolio_title_show);
         artist = portfolioView.findViewById(R.id.portfolio_artist_show);
+
+        /* DATA HANDLE */
 
         title.setText(music.getName());
         artist.setText("- " + music.getArtist());

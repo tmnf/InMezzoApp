@@ -19,6 +19,7 @@ import com.tiagofarinha.inmezzoapp.Utils.LoginUtils;
 
 import java.util.ArrayList;
 
+/* This class handles post row fulfilling */
 
 public class PostAdapter extends ArrayAdapter<Post> {
 
@@ -49,6 +50,7 @@ public class PostAdapter extends ArrayAdapter<Post> {
         TextView post_pub_date = postListView.findViewById(R.id.post_pub_date);
         TextView post_text = postListView.findViewById(R.id.post_message);
 
+        // Contains url associated to the video
         TextView hidden_url = postListView.findViewById(R.id.hidden_url);
 
         /* Data Handle */

@@ -3,6 +3,7 @@ package com.tiagofarinha.inmezzoapp.Utils;
 import android.support.v4.app.Fragment;
 
 import com.tiagofarinha.inmezzoapp.AdminTools.AdminLogic;
+import com.tiagofarinha.inmezzoapp.Cache.FragManager;
 import com.tiagofarinha.inmezzoapp.Fragments.AboutLogic;
 import com.tiagofarinha.inmezzoapp.Fragments.CandidaturasLogic;
 import com.tiagofarinha.inmezzoapp.Fragments.ConcertsLogic;
@@ -14,7 +15,6 @@ import com.tiagofarinha.inmezzoapp.Fragments.MembersLogic;
 import com.tiagofarinha.inmezzoapp.Fragments.PortfolioLogic;
 import com.tiagofarinha.inmezzoapp.Fragments.ProfileLogic;
 import com.tiagofarinha.inmezzoapp.Fragments.ReservesLogic;
-import com.tiagofarinha.inmezzoapp.MainLogic.FragManager;
 import com.tiagofarinha.inmezzoapp.MainLogic.MainActivity;
 import com.tiagofarinha.inmezzoapp.R;
 

@@ -10,7 +10,7 @@ public class User {
     public User() {
     }
 
-    public User(String user_name, String user_birthday, String user_voice, int user_phone, String user_email, String user_pic, int user_mode){
+    public User(String user_name, String user_birthday, String user_voice, int user_phone, String user_email, String user_pic, int user_mode) {
         this.user_name = user_name;
         this.user_birthday = user_birthday;
         this.user_voice = user_voice;
@@ -44,9 +44,11 @@ public class User {
         return user_phone;
     }
 
-    public int getUser_mode() { return user_mode; }
+    public int getUser_mode() {
+        return user_mode;
+    }
 
-    public String toString(){
-        return  user_name + user_birthday + user_voice + user_phone + user_email + user_mode;
+    public String toString() {
+        return user_name + user_birthday + user_voice + user_phone + user_email + user_mode;
     }
 }

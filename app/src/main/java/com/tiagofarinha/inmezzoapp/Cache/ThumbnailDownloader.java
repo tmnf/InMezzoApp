@@ -5,14 +5,14 @@ import com.tiagofarinha.inmezzoapp.Models.YoutubeVideo;
 
 import java.io.IOException;
 
-public class VideoDownloader extends Thread {
+public class ThumbnailDownloader extends Thread {
 
     /* Handles Video Info Download */
 
     private ResourceLoader rl;
     private String url, id;
 
-    public VideoDownloader(ResourceLoader rl, String url, String id) {
+    public ThumbnailDownloader(ResourceLoader rl, String url, String id) {
         this.rl = rl;
         this.url = url;
         this.id = id;

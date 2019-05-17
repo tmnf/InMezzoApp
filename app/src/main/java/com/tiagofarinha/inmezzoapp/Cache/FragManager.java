@@ -1,4 +1,4 @@
-package com.tiagofarinha.inmezzoapp.MainLogic;
+package com.tiagofarinha.inmezzoapp.Cache;
 
 import android.support.v4.app.Fragment;
 

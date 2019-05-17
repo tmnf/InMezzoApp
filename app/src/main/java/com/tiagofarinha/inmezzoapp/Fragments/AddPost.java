@@ -18,7 +18,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.tiagofarinha.inmezzoapp.Cache.ResourceLoader;
-import com.tiagofarinha.inmezzoapp.Cache.VideoDownloader;
+import com.tiagofarinha.inmezzoapp.Cache.ThumbnailDownloader;
 import com.tiagofarinha.inmezzoapp.MainLogic.MainActivity;
 import com.tiagofarinha.inmezzoapp.Models.Post;
 import com.tiagofarinha.inmezzoapp.Models.User;
@@ -26,7 +26,7 @@ import com.tiagofarinha.inmezzoapp.Models.YoutubeContainer;
 import com.tiagofarinha.inmezzoapp.R;
 import com.tiagofarinha.inmezzoapp.Utils.Utils;
 
-public class PostLogic extends Fragment {
+public class AddPost extends Fragment {
 
     private EditText post_text, url;
 
@@ -99,7 +99,7 @@ public class PostLogic extends Fragment {
         DatabaseReference videosRef = FirebaseDatabase.getInstance().getReference().child("videos");
         videosRef.push().setValue(video);
 
-        new VideoDownloader(ResourceLoader.getInstance(), url, video.getId()).start();
+        new ThumbnailDownloader(ResourceLoader.getInstance(), url, video.getId()).start();
     }
 
     public void onSuccess() {
