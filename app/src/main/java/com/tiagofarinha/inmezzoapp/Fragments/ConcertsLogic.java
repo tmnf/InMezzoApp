@@ -31,7 +31,7 @@ public class ConcertsLogic extends Fragment {
     }
 
     private void getConcerts() {
-        concertsAdapter = new ConcertsAdapter(getContext(), ResourceLoader.concerts);
+        concertsAdapter = new ConcertsAdapter(getContext(), ResourceLoader.concerts, R.layout.concert_row);
         listView.setAdapter(concertsAdapter);
     }
 }

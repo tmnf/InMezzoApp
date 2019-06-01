@@ -31,7 +31,7 @@ public class PortfolioLogic extends Fragment {
     }
 
     private void getPortfolio() {
-        portfolioAdapter = new PortfolioAdapter(getContext(), ResourceLoader.portfolio);
+        portfolioAdapter = new PortfolioAdapter(getContext(), ResourceLoader.portfolio, R.layout.portfolio_row);
         listView.setAdapter(portfolioAdapter);
     }
 }

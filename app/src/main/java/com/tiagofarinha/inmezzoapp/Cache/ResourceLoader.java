@@ -12,6 +12,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.tiagofarinha.inmezzoapp.Interfaces.Adaptable;
 import com.tiagofarinha.inmezzoapp.MainLogic.SplashScreen;
 import com.tiagofarinha.inmezzoapp.Models.Concert;
 import com.tiagofarinha.inmezzoapp.Models.Ensaio;
@@ -32,17 +33,17 @@ public class ResourceLoader extends Thread {
     private static final int MAX_POSTS = 15;
 
 
-    // CLASS INSTANCE
-    public static ResourceLoader INSTANCE;
-
     // PUBLIC OBJECT LISTS
-    public static ArrayList<Post> posts = new ArrayList<>();
-    public static ArrayList<User> users = new ArrayList<>();
+    public static ArrayList<Adaptable> posts = new ArrayList<>();
+    public static ArrayList<Adaptable> users = new ArrayList<>();
+    public static ArrayList<Adaptable> portfolio = new ArrayList<>();
+    public static ArrayList<Adaptable> concerts = new ArrayList<>();
+    public static ArrayList<Adaptable> ensaios = new ArrayList<>();
+    // CLASS INSTANCE
+    private static ResourceLoader INSTANCE;
+
     public static ArrayList<ProfilePic> user_pics = new ArrayList<>();
     public static ArrayList<YoutubeVideo> videos = new ArrayList<>();
-    public static ArrayList<Music> portfolio = new ArrayList<>();
-    public static ArrayList<Concert> concerts = new ArrayList<>();
-    public static ArrayList<Ensaio> ensaios = new ArrayList<>();
 
     // CONTROL VARIABLES
     private boolean active;
@@ -65,16 +66,18 @@ public class ResourceLoader extends Thread {
     public static YoutubeVideo findVideoWithUrl(String url) {
         YoutubeVideo aux = null;
 
-        for (YoutubeVideo x : videos)
+        for (YoutubeVideo x : videos) {
             if (x.getUrl().equals(url)) {
                 aux = x;
                 break;
             }
+        }
+
 
         return aux;
     }
 
-    public void loadResources() {
+    private void loadResources() {
         loadUsers();
         loadPosts();
         loadConcerts();
@@ -83,7 +86,7 @@ public class ResourceLoader extends Thread {
         loadVideos();
     }
 
-    public synchronized void taskOver() {
+    private synchronized void taskOver() {
         if (!active) {
             tasks_remaining--;
             notify();
@@ -110,9 +113,10 @@ public class ResourceLoader extends Thread {
         StorageReference pic_ref = FirebaseStorage.getInstance().getReference().child("profile_images");
 
         user_pics.clear();
-        for (User x : users) {
+        for (Adaptable x : users) {
 
-            final String user_pic = x.getUser_pic();
+            User aux = (User) x;
+            final String user_pic = aux.getUser_pic();
 
             StorageReference ref = pic_ref.child(user_pic);
             ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
@@ -139,7 +143,7 @@ public class ResourceLoader extends Thread {
         }
     }
 
-    public void loadVideos() {
+    private void loadVideos() {
         final DatabaseReference videosRef = FirebaseDatabase.getInstance().getReference().child("videos");
 
         videosRef.addValueEventListener(new ValueEventListener() {

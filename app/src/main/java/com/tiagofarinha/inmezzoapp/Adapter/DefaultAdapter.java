@@ -38,6 +38,8 @@ public abstract class DefaultAdapter extends ArrayAdapter<Adaptable> {
 
         Adaptable obj = objects.get(position);
 
+        fillView(objListView, obj);
+
         return objListView;
     }
 
