@@ -1,6 +1,8 @@
 package com.tiagofarinha.inmezzoapp.Models;
 
-public class Ensaio {
+import com.tiagofarinha.inmezzoapp.Interfaces.Adaptable;
+
+public class Ensaio implements Adaptable {
 
     private String date, descr;
 

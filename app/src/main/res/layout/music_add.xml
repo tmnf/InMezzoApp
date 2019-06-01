@@ -13,7 +13,7 @@
         android:fontFamily="@font/bookman_bold"
         android:text="@string/music_inserir"
         android:textColor="@color/white"
-        android:textSize="30sp"
+        android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

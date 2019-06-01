@@ -27,27 +27,16 @@
                 app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
                 app:srcCompat="@drawable/inmezzo_photo" />
 
-            <ImageView
-                android:id="@+id/sobre_titulo"
-                android:layout_width="0dp"
-                android:layout_height="32dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
-                android:scaleType="fitStart"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/about_title" />
-
             <android.support.constraint.ConstraintLayout
                 android:id="@+id/constraintLayout"
                 android:layout_width="395dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginEnd="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/sobre_titulo">
+                app:layout_constraintTop_toBottomOf="@+id/about_title">
 
                 <ImageView
                     android:id="@+id/sobre_background"
@@ -78,6 +67,22 @@
                     app:layout_constraintTop_toTopOf="@+id/sobre_background" />
 
             </android.support.constraint.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/about_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:fontFamily="@font/bookman_bold"
+                android:text="@string/about_title"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
         </android.support.constraint.ConstraintLayout>
     </ScrollView>

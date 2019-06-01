@@ -1,8 +1,9 @@
 package com.tiagofarinha.inmezzoapp.Models;
 
+import com.tiagofarinha.inmezzoapp.Interfaces.Adaptable;
 import com.tiagofarinha.inmezzoapp.Utils.DateUtils;
 
-public class Post {
+public class Post implements Adaptable {
 
     private String post_text, url, date_pub;
 

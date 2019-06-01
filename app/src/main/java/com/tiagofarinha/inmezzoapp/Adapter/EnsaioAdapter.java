@@ -2,58 +2,38 @@ package com.tiagofarinha.inmezzoapp.Adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.tiagofarinha.inmezzoapp.Interfaces.Adaptable;
 import com.tiagofarinha.inmezzoapp.Models.Ensaio;
 import com.tiagofarinha.inmezzoapp.R;
 
 import java.util.ArrayList;
 
+/* This class handles member row fulfilling */
+public class EnsaioAdapter extends DefaultAdapter {
 
-public class EnsaioAdapter extends ArrayAdapter<Ensaio> {
-
-    private Context mContext;
-    private ArrayList<Ensaio> ensaios;
-
-    /* This class handles member row fulfilling */
-
-    public EnsaioAdapter(@NonNull Context mContext, ArrayList<Ensaio> ensaios) {
-        super(mContext, 0, ensaios);
-
-        this.mContext = mContext;
-        this.ensaios = ensaios;
+    public EnsaioAdapter(@NonNull Context mContext, ArrayList<Adaptable> objects, int layoutId) {
+        super(mContext, objects, layoutId);
     }
 
-    @NonNull
     @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        View ensaiosView = convertView;
-        if (ensaiosView == null)
-            ensaiosView = LayoutInflater.from(mContext).inflate(R.layout.ensaio_row, parent, false);
-
-        Ensaio ensaio = ensaios.get(position);
-
-        /* REFERENCES */
-
+    protected void fillView(View view, Adaptable obj) {
         TextView date, hour, descr;
 
-        date = ensaiosView.findViewById(R.id.ensaio_date_show);
-        hour = ensaiosView.findViewById(R.id.ensaio_hour_show);
-        descr = ensaiosView.findViewById(R.id.ensaio_descr_show);
+        Ensaio ensaio = (Ensaio) obj;
+
+        date = view.findViewById(R.id.ensaio_date_show);
+        hour = view.findViewById(R.id.ensaio_hour_show);
+        descr = view.findViewById(R.id.ensaio_descr_show);
 
         /* DATA HANDLE */
 
-        String[] datetime = ensaio.getDate().split(",");
+        String[] datetime = ((Ensaio) obj).getDate().split(",");
 
         date.setText(datetime[0]);
         hour.setText(datetime[1]);
         descr.setText(ensaio.getDescr());
-
-        return ensaiosView;
     }
 }

@@ -1,6 +1,8 @@
 package com.tiagofarinha.inmezzoapp.Models;
 
-public class Concert {
+import com.tiagofarinha.inmezzoapp.Interfaces.Adaptable;
+
+public class Concert implements Adaptable {
 
     private String date, local, descr;
 

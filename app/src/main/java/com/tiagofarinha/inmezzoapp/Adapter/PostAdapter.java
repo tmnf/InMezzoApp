@@ -2,16 +2,13 @@ package com.tiagofarinha.inmezzoapp.Adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.tiagofarinha.inmezzoapp.Cache.ResourceLoader;
+import com.tiagofarinha.inmezzoapp.Interfaces.Adaptable;
 import com.tiagofarinha.inmezzoapp.Models.Post;
 import com.tiagofarinha.inmezzoapp.Models.YoutubeVideo;
 import com.tiagofarinha.inmezzoapp.R;
@@ -21,49 +18,35 @@ import java.util.ArrayList;
 
 /* This class handles post row fulfilling */
 
-public class PostAdapter extends ArrayAdapter<Post> {
+public class PostAdapter extends DefaultAdapter {
 
-    private Context mContext;
-    private ArrayList<Post> posts;
-
-    public PostAdapter(@NonNull Context mContext, ArrayList<Post> posts) {
-        super(mContext, 0, posts);
-
-        this.mContext = mContext;
-        this.posts = posts;
+    public PostAdapter(@NonNull Context mContext, ArrayList<Adaptable> objects, int layoutId) {
+        super(mContext, objects, layoutId);
     }
 
-    @NonNull
     @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        View postListView = convertView;
-
-        if (postListView == null)
-            postListView = LayoutInflater.from(mContext).inflate(R.layout.post_row, parent, false);
-
-        Post post = posts.get(position);
-
+    protected void fillView(View view, Adaptable obj) {
+        Post post = (Post) obj;
+        TextView post_name, post_pub_date, post_text, hidden_url;
         /* REFERENCES */
 
-        ImageView pic = postListView.findViewById(R.id.post_pic);
-        TextView post_name = postListView.findViewById(R.id.post_name);
-        TextView post_pub_date = postListView.findViewById(R.id.post_pub_date);
-        TextView post_text = postListView.findViewById(R.id.post_message);
+        ImageView pic = view.findViewById(R.id.post_pic);
+        post_name = view.findViewById(R.id.post_name);
+        post_pub_date = view.findViewById(R.id.post_pub_date);
+        post_text = view.findViewById(R.id.post_message);
 
         // Contains url associated to the video
-        TextView hidden_url = postListView.findViewById(R.id.hidden_url);
+        hidden_url = view.findViewById(R.id.hidden_url);
 
         /* Data Handle */
 
         hidden_url.setVisibility(View.INVISIBLE);
-        youtubeViewHandle(postListView, post, hidden_url);
+        youtubeViewHandle(view, post, hidden_url);
 
         LoginUtils.putInto(pic, post.getOwner());
         post_name.setText(post.getOwner().getUser_name());
         post_pub_date.setText(post.getDate_pub());
         post_text.setText(post.getPost_text());
-
-        return postListView;
     }
 
     private void youtubeViewHandle(View postListView, Post post, TextView hidden_url) {
@@ -82,5 +65,4 @@ public class PostAdapter extends ArrayAdapter<Post> {
             }
         }
     }
-
 }

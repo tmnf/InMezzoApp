@@ -27,7 +27,7 @@ public class FeedLogic extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.feed_fragment, container, false);
 
-        listView = view.findViewById(R.id.concerts_list);
+        listView = view.findViewById(R.id.post_list);
 
         getPosts();
 

@@ -1,6 +1,8 @@
 package com.tiagofarinha.inmezzoapp.Models;
 
-public class Music {
+import com.tiagofarinha.inmezzoapp.Interfaces.Adaptable;
+
+public class Music implements Adaptable {
 
     private String name, artist;
 

@@ -4,6 +4,7 @@
 
     <string name="app_name">InMezzo</string>
     <string name="nav_header_desc">Navigation header</string>
+    <string name="app_title"> Coro InMezzo </string>
 
     ====== Menu Info ======
 
@@ -70,5 +71,19 @@
     <string name="music_inserir"> Adicionar Música </string>
     <string name="concert_inserir"> Adicionar Concerto </string>
     <string name="ensaio_inserir"> Adicionar Ensaio </string>
+
+    ====== Page Titles ======
+
+    <string name="feed_title"> Últimas Mensagens </string>
+    <string name="portfolio_title"> Portfolio </string>
+    <string name="contacts_title"> Contactos </string>
+    <string name="about_title"> Sobre </string>
+    <string name="concerts_title"> Concertos </string>
+    <string name="members_title"> Membros </string>
+    <string name="candidaturas_title"> Candidaturas </string>
+    <string name="reservas_title"> Reservas </string>
+    <string name="login_title"> Login </string>
+    <string name="ensaios_title"> Ensaios </string>
+    <string name="admin_title"> Admin Tools </string>
 
 </resources>

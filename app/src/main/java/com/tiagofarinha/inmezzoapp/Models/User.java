@@ -1,6 +1,8 @@
 package com.tiagofarinha.inmezzoapp.Models;
 
-public class User {
+import com.tiagofarinha.inmezzoapp.Interfaces.Adaptable;
+
+public class User implements Adaptable {
 
     public static final int USER = 0, ADMIN = 1, COORD = 2;
 
