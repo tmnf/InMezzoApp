@@ -31,7 +31,7 @@ public class MembersLogic extends Fragment {
     }
 
     private void getUsers() {
-        mAdapter = new UserAdapter(getContext(), ResourceLoader.users, R.layout.user_row);
+        mAdapter = new UserAdapter(getContext(), ResourceLoader.getInstance().getUsers(), R.layout.user_row);
         listView.setAdapter(mAdapter);
     }
 }

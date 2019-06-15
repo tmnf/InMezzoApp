@@ -32,21 +32,21 @@ public class ResourceLoader extends Thread {
     private static final int MAX_POSTS = 15;
 
 
+    public ArrayList<PicInfo> pic_info = new ArrayList<>();
+    public ArrayList<YoutubeVideo> videos = new ArrayList<>();
     // PUBLIC OBJECT LISTS
-    public static ArrayList<Adaptable> posts = new ArrayList<>();
-    public static ArrayList<Adaptable> users = new ArrayList<>();
-    public static ArrayList<Adaptable> portfolio = new ArrayList<>();
-    public static ArrayList<Adaptable> concerts = new ArrayList<>();
-    public static ArrayList<Adaptable> ensaios = new ArrayList<>();
+    private ArrayList<Adaptable> posts = new ArrayList<>();
+    private ArrayList<Adaptable> users = new ArrayList<>();
+    private ArrayList<Adaptable> portfolio = new ArrayList<>();
+
     // CLASS INSTANCE
     private static ResourceLoader INSTANCE;
-
-    public static ArrayList<PicInfo> pic_info = new ArrayList<>();
-    public static ArrayList<YoutubeVideo> videos = new ArrayList<>();
+    private ArrayList<Adaptable> concerts = new ArrayList<>();
+    private ArrayList<Adaptable> ensaios = new ArrayList<>();
 
     // CONTROL VARIABLES
     private boolean active;
-    private int tasks_remaining;
+    private int tasks_remaining, pics_remaining;
 
     public ResourceLoader() {
         tasks_remaining = TOTAL_TASKS;
@@ -62,7 +62,7 @@ public class ResourceLoader extends Thread {
 
     /* ================ General Methods ================ */
 
-    public static YoutubeVideo findVideoWithUrl(String url) {
+    public YoutubeVideo findVideoWithUrl(String url) {
         YoutubeVideo aux = null;
 
         for (YoutubeVideo x : videos) {
@@ -101,10 +101,10 @@ public class ResourceLoader extends Thread {
                 wait();
 
             loadPics();
-
         } catch (Exception e) {
             e.printStackTrace();
         }
+        interrupt();
     }
 
     private void loadPics() {
@@ -116,16 +116,28 @@ public class ResourceLoader extends Thread {
             final User aux = (User) x;
             final String user_pic = aux.getUser_pic();
 
+            pics_remaining = users.size();
+
             StorageReference ref = pic_ref.child(user_pic);
             ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                 @Override
                 public void onSuccess(Uri uri) {
-                    pic_info.add(new PicInfo(uri, aux.getUser_phone()));
+                    addPic(uri, aux.getUser_phone());
                 }
             });
         }
-        active = true;
-        SplashScreen.getInstance().ready();
+    }
+
+    private void addPic(Uri uri, int num) {
+        synchronized (pic_info) {
+            pic_info.add(new PicInfo(uri, num));
+            pics_remaining--;
+
+            if (pics_remaining == 0) {
+                active = true;
+                SplashScreen.getInstance().ready();
+            }
+        }
     }
 
     /* ================ Load Videos ================ */
@@ -276,5 +288,33 @@ public class ResourceLoader extends Thread {
 
             }
         });
+    }
+
+    public ArrayList<Adaptable> getPosts() {
+        return posts;
+    }
+
+    public ArrayList<Adaptable> getUsers() {
+        return users;
+    }
+
+    public ArrayList<Adaptable> getPortfolio() {
+        return portfolio;
+    }
+
+    public ArrayList<Adaptable> getConcerts() {
+        return concerts;
+    }
+
+    public ArrayList<Adaptable> getEnsaios() {
+        return ensaios;
+    }
+
+    public ArrayList<PicInfo> getPic_info() {
+        return pic_info;
+    }
+
+    public ArrayList<YoutubeVideo> getVideos() {
+        return videos;
     }
 }

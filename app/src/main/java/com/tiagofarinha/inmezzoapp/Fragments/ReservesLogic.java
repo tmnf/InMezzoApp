@@ -46,7 +46,7 @@ public class ReservesLogic extends Fragment {
             public void onClick(View v) {
                 for (String x : info)
                     if (x.isEmpty()) {
-                        Utils.showMessage(getContext(), "Campos vazios ou inválidos");
+                        Utils.showMessage("Campos vazios ou inválidos");
                         return;
                     }
                 sendEmail();

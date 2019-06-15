@@ -22,8 +22,11 @@ import java.util.ArrayList;
 public class AdminLogic extends Fragment {
 
     public static final String DEFAULT_PASSWORD = "pass123";
+
     private static AdminLogic INSTANCE;
+
     private EditText email, name, birth, voice, phone, mode;
+
     private ArrayList<EditText> fields;
 
     public static AdminLogic getInstance() {
@@ -84,17 +87,17 @@ public class AdminLogic extends Fragment {
                 empty = true;
 
         if (!empty) {
-            Utils.showMessage(getContext(), "A criar user...");
+            Utils.showMessage("A criar user...");
 
             new UserCreator(info.get(0), DEFAULT_PASSWORD, info.get(1), info.get(2),
                     info.get(3), info.get(4), info.get(5)).start();
 
-        } else Utils.showMessage(getContext(), "Campos Vazios");
+        } else Utils.showMessage("Campos Vazios");
     }
 
     // Code After Operation Success
     public void onSucess() {
-        Utils.showMessage(getContext(), "User Created");
+        Utils.showMessage("User Created");
 
         for (EditText x : fields)
             x.setText("");

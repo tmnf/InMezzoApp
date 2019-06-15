@@ -51,17 +51,17 @@ public class AddMusic extends Fragment {
             Music music = new Music(name.getText().toString(), artist.getText().toString());
             DatabaseReference port_ref = FirebaseDatabase.getInstance().getReference().child("portfolio");
 
-            Utils.showMessage(getContext(), "A adicionar música...");
+            Utils.showMessage("A adicionar música...");
             port_ref.push().setValue(music).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void aVoid) {
                     MenuUtils.filterMenuItem(R.id.menu_portfolio);
-                    Utils.showMessage(getContext(), "Música Adicionada Com Sucesso");
+                    Utils.showMessage("Música Adicionada Com Sucesso");
                 }
             });
 
         } else {
-            Utils.showMessage(getContext(), "Campos vazios!");
+            Utils.showMessage("Campos vazios!");
         }
     }
 }

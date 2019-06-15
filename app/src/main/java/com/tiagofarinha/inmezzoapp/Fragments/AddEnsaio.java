@@ -57,7 +57,7 @@ public class AddEnsaio extends Fragment {
     private void addInfo(ArrayList<EditText> fields) {
         for (EditText x : fields)
             if (x.getText().toString().isEmpty()) {
-                Utils.showMessage(getContext(), "Por favor preencha todos os campos");
+                Utils.showMessage("Por favor preencha todos os campos");
                 return;
             }
 
@@ -67,13 +67,13 @@ public class AddEnsaio extends Fragment {
 
         DatabaseReference ensaio_ref = FirebaseDatabase.getInstance().getReference().child("ensaios");
 
-        Utils.showMessage(getContext(), "A adicionar ensaio...");
+        Utils.showMessage("A adicionar ensaio...");
 
         ensaio_ref.push().setValue(ensaio).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
                 MenuUtils.filterMenuItem(R.id.menu_ensaios);
-                Utils.showMessage(getContext(), "Ensaio Adicionado com Sucesso!");
+                Utils.showMessage("Ensaio Adicionado com Sucesso!");
             }
         });
     }

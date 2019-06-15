@@ -45,21 +45,21 @@ public class LoginLogic extends Fragment {
     }
 
     private void tryLogin(String email, String password) {
-        Utils.showMessage(getContext(), "A Iniciar Sessão...");
+        Utils.showMessage("A Iniciar Sessão...");
 
         if (email.isEmpty() || password.isEmpty()) {
-            Utils.showMessage(getContext(), "Campos em branco");
+            Utils.showMessage("Campos em branco");
             return;
         }
 
         LoginUtils.logInUser(email, password, this);
     }
 
-    public void checkLoginSucess(boolean sucess, String message) {
-        if (sucess)
+    public void checkLoginSucess(boolean success, String message) {
+        if (success)
             MainActivity.getInstance().handleLog(1);
         else
-            Utils.showMessage(getContext(), "Erro: " + message);
+            Utils.showMessage("Erro: " + message);
     }
 
 }

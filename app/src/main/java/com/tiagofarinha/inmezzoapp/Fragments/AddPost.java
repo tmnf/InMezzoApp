@@ -52,12 +52,12 @@ public class AddPost extends Fragment {
                 String ur = url.getText().toString();
 
                 if (!ur.isEmpty() && !(ur.contains("youtube.com") || ur.contains("youtu.be"))) {
-                    Utils.showMessage(getContext(), "O URL é inválido!");
+                    Utils.showMessage("O URL é inválido!");
                     return;
                 }
 
                 if (post_text.getText().toString().isEmpty()) {
-                    Utils.showMessage(getContext(), "Campo *Mensagem* não preenchido!");
+                    Utils.showMessage("Campo *Mensagem* não preenchido!");
                     return;
                 }
 
@@ -67,7 +67,7 @@ public class AddPost extends Fragment {
     }
 
     private void createPost() {
-        Utils.showMessage(getContext(), "A publicar...");
+        Utils.showMessage("A publicar...");
         final DatabaseReference postsRef = FirebaseDatabase.getInstance().getReference().child("posts");
 
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -87,7 +87,7 @@ public class AddPost extends Fragment {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Utils.showMessage(getContext(), "Erro ao publicar!");
+                Utils.showMessage("Erro ao publicar!");
             }
         });
     }
@@ -103,6 +103,6 @@ public class AddPost extends Fragment {
 
     public void onSuccess() {
         MainActivity.getInstance().goToMainPage();
-        Utils.showMessage(getContext(), "Publicado com sucesso!");
+        Utils.showMessage("Publicado com sucesso!");
     }
 }

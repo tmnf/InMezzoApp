@@ -6,7 +6,6 @@ import android.support.design.widget.NavigationView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -40,11 +39,11 @@ public class LoginUtils {
         }
     }
 
-    public static void updateGuiAccording(FirebaseAuth mAuth, FirebaseUser currentUser, NavigationView navigationView) {
+    public static void updateGuiAccording(FirebaseAuth mAuth, NavigationView navigationView) {
         Menu menu = navigationView.getMenu();
         View header = navigationView.getHeaderView(0);
 
-        currentUser = mAuth.getCurrentUser();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
 
         MenuItem login = menu.findItem(R.id.menu_login);
         MenuItem perfil = menu.findItem(R.id.menu_perfil);
@@ -54,8 +53,6 @@ public class LoginUtils {
 
         TextView user_name = header.findViewById(R.id.menu_name);
         ImageView pic = header.findViewById(R.id.menu_pic);
-
-        Button post_button = MainActivity.getInstance().getPost_button();
 
         if (currentUser == null) {
             login.setVisible(true);
@@ -104,7 +101,7 @@ public class LoginUtils {
     }
 
     public static void putInto(final ImageView view, User user) {
-        for (PicInfo x : ResourceLoader.pic_info)
+        for (PicInfo x : ResourceLoader.getInstance().getPic_info())
             if (x.getNum() == user.getUser_phone())
                 fillView(view, x.getUri());
     }

@@ -61,7 +61,7 @@ public class AddConcert extends Fragment {
 
         for (EditText x : info) {
             if (x.getText().toString().isEmpty()) {
-                Utils.showMessage(getContext(), "Por favor preencha todos os campos");
+                Utils.showMessage("Por favor preencha todos os campos");
                 return;
             }
         }
@@ -72,12 +72,12 @@ public class AddConcert extends Fragment {
 
         DatabaseReference concert_ref = FirebaseDatabase.getInstance().getReference().child("concerts");
 
-        Utils.showMessage(getContext(), "A adicionar concerto...");
+        Utils.showMessage("A adicionar concerto...");
         concert_ref.push().setValue(concert).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
                 MenuUtils.filterMenuItem(R.id.menu_concertos);
-                Utils.showMessage(getContext(), "Concerto Adicionado");
+                Utils.showMessage("Concerto Adicionado");
             }
         });
     }

@@ -31,7 +31,7 @@ public class EnsaiosLogic extends Fragment {
     }
 
     private void getEnsaios() {
-        ensaiosAdapter = new EnsaioAdapter(getContext(), ResourceLoader.ensaios, R.layout.ensaio_row);
+        ensaiosAdapter = new EnsaioAdapter(getContext(), ResourceLoader.getInstance().getEnsaios(), R.layout.ensaio_row);
         listView.setAdapter(ensaiosAdapter);
     }
 }

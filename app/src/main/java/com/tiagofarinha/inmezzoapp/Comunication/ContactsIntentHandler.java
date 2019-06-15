@@ -27,6 +27,8 @@ public class ContactsIntentHandler extends Thread {
             case EMAIL:
                 initEmail();
         }
+
+        interrupt();
     }
 
     private void initPhoneCall() {

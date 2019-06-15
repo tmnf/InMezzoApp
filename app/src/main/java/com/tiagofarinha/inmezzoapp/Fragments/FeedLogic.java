@@ -35,7 +35,7 @@ public class FeedLogic extends Fragment {
     }
 
     private void getPosts() {
-        postAdapter = new PostAdapter(getContext(), ResourceLoader.posts, R.layout.post_row);
+        postAdapter = new PostAdapter(getContext(), ResourceLoader.getInstance().getPosts(), R.layout.post_row);
         listView.setAdapter(postAdapter);
 
         setListener();

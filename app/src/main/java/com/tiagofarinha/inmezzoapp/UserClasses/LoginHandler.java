@@ -31,6 +31,8 @@ public class LoginHandler extends Thread {
                     ll.checkLoginSucess(true, "");
                 } else
                     ll.checkLoginSucess(false, task.getException().getMessage());
+
+                interrupt();
             }
         });
     }

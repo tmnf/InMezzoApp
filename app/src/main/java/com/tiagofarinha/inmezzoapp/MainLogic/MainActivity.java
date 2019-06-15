@@ -15,7 +15,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.tiagofarinha.inmezzoapp.Cache.FragManager;
 import com.tiagofarinha.inmezzoapp.Fragments.AddConcert;
 import com.tiagofarinha.inmezzoapp.Fragments.AddEnsaio;
@@ -42,7 +41,6 @@ public class MainActivity extends AppCompatActivity
     private NavigationView navigationView;
 
     private FirebaseAuth mAuth;
-    private FirebaseUser currentUser;
 
     private Button post_button;
     private Fragment currentFrag;
@@ -63,7 +61,6 @@ public class MainActivity extends AppCompatActivity
 
         /* Get Firebase */
         mAuth = FirebaseAuth.getInstance();
-        currentUser = mAuth.getCurrentUser();
 
         INSTANCE = this;
 
@@ -74,7 +71,7 @@ public class MainActivity extends AppCompatActivity
         if (savedInstanceState == null)
             startFrag();
 
-        LoginUtils.updateGuiAccording(mAuth, currentUser, navigationView);
+        LoginUtils.updateGuiAccording(mAuth, navigationView);
     }
 
     private void startFrag() {
@@ -190,20 +187,20 @@ public class MainActivity extends AppCompatActivity
                 break;
         }
 
-        LoginUtils.updateGuiAccording(mAuth, currentUser, navigationView);
+        LoginUtils.updateGuiAccording(mAuth, navigationView);
     }
 
     private void logOut() {
         if (LoginUtils.logOutUser(mAuth)) {
-            Utils.showMessage(this, "Sessão Terminada");
+            Utils.showMessage("Sessão Terminada");
             auxUser = null;
         } else
-            Utils.showMessage(this, "Erro ao tentar terminar sessão!");
+            Utils.showMessage("Erro ao tentar terminar sessão!");
     }
 
     private void logIn() {
         closeKeyboard();
-        Utils.showMessage(this, "Sessão Iniciada");
+        Utils.showMessage("Sessão Iniciada");
     }
 
     public void closeKeyboard() {

@@ -26,6 +26,8 @@ public class ClientEmailHandler extends Thread {
 
         intent.setType("message/rfc822");
         MainActivity.getInstance().startActivity(Intent.createChooser(intent, "Escolha o seu cliente de email"));
+
+        interrupt();
     }
 
 
