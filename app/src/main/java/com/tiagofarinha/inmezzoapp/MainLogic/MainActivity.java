@@ -25,6 +25,7 @@ import com.tiagofarinha.inmezzoapp.Fragments.ConcertsLogic;
 import com.tiagofarinha.inmezzoapp.Fragments.EnsaiosLogic;
 import com.tiagofarinha.inmezzoapp.Fragments.FeedLogic;
 import com.tiagofarinha.inmezzoapp.Fragments.PortfolioLogic;
+import com.tiagofarinha.inmezzoapp.Models.User;
 import com.tiagofarinha.inmezzoapp.R;
 import com.tiagofarinha.inmezzoapp.Utils.LoginUtils;
 import com.tiagofarinha.inmezzoapp.Utils.MenuUtils;
@@ -45,6 +46,8 @@ public class MainActivity extends AppCompatActivity
 
     private Button post_button;
     private Fragment currentFrag;
+
+    private User auxUser;
 
     public static MainActivity getInstance() {
         return INSTANCE;
@@ -154,9 +157,24 @@ public class MainActivity extends AppCompatActivity
         navigationView.setCheckedItem(id);
         closeKeyboard();
 
-        if (!(frag instanceof FeedLogic || frag instanceof ConcertsLogic || frag instanceof EnsaiosLogic || frag instanceof PortfolioLogic))
+        if (checkSuperPermissions())
+            post_button.setVisibility(View.VISIBLE);
+        else
             post_button.setVisibility(View.INVISIBLE);
-        else post_button.setVisibility(View.VISIBLE);
+    }
+
+    public boolean checkSuperPermissions() {
+        Fragment f = currentFrag;
+
+        if (auxUser == null)
+            return false;
+
+        if ((f instanceof ConcertsLogic || f instanceof EnsaiosLogic || f instanceof PortfolioLogic)
+                && (auxUser.getUser_mode() == User.COORD || auxUser.getUser_mode() == User.ADMIN))
+            return true;
+
+        return f instanceof FeedLogic;
+
     }
 
     public void handleLog(int mode) {
@@ -173,13 +191,13 @@ public class MainActivity extends AppCompatActivity
         }
 
         LoginUtils.updateGuiAccording(mAuth, currentUser, navigationView);
-        goToMainPage();
     }
 
     private void logOut() {
-        if (LoginUtils.logOutUser(mAuth))
+        if (LoginUtils.logOutUser(mAuth)) {
             Utils.showMessage(this, "Sessão Terminada");
-        else
+            auxUser = null;
+        } else
             Utils.showMessage(this, "Erro ao tentar terminar sessão!");
     }
 
@@ -202,4 +220,7 @@ public class MainActivity extends AppCompatActivity
         return post_button;
     }
 
+    public void setAuxUser(User user) {
+        this.auxUser = user;
+    }
 }

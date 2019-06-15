@@ -1,5 +1,6 @@
 package com.tiagofarinha.inmezzoapp.Utils;
 
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.view.Menu;
@@ -15,10 +16,11 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 import com.tiagofarinha.inmezzoapp.Cache.ResourceLoader;
 import com.tiagofarinha.inmezzoapp.Fragments.LoginLogic;
 import com.tiagofarinha.inmezzoapp.MainLogic.MainActivity;
-import com.tiagofarinha.inmezzoapp.Models.ProfilePic;
+import com.tiagofarinha.inmezzoapp.Models.PicInfo;
 import com.tiagofarinha.inmezzoapp.Models.User;
 import com.tiagofarinha.inmezzoapp.R;
 import com.tiagofarinha.inmezzoapp.UserClasses.LoginHandler;
@@ -64,7 +66,7 @@ public class LoginUtils {
 
             user_name.setText("Menu");
             pic.setVisibility(View.INVISIBLE);
-            post_button.setVisibility(View.INVISIBLE); // BUG AQUI
+            MainActivity.getInstance().goToMainPage();
 
         } else {
             login.setVisible(false);
@@ -74,7 +76,6 @@ public class LoginUtils {
 
             user_name.setText(currentUser.getDisplayName());
             pic.setVisibility(View.VISIBLE);
-            post_button.setVisibility(View.VISIBLE);
 
             getPicAndTools(currentUser, admin, pic);
         }
@@ -90,6 +91,9 @@ public class LoginUtils {
                 if (user.getUser_mode() == User.ADMIN)
                     admin.setVisible(true);
                 else admin.setVisible(false);
+
+                MainActivity.getInstance().setAuxUser(user);
+                MainActivity.getInstance().goToMainPage();
             }
 
             @Override
@@ -100,10 +104,12 @@ public class LoginUtils {
     }
 
     public static void putInto(final ImageView view, User user) {
-        for (ProfilePic x : ResourceLoader.user_pics)
-            if (x.getNumber().equals(user.getUser_pic())) {
-                view.setImageBitmap(x.getPic());
-            }
+        for (PicInfo x : ResourceLoader.pic_info)
+            if (x.getNum() == user.getUser_phone())
+                fillView(view, x.getUri());
     }
 
+    public static void fillView(ImageView view, Uri uri) {
+        Picasso.get().load(uri).fit().centerCrop().into(view);
+    }
 }

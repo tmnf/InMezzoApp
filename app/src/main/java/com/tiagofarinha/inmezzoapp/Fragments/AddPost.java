@@ -18,7 +18,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.tiagofarinha.inmezzoapp.Cache.ResourceLoader;
-import com.tiagofarinha.inmezzoapp.Cache.ThumbnailDownloader;
 import com.tiagofarinha.inmezzoapp.MainLogic.MainActivity;
 import com.tiagofarinha.inmezzoapp.Models.Post;
 import com.tiagofarinha.inmezzoapp.Models.User;
@@ -99,7 +98,7 @@ public class AddPost extends Fragment {
         DatabaseReference videosRef = FirebaseDatabase.getInstance().getReference().child("videos");
         videosRef.push().setValue(video);
 
-        new ThumbnailDownloader(ResourceLoader.getInstance(), url, video.getId()).start();
+        ResourceLoader.getInstance().addToVideoList(url, video.getId());
     }
 
     public void onSuccess() {

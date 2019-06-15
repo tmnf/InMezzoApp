@@ -59,10 +59,8 @@ public class PostAdapter extends DefaultAdapter {
             container.removeView(thumb);
         } else {
             YoutubeVideo video = ResourceLoader.findVideoWithUrl(post.getUrl());
-            if (video != null && thumb != null) {
-                hidden_url.setText(video.getId());
-                thumb.setImageBitmap(video.getThumbnail());
-            }
+            if (thumb != null)
+                LoginUtils.fillView(thumb, video.getThumbnail());
         }
     }
 }

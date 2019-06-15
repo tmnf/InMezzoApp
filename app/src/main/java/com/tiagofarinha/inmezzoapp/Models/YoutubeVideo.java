@@ -1,18 +1,18 @@
 package com.tiagofarinha.inmezzoapp.Models;
 
-import android.graphics.Bitmap;
+import android.net.Uri;
 
 public class YoutubeVideo extends YoutubeContainer {
 
-    private Bitmap thumbnail;
+    private Uri thumbnail;
 
-    public YoutubeVideo(String url, Bitmap thumbnail) {
+    public YoutubeVideo(String url, Uri thumbnail) {
         super(url);
 
         this.thumbnail = thumbnail;
     }
 
-    public Bitmap getThumbnail() {
+    public Uri getThumbnail() {
         return thumbnail;
     }
 
