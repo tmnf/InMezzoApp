@@ -62,7 +62,7 @@ public class LoginUtils {
             ensaios.setVisible(false);
 
             user_name.setText("Menu");
-            pic.setVisibility(View.INVISIBLE);
+            pic.setVisibility(View.GONE);
             MainActivity.getInstance().goToMainPage();
 
         } else {

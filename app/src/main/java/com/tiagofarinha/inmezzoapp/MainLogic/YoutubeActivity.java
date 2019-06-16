@@ -18,11 +18,9 @@ public class YoutubeActivity extends YouTubeBaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_youtube);
 
-        if (savedInstanceState == null) {
-            video = findViewById(R.id.youtube_viewer);
-            String url = getIntent().getStringExtra("url");
-            video.initialize(YoutubeConfig.getApiKey(), new YoutubeListener(url));
-        }
+        video = findViewById(R.id.youtube_viewer);
+        String url = getIntent().getStringExtra("url");
+        video.initialize(YoutubeConfig.getApiKey(), new YoutubeListener(url));
     }
 
     @Override

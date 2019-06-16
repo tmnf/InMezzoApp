@@ -2,7 +2,9 @@ package com.tiagofarinha.inmezzoapp.Adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.tiagofarinha.inmezzoapp.Interfaces.Adaptable;
@@ -19,21 +21,39 @@ public class EnsaioAdapter extends DefaultAdapter {
     }
 
     @Override
-    protected void fillView(View view, Adaptable obj) {
-        TextView date, hour, descr;
+    protected View fillView(View convertView, ViewGroup parent, Adaptable obj) {
+        ViewHolder holder;
 
-        Ensaio ensaio = (Ensaio) obj;
-
-        date = view.findViewById(R.id.ensaio_date_show);
-        hour = view.findViewById(R.id.ensaio_hour_show);
-        descr = view.findViewById(R.id.ensaio_descr_show);
+        if (convertView == null) {
+            convertView = LayoutInflater.from(mContext).inflate(layoutId, parent, false);
+            holder = new ViewHolder(convertView, (Ensaio) obj);
+            convertView.setTag(holder);
+        } else {
+            holder = (ViewHolder) convertView.getTag();
+        }
 
         /* DATA HANDLE */
 
         String[] datetime = ((Ensaio) obj).getDate().split(",");
 
-        date.setText(datetime[0]);
-        hour.setText(datetime[1]);
-        descr.setText(ensaio.getDescr());
+        holder.date.setText(datetime[0]);
+        holder.hour.setText(datetime[1]);
+        holder.descr.setText(holder.ensaio.getDescr());
+
+        return convertView;
+    }
+
+    private class ViewHolder {
+        Ensaio ensaio;
+
+        TextView date, hour, descr;
+
+        public ViewHolder(View view, Ensaio ensaio) {
+            this.ensaio = ensaio;
+
+            date = view.findViewById(R.id.ensaio_date_show);
+            hour = view.findViewById(R.id.ensaio_hour_show);
+            descr = view.findViewById(R.id.ensaio_descr_show);
+        }
     }
 }

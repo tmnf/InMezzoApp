@@ -24,6 +24,7 @@ import com.tiagofarinha.inmezzoapp.Fragments.ConcertsLogic;
 import com.tiagofarinha.inmezzoapp.Fragments.EnsaiosLogic;
 import com.tiagofarinha.inmezzoapp.Fragments.FeedLogic;
 import com.tiagofarinha.inmezzoapp.Fragments.PortfolioLogic;
+import com.tiagofarinha.inmezzoapp.Fragments.ProfileLogic;
 import com.tiagofarinha.inmezzoapp.Models.User;
 import com.tiagofarinha.inmezzoapp.R;
 import com.tiagofarinha.inmezzoapp.Utils.LoginUtils;
@@ -139,6 +140,18 @@ public class MainActivity extends AppCompatActivity
             return;
         }
         changeFrag(fragment, R.id.menu_inicio, true);
+    }
+
+    public void goToProfilePage(User user) {
+        Fragment fragment = new ProfileLogic();
+
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("user", user);
+
+        fragment.setArguments(bundle);
+
+        fragment.setArguments(bundle);
+        changeFrag(fragment, R.id.menu_perfil, true);
     }
 
     public void changeFrag(Fragment frag, int id, boolean found) {

@@ -11,7 +11,9 @@
         android:roundIcon="@mipmap/inmezzo_icon_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainLogic.YoutubeActivity"></activity>
+        <activity
+            android:name=".MainLogic.YoutubeActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"></activity>
         <activity
             android:name=".MainLogic.MainActivity"
             android:screenOrientation="portrait" />

@@ -1,4 +1,6 @@
 package com.tiagofarinha.inmezzoapp.Interfaces;
 
-public interface Adaptable {
+import java.io.Serializable;
+
+public interface Adaptable extends Serializable {
 }

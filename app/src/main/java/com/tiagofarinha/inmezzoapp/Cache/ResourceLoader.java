@@ -31,18 +31,17 @@ public class ResourceLoader extends Thread {
     private static final int TOTAL_TASKS = 5;
     private static final int MAX_POSTS = 15;
 
-
-    public ArrayList<PicInfo> pic_info = new ArrayList<>();
-    public ArrayList<YoutubeVideo> videos = new ArrayList<>();
     // PUBLIC OBJECT LISTS
     private ArrayList<Adaptable> posts = new ArrayList<>();
     private ArrayList<Adaptable> users = new ArrayList<>();
     private ArrayList<Adaptable> portfolio = new ArrayList<>();
+    private ArrayList<Adaptable> concerts = new ArrayList<>();
+    private ArrayList<Adaptable> ensaios = new ArrayList<>();
 
     // CLASS INSTANCE
     private static ResourceLoader INSTANCE;
-    private ArrayList<Adaptable> concerts = new ArrayList<>();
-    private ArrayList<Adaptable> ensaios = new ArrayList<>();
+    public ArrayList<PicInfo> pic_info = new ArrayList<>();
+    public ArrayList<YoutubeVideo> videos = new ArrayList<>();
 
     // CONTROL VARIABLES
     private boolean active;
@@ -71,8 +70,6 @@ public class ResourceLoader extends Thread {
                 break;
             }
         }
-
-
         return aux;
     }
 

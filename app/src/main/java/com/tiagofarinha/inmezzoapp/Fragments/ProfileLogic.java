@@ -23,8 +23,13 @@ import com.tiagofarinha.inmezzoapp.Utils.LoginUtils;
 
 public class ProfileLogic extends Fragment {
 
+    private User user;
+
     private ImageView pic;
     private TextView name, age, voice;
+
+    public ProfileLogic() {
+    }
 
     @Nullable
     @Override
@@ -36,25 +41,30 @@ public class ProfileLogic extends Fragment {
         age = view.findViewById(R.id.profile_age);
         voice = view.findViewById(R.id.profile_voice);
 
-        getUser();
+        if (getArguments() == null)
+            getUser();
+        else {
+            user = (User) getArguments().getSerializable("user");
+            refreshGUI(user);
+        }
 
         return view;
     }
 
-
     public void getUser() {
         FirebaseUser aut = FirebaseAuth.getInstance().getCurrentUser();
-        FirebaseDatabase.getInstance().getReference().child("users").child(aut.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                refreshGUI(dataSnapshot.getValue(User.class));
-            }
+        if (aut != null) {
+            FirebaseDatabase.getInstance().getReference().child("users").child(aut.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    refreshGUI(dataSnapshot.getValue(User.class));
+                }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                }
+            });
+        }
     }
 
     public void refreshGUI(User user) {

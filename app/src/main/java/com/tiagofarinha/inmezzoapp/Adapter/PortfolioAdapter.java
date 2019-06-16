@@ -2,7 +2,9 @@ package com.tiagofarinha.inmezzoapp.Adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.tiagofarinha.inmezzoapp.Interfaces.Adaptable;
@@ -20,19 +22,34 @@ public class PortfolioAdapter extends DefaultAdapter {
     }
 
     @Override
-    protected void fillView(View view, Adaptable obj) {
-        Music music = (Music) obj;
+    protected View fillView(View convertView, ViewGroup parent, Adaptable obj) {
+        ViewHolder holder;
 
-        /* REFERENCES */
+        if (convertView == null) {
+            convertView = LayoutInflater.from(mContext).inflate(layoutId, parent, false);
+            holder = new ViewHolder(convertView, (Music) obj);
+            convertView.setTag(holder);
+        } else {
+            holder = (ViewHolder) convertView.getTag();
+        }
+
+        /* DATA HANDLE */
+        holder.title.setText(holder.music.getName());
+        holder.artist.setText("- " + holder.music.getArtist());
+
+        return convertView;
+    }
+
+    private class ViewHolder {
+        Music music;
 
         TextView title, artist;
 
-        title = view.findViewById(R.id.portfolio_title_show);
-        artist = view.findViewById(R.id.portfolio_artist_show);
+        public ViewHolder(View view, Music music) {
+            this.music = music;
 
-        /* DATA HANDLE */
-
-        title.setText(music.getName());
-        artist.setText("- " + music.getArtist());
+            title = view.findViewById(R.id.portfolio_title_show);
+            artist = view.findViewById(R.id.portfolio_artist_show);
+        }
     }
 }

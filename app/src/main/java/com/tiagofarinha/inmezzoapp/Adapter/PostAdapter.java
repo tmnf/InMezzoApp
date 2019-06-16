@@ -1,14 +1,19 @@
 package com.tiagofarinha.inmezzoapp.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.tiagofarinha.inmezzoapp.Cache.ResourceLoader;
 import com.tiagofarinha.inmezzoapp.Interfaces.Adaptable;
+import com.tiagofarinha.inmezzoapp.MainLogic.MainActivity;
+import com.tiagofarinha.inmezzoapp.MainLogic.YoutubeActivity;
 import com.tiagofarinha.inmezzoapp.Models.Post;
 import com.tiagofarinha.inmezzoapp.Models.YoutubeVideo;
 import com.tiagofarinha.inmezzoapp.R;
@@ -25,42 +30,83 @@ public class PostAdapter extends DefaultAdapter {
     }
 
     @Override
-    protected void fillView(View view, Adaptable obj) {
-        Post post = (Post) obj;
-        TextView post_name, post_pub_date, post_text, hidden_url;
-        /* REFERENCES */
+    protected View fillView(View convertView, ViewGroup parent, Adaptable obj) {
+        ViewHolder holder;
 
-        ImageView pic = view.findViewById(R.id.post_pic);
-        post_name = view.findViewById(R.id.post_name);
-        post_pub_date = view.findViewById(R.id.post_pub_date);
-        post_text = view.findViewById(R.id.post_message);
+        if (convertView == null) {
+            convertView = LayoutInflater.from(mContext).inflate(layoutId, parent, false);
+            holder = new ViewHolder(convertView, (Post) obj);
+            convertView.setTag(holder);
+        } else {
+            holder = (ViewHolder) convertView.getTag();
+        }
 
-        // Contains url associated to the video
-        hidden_url = view.findViewById(R.id.hidden_url);
+        holder.post = (Post) obj;
 
-        /* Data Handle */
+        LoginUtils.putInto(holder.pic, holder.post.getOwner());
+        holder.post_name.setText(holder.post.getOwner().getUser_name());
+        holder.post_pub_date.setText(holder.post.getDate_pub());
+        holder.post_text.setText(holder.post.getPost_text());
 
-        hidden_url.setVisibility(View.INVISIBLE);
-        youtubeViewHandle(view, post, hidden_url);
+        addUserListener(holder);
+        youtubeViewHandle(holder);
 
-        LoginUtils.putInto(pic, post.getOwner());
-        post_name.setText(post.getOwner().getUser_name());
-        post_pub_date.setText(post.getDate_pub());
-        post_text.setText(post.getPost_text());
+        return convertView;
     }
 
-    private void youtubeViewHandle(View postListView, Post post, TextView hidden_url) {
-        ImageView thumb = postListView.findViewById(R.id.youtube_tumbnail);
-
-        if (post.getUrl().isEmpty()) {
-            ConstraintLayout container = postListView.findViewById(R.id.post_container);
-            ImageView play = postListView.findViewById(R.id.play_button);
-            container.removeView(play);
-            container.removeView(thumb);
+    private void youtubeViewHandle(ViewHolder h) {
+        YoutubeVideo video = ResourceLoader.getInstance().findVideoWithUrl(h.post.getUrl());
+        if (video == null) {
+            h.thumb.setVisibility(View.GONE);
+            h.play.setVisibility(View.GONE);
         } else {
-            YoutubeVideo video = ResourceLoader.getInstance().findVideoWithUrl(post.getUrl());
-            if (thumb != null)
-                LoginUtils.fillView(thumb, video.getThumbnail());
+            LoginUtils.fillView(h.thumb, video.getThumbnail());
+            setListener(video.getId(), h);
+
+            h.thumb.setVisibility(View.VISIBLE);
+            h.play.setVisibility(View.VISIBLE);
         }
     }
+
+    private void setListener(final String id, ViewHolder h) {
+        h.thumb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.getInstance(), YoutubeActivity.class);
+                intent.putExtra("url", id);
+                MainActivity.getInstance().startActivity(intent);
+            }
+        });
+    }
+
+    private void addUserListener(final ViewHolder h) {
+        h.pic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MainActivity.getInstance().goToProfilePage(h.post.getOwner());
+            }
+        });
+    }
+
+    /* Caching Views */
+    private class ViewHolder {
+        TextView post_name, post_pub_date, post_text;
+        ImageView pic, thumb, play;
+        ConstraintLayout container;
+        Post post;
+
+        ViewHolder(View convertView, Post post) {
+            this.post = post;
+
+            pic = convertView.findViewById(R.id.post_pic);
+            post_name = convertView.findViewById(R.id.post_name);
+            post_pub_date = convertView.findViewById(R.id.post_pub_date);
+            post_text = convertView.findViewById(R.id.post_message);
+            thumb = convertView.findViewById(R.id.youtube_tumbnail);
+            play = convertView.findViewById(R.id.play_button);
+
+            container = convertView.findViewById(R.id.post_container);
+        }
+    }
+
 }
