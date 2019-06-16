@@ -15,6 +15,7 @@ import com.tiagofarinha.inmezzoapp.Fragments.MembersLogic;
 import com.tiagofarinha.inmezzoapp.Fragments.PortfolioLogic;
 import com.tiagofarinha.inmezzoapp.Fragments.ProfileLogic;
 import com.tiagofarinha.inmezzoapp.Fragments.ReservesLogic;
+import com.tiagofarinha.inmezzoapp.Fragments.WarningLogic;
 import com.tiagofarinha.inmezzoapp.MainLogic.MainActivity;
 import com.tiagofarinha.inmezzoapp.R;
 
@@ -66,6 +67,9 @@ public class MenuUtils {
                     break;
                 case R.id.menu_admin:
                     frag = new AdminLogic();
+                    break;
+                case R.id.menu_warnings:
+                    frag = new WarningLogic();
                     break;
                 default:
                     break;

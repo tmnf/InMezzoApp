@@ -50,6 +50,10 @@
                     android:icon="@drawable/perfil_icon"
                     android:title="@string/menu_perfil" />
                 <item
+                    android:id="@+id/menu_warnings"
+                    android:icon="@drawable/warning_icon"
+                    android:title="@string/menu_warnings" />
+                <item
                     android:id="@+id/menu_ensaios"
                     android:icon="@drawable/ensaio_icon"
                     android:title="@string/menu_ensaios" />

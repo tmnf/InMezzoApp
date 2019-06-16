@@ -26,6 +26,24 @@ import com.tiagofarinha.inmezzoapp.UserClasses.LoginHandler;
 
 public class LoginUtils {
 
+    private static LoginUtils INSTANCE;
+
+    private MenuItem login, perfil, logout, admin, ensaios, warnings;
+    private Menu menu;
+    private View header;
+
+    private TextView user_name;
+    private ImageView pic;
+
+    public LoginUtils() {
+    }
+
+    public static LoginUtils getInstance() {
+        if (INSTANCE == null)
+            INSTANCE = new LoginUtils();
+        return INSTANCE;
+    }
+
     public static void logInUser(String email, String password, LoginLogic ll) {
         new LoginHandler(email, password, ll).start();
     }
@@ -39,20 +57,23 @@ public class LoginUtils {
         }
     }
 
-    public static void updateGuiAccording(FirebaseAuth mAuth, NavigationView navigationView) {
-        Menu menu = navigationView.getMenu();
-        View header = navigationView.getHeaderView(0);
+    public void updateGuiAccording(FirebaseAuth mAuth, NavigationView navigationView) {
+        if (login == null) {
+            menu = navigationView.getMenu();
+            header = navigationView.getHeaderView(0);
+
+            login = menu.findItem(R.id.menu_login);
+            perfil = menu.findItem(R.id.menu_perfil);
+            logout = menu.findItem(R.id.menu_logout);
+            admin = menu.findItem(R.id.menu_admin);
+            ensaios = menu.findItem(R.id.menu_ensaios);
+            warnings = menu.findItem(R.id.menu_warnings);
+
+            user_name = header.findViewById(R.id.menu_name);
+            pic = header.findViewById(R.id.menu_pic);
+        }
 
         FirebaseUser currentUser = mAuth.getCurrentUser();
-
-        MenuItem login = menu.findItem(R.id.menu_login);
-        MenuItem perfil = menu.findItem(R.id.menu_perfil);
-        MenuItem logout = menu.findItem(R.id.menu_logout);
-        MenuItem admin = menu.findItem(R.id.menu_admin);
-        MenuItem ensaios = menu.findItem(R.id.menu_ensaios);
-
-        TextView user_name = header.findViewById(R.id.menu_name);
-        ImageView pic = header.findViewById(R.id.menu_pic);
 
         if (currentUser == null) {
             login.setVisible(true);
@@ -60,16 +81,17 @@ public class LoginUtils {
             logout.setVisible(false);
             admin.setVisible(false);
             ensaios.setVisible(false);
+            warnings.setVisible(false);
 
             user_name.setText("Menu");
-            pic.setVisibility(View.GONE);
-            MainActivity.getInstance().goToMainPage();
-
+            pic.setVisibility(View.INVISIBLE);
+            MenuUtils.filterMenuItem(R.id.menu_inicio);
         } else {
             login.setVisible(false);
             perfil.setVisible(true);
             logout.setVisible(true);
             ensaios.setVisible(true);
+            warnings.setVisible(true);
 
             user_name.setText(currentUser.getDisplayName());
             pic.setVisibility(View.VISIBLE);
@@ -78,7 +100,7 @@ public class LoginUtils {
         }
     }
 
-    private static void getPicAndTools(FirebaseUser currentUser, final MenuItem admin, final ImageView pic) {
+    private void getPicAndTools(FirebaseUser currentUser, final MenuItem admin, final ImageView pic) {
         FirebaseDatabase.getInstance().getReference().child("users").child(currentUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -90,7 +112,7 @@ public class LoginUtils {
                 else admin.setVisible(false);
 
                 MainActivity.getInstance().setAuxUser(user);
-                MainActivity.getInstance().goToMainPage();
+                MenuUtils.filterMenuItem(R.id.menu_inicio);
             }
 
             @Override
@@ -99,6 +121,7 @@ public class LoginUtils {
             }
         });
     }
+
 
     public static void putInto(final ImageView view, User user) {
         for (PicInfo x : ResourceLoader.getInstance().getPic_info())

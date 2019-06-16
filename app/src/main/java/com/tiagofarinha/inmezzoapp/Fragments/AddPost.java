@@ -18,11 +18,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.tiagofarinha.inmezzoapp.Cache.ResourceLoader;
-import com.tiagofarinha.inmezzoapp.MainLogic.MainActivity;
 import com.tiagofarinha.inmezzoapp.Models.Post;
 import com.tiagofarinha.inmezzoapp.Models.User;
 import com.tiagofarinha.inmezzoapp.Models.YoutubeContainer;
 import com.tiagofarinha.inmezzoapp.R;
+import com.tiagofarinha.inmezzoapp.Utils.MenuUtils;
 import com.tiagofarinha.inmezzoapp.Utils.Utils;
 
 public class AddPost extends Fragment {
@@ -102,7 +102,7 @@ public class AddPost extends Fragment {
     }
 
     public void onSuccess() {
-        MainActivity.getInstance().goToMainPage();
+        MenuUtils.filterMenuItem(R.id.menu_inicio);
         Utils.showMessage("Publicado com sucesso!");
     }
 }

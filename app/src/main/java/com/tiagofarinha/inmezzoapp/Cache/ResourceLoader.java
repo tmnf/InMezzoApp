@@ -19,6 +19,7 @@ import com.tiagofarinha.inmezzoapp.Models.Music;
 import com.tiagofarinha.inmezzoapp.Models.PicInfo;
 import com.tiagofarinha.inmezzoapp.Models.Post;
 import com.tiagofarinha.inmezzoapp.Models.User;
+import com.tiagofarinha.inmezzoapp.Models.Warning;
 import com.tiagofarinha.inmezzoapp.Models.YoutubeContainer;
 import com.tiagofarinha.inmezzoapp.Models.YoutubeVideo;
 
@@ -28,8 +29,8 @@ import java.util.Collections;
 public class ResourceLoader extends Thread {
 
     // CLASS CONSTANTS
-    private static final int TOTAL_TASKS = 5;
-    private static final int MAX_POSTS = 15;
+    private static final int TOTAL_TASKS = 7;
+    private static final int MAX_POSTS = 15, MAX_WARNINGS = 20;
 
     // PUBLIC OBJECT LISTS
     private ArrayList<Adaptable> posts = new ArrayList<>();
@@ -37,11 +38,12 @@ public class ResourceLoader extends Thread {
     private ArrayList<Adaptable> portfolio = new ArrayList<>();
     private ArrayList<Adaptable> concerts = new ArrayList<>();
     private ArrayList<Adaptable> ensaios = new ArrayList<>();
+    public ArrayList<PicInfo> pic_info = new ArrayList<>();
+    public ArrayList<YoutubeVideo> videos = new ArrayList<>();
+    private ArrayList<Adaptable> warnings = new ArrayList<>();
 
     // CLASS INSTANCE
     private static ResourceLoader INSTANCE;
-    public ArrayList<PicInfo> pic_info = new ArrayList<>();
-    public ArrayList<YoutubeVideo> videos = new ArrayList<>();
 
     // CONTROL VARIABLES
     private boolean active;
@@ -73,13 +75,34 @@ public class ResourceLoader extends Thread {
         return aux;
     }
 
-    private void loadResources() {
-        loadUsers();
-        loadPosts();
-        loadConcerts();
-        loadEnsaios();
-        loadPortfolio();
-        loadVideos();
+    public static void deleteExciding(ArrayList<Adaptable> list, int max, String type) {
+        if (list.size() > max) {
+            final DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child(type);
+            final int toDelete = list.size() - max;
+
+            ref.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    ArrayList<String> keys = new ArrayList<>();
+                    int i = toDelete;
+                    for (DataSnapshot x : dataSnapshot.getChildren()) {
+                        if (i == 0)
+                            break;
+                        keys.add(x.getKey());
+                        i--;
+                    }
+
+                    for (String x : keys) {
+                        ref.child(x).removeValue();
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+        }
     }
 
     private synchronized void taskOver() {
@@ -88,8 +111,6 @@ public class ResourceLoader extends Thread {
             notify();
         }
     }
-
-    /* ================ Load Profile Pics ================ */
 
     @Override
     public synchronized void run() {
@@ -103,6 +124,9 @@ public class ResourceLoader extends Thread {
         }
         interrupt();
     }
+
+    /* ================ Load Profile Pics ================ */
+
 
     private void loadPics() {
         StorageReference pic_ref = FirebaseStorage.getInstance().getReference().child("profile_images");
@@ -137,21 +161,40 @@ public class ResourceLoader extends Thread {
         }
     }
 
+    /* ================ Load Warning ================ */
+
+    private void loadResources() {
+        loadUsers();
+        loadPosts();
+        loadConcerts();
+        loadEnsaios();
+        loadPortfolio();
+        loadVideos();
+        loadWarnings();
+    }
+
     /* ================ Load Videos ================ */
 
-    private void loadVideos() {
-        final DatabaseReference videosRef = FirebaseDatabase.getInstance().getReference().child("videos");
+    private void loadWarnings() {
+        DatabaseReference warningsRef = FirebaseDatabase.getInstance().getReference().child("warnings");
 
-        videosRef.addValueEventListener(new ValueEventListener() {
+        warningsRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                videos.clear();
+                warnings.clear();
 
+                int i = 0;
                 for (DataSnapshot x : dataSnapshot.getChildren()) {
-                    YoutubeContainer aux = x.getValue(YoutubeContainer.class);
-
-                    addToVideoList(aux.getUrl(), aux.getId());
+                    if (i == MAX_WARNINGS)
+                        break;
+                    warnings.add(x.getValue(Warning.class));
+                    i++;
                 }
+
+                Collections.reverse(warnings);
+                deleteExciding(warnings, MAX_WARNINGS, "warnings");
+
+                taskOver();
             }
 
             @Override
@@ -192,24 +235,19 @@ public class ResourceLoader extends Thread {
 
     /* ================ Load Posts ================ */
 
-    private void loadPosts() {
-        DatabaseReference post_ref = FirebaseDatabase.getInstance().getReference().child("posts");
+    private void loadVideos() {
+        final DatabaseReference videosRef = FirebaseDatabase.getInstance().getReference().child("videos");
 
-        post_ref.addValueEventListener(new ValueEventListener() {
+        videosRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                posts.clear();
+                videos.clear();
 
-                int i = 0;
                 for (DataSnapshot x : dataSnapshot.getChildren()) {
-                    if (i > MAX_POSTS)
-                        break;
+                    YoutubeContainer aux = x.getValue(YoutubeContainer.class);
 
-                    posts.add(x.getValue(Post.class));
-                    i++;
+                    addToVideoList(aux.getUrl(), aux.getId());
                 }
-
-                Collections.reverse(posts);
 
                 taskOver();
             }
@@ -287,6 +325,36 @@ public class ResourceLoader extends Thread {
         });
     }
 
+    private void loadPosts() {
+        DatabaseReference post_ref = FirebaseDatabase.getInstance().getReference().child("posts");
+
+        post_ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                posts.clear();
+
+                int i = 0;
+                for (DataSnapshot x : dataSnapshot.getChildren()) {
+                    if (i > MAX_POSTS)
+                        break;
+
+                    posts.add(x.getValue(Post.class));
+                    i++;
+                }
+
+                Collections.reverse(posts);
+
+                deleteExciding(posts, MAX_POSTS, "posts");
+                taskOver();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
     public ArrayList<Adaptable> getPosts() {
         return posts;
     }
@@ -313,5 +381,9 @@ public class ResourceLoader extends Thread {
 
     public ArrayList<YoutubeVideo> getVideos() {
         return videos;
+    }
+
+    public ArrayList<Adaptable> getWarnings() {
+        return warnings;
     }
 }

@@ -19,6 +19,7 @@
     <string name="menu_reservas">Reservas</string>
 
     <string name="menu_candidaturas">Candidaturas</string>
+    <string name="menu_warnings"> Avisos </string>
 
     - Member Area
 
@@ -64,6 +65,7 @@
     <string name="hour"> Hora (hh:mm) </string>
     <string name="youtube"> Youtube Url </string>
     <string name="configs"> Configurações </string>
+    <string name="warning"> Aviso </string>
     <string name="descr"> Descrição </string>
     <string name="artist"> Artista/Compositor </string>
 
@@ -71,6 +73,7 @@
     <string name="music_inserir"> Adicionar Música </string>
     <string name="concert_inserir"> Adicionar Concerto </string>
     <string name="ensaio_inserir"> Adicionar Ensaio </string>
+    <string name="warning_add"> Adicionar Aviso </string>
 
     ====== Page Titles ======
 
@@ -85,5 +88,6 @@
     <string name="login_title"> Login </string>
     <string name="ensaios_title"> Ensaios </string>
     <string name="admin_title"> Admin Tools </string>
+    <string name="warning_title"> Avisos </string>
 
 </resources>

@@ -20,11 +20,13 @@ import com.tiagofarinha.inmezzoapp.Fragments.AddConcert;
 import com.tiagofarinha.inmezzoapp.Fragments.AddEnsaio;
 import com.tiagofarinha.inmezzoapp.Fragments.AddMusic;
 import com.tiagofarinha.inmezzoapp.Fragments.AddPost;
+import com.tiagofarinha.inmezzoapp.Fragments.AddWarning;
 import com.tiagofarinha.inmezzoapp.Fragments.ConcertsLogic;
 import com.tiagofarinha.inmezzoapp.Fragments.EnsaiosLogic;
 import com.tiagofarinha.inmezzoapp.Fragments.FeedLogic;
 import com.tiagofarinha.inmezzoapp.Fragments.PortfolioLogic;
 import com.tiagofarinha.inmezzoapp.Fragments.ProfileLogic;
+import com.tiagofarinha.inmezzoapp.Fragments.WarningLogic;
 import com.tiagofarinha.inmezzoapp.Models.User;
 import com.tiagofarinha.inmezzoapp.R;
 import com.tiagofarinha.inmezzoapp.Utils.LoginUtils;
@@ -72,11 +74,11 @@ public class MainActivity extends AppCompatActivity
         if (savedInstanceState == null)
             startFrag();
 
-        LoginUtils.updateGuiAccording(mAuth, navigationView);
+        LoginUtils.getInstance().updateGuiAccording(mAuth, navigationView);
     }
 
     private void startFrag() {
-        goToMainPage();
+        MenuUtils.filterMenuItem(R.id.menu_inicio);
     }
 
     private void initComps() {
@@ -105,6 +107,8 @@ public class MainActivity extends AppCompatActivity
                     changeFrag(new AddConcert(), R.id.menu_concertos, true);
                 else if (currentFrag instanceof EnsaiosLogic)
                     changeFrag(new AddEnsaio(), R.id.menu_ensaios, true);
+                else if (currentFrag instanceof WarningLogic)
+                    changeFrag(new AddWarning(), R.id.menu_warnings, true);
             }
         });
 
@@ -117,7 +121,7 @@ public class MainActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else if (!(currentFrag instanceof FeedLogic)) {
-            goToMainPage();
+            MenuUtils.filterMenuItem(R.id.menu_inicio);
         } else {
             super.onBackPressed();
         }
@@ -130,16 +134,6 @@ public class MainActivity extends AppCompatActivity
         MenuUtils.filterMenuItem(item.getItemId());
         drawer.closeDrawer(GravityCompat.START);
         return true;
-    }
-
-    public void goToMainPage() {
-        Fragment fragment = getSupportFragmentManager().findFragmentByTag("Frag:" + R.id.menu_inicio);
-
-        if (fragment == null) {
-            changeFrag(new FeedLogic(), R.id.menu_inicio, false);
-            return;
-        }
-        changeFrag(fragment, R.id.menu_inicio, true);
     }
 
     public void goToProfilePage(User user) {
@@ -176,14 +170,14 @@ public class MainActivity extends AppCompatActivity
     public boolean checkSuperPermissions() {
         Fragment f = currentFrag;
 
-        if (auxUser == null)
+        if (auxUser == null) // Normal User
             return false;
 
-        if ((f instanceof ConcertsLogic || f instanceof EnsaiosLogic || f instanceof PortfolioLogic)
+        if ((f instanceof ConcertsLogic || f instanceof EnsaiosLogic || f instanceof PortfolioLogic || f instanceof WarningLogic) // Coord or Admin User
                 && (auxUser.getUser_mode() == User.COORD || auxUser.getUser_mode() == User.ADMIN))
             return true;
 
-        return f instanceof FeedLogic;
+        return f instanceof FeedLogic; // Normal Member
 
     }
 
@@ -200,7 +194,7 @@ public class MainActivity extends AppCompatActivity
                 break;
         }
 
-        LoginUtils.updateGuiAccording(mAuth, navigationView);
+        LoginUtils.getInstance().updateGuiAccording(mAuth, navigationView);
     }
 
     private void logOut() {
