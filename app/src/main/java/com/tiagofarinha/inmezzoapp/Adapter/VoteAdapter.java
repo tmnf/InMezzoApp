@@ -8,15 +8,15 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.tiagofarinha.inmezzoapp.Interfaces.Adaptable;
-import com.tiagofarinha.inmezzoapp.Models.Concert;
+import com.tiagofarinha.inmezzoapp.Models.User;
 import com.tiagofarinha.inmezzoapp.R;
 
 import java.util.ArrayList;
 
 
-public class ConcertsAdapter extends DefaultAdapter {
+public class VoteAdapter extends DefaultAdapter {
 
-    public ConcertsAdapter(@NonNull Context mContext, ArrayList<Adaptable> objects, int layoutId) {
+    public VoteAdapter(@NonNull Context mContext, ArrayList<Adaptable> objects, int layoutId) {
         super(mContext, objects, layoutId);
     }
 
@@ -34,28 +34,19 @@ public class ConcertsAdapter extends DefaultAdapter {
 
         /* DATA HANDLE */
 
-        Concert concert = (Concert) obj;
+        User user = (User) obj;
 
-        holder.descr.setText(concert.getDescr());
-        holder.local.setText("Local: " + concert.getLocal());
-
-        String[] datetime = concert.getDate().split(",");
-
-        holder.date.setText("Dia: " + datetime[0]);
-        holder.hour.setText("Hora: " + datetime[1]);
+        holder.vote_username.setText("- " + user.getUser_name());
 
         return convertView;
     }
 
     private class ViewHolder {
 
-        TextView descr, date, hour, local;
+        TextView vote_username;
 
         public ViewHolder(View view) {
-            descr = view.findViewById(R.id.concert_title_show);
-            local = view.findViewById(R.id.concert_local_show);
-            date = view.findViewById(R.id.concert_date_show);
-            hour = view.findViewById(R.id.concert_hour_show);
+            vote_username = view.findViewById(R.id.vote_username);
         }
     }
 }

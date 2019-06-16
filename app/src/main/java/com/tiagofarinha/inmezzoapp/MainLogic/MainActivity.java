@@ -233,4 +233,8 @@ public class MainActivity extends AppCompatActivity
     public void setAuxUser(User user) {
         this.auxUser = user;
     }
+
+    public User getAuxUser() {
+        return auxUser;
+    }
 }

@@ -53,4 +53,9 @@ public class User implements Adaptable {
     public String toString() {
         return user_name + user_birthday + user_voice + user_phone + user_email + user_mode;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        return user_phone == ((User) obj).getUser_phone();
+    }
 }

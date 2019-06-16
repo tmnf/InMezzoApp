@@ -11,6 +11,7 @@ import android.widget.ListView;
 
 import com.tiagofarinha.inmezzoapp.Adapter.PostAdapter;
 import com.tiagofarinha.inmezzoapp.Cache.ResourceLoader;
+import com.tiagofarinha.inmezzoapp.MainLogic.MainActivity;
 import com.tiagofarinha.inmezzoapp.R;
 
 public class FeedLogic extends Fragment {
@@ -31,7 +32,7 @@ public class FeedLogic extends Fragment {
     }
 
     private void getPosts() {
-        postAdapter = new PostAdapter(getContext(), ResourceLoader.getInstance().getPosts(), R.layout.post_row);
+        postAdapter = new PostAdapter(MainActivity.getInstance(), ResourceLoader.getInstance().getPosts(), R.layout.post_row);
         listView.setAdapter(postAdapter);
     }
 }

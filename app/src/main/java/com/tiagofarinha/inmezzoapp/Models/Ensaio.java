@@ -21,4 +21,11 @@ public class Ensaio implements Adaptable {
     public String getDescr() {
         return descr;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        Ensaio ensaio = (Ensaio) obj;
+
+        return ensaio.getDate().equals(this.date) && ensaio.getDescr().equals(this.descr);
+    }
 }
