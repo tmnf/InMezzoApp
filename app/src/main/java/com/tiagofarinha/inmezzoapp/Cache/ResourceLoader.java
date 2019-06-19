@@ -63,6 +63,22 @@ public class ResourceLoader extends AsyncTask {
     }
 
     @Override
+    protected void onCancelled() {
+        super.onCancelled();
+
+        posts.clear();
+        users.clear();
+        portfolio.clear();
+        concerts.clear();
+        ensaios.clear();
+        pic_info.clear();
+        videos.clear();
+        warnings.clear();
+        active = false;
+        ss.ready();
+    }
+
+    @Override
     protected void onPostExecute(Object o) {
         super.onPostExecute(o);
 
@@ -397,5 +413,9 @@ public class ResourceLoader extends AsyncTask {
 
     public ArrayList<Adaptable> getWarnings() {
         return warnings;
+    }
+
+    public boolean isActive() {
+        return active;
     }
 }

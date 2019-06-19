@@ -25,6 +25,7 @@ public class FeedLogic extends Fragment {
         View view = inflater.inflate(R.layout.feed_fragment, container, false);
 
         listView = view.findViewById(R.id.post_list);
+        listView.setEmptyView(view.findViewById(R.id.failed_view));
 
         getPosts();
 
