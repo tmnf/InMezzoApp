@@ -11,7 +11,7 @@ import android.widget.ListView;
 
 import com.tiagofarinha.inmezzoapp.Adapter.WarningsAdapter;
 import com.tiagofarinha.inmezzoapp.Cache.ResourceLoader;
-import com.tiagofarinha.inmezzoapp.MainLogic.MainActivity;
+import com.tiagofarinha.inmezzoapp.MainLogic.MainMethods;
 import com.tiagofarinha.inmezzoapp.R;
 
 public class WarningLogic extends Fragment {
@@ -27,7 +27,7 @@ public class WarningLogic extends Fragment {
     }
 
     private void getWarnings(View view) {
-        WarningsAdapter wa = new WarningsAdapter(MainActivity.getInstance(), ResourceLoader.getInstance().getWarnings(), R.layout.warning_row);
+        WarningsAdapter wa = new WarningsAdapter(MainMethods.getInstance().getContext(), ResourceLoader.getInstance().getWarnings(), R.layout.warning_row);
 
         ListView listView = view.findViewById(R.id.warning_list);
         listView.setAdapter(wa);

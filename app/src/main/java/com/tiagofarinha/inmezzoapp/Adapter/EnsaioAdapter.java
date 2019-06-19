@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.tiagofarinha.inmezzoapp.Fragments.PollLogic;
 import com.tiagofarinha.inmezzoapp.Interfaces.Adaptable;
-import com.tiagofarinha.inmezzoapp.MainLogic.MainActivity;
+import com.tiagofarinha.inmezzoapp.MainLogic.MainMethods;
 import com.tiagofarinha.inmezzoapp.Models.Ensaio;
 import com.tiagofarinha.inmezzoapp.R;
 
@@ -58,7 +58,7 @@ public class EnsaioAdapter extends DefaultAdapter {
                 Bundle args = new Bundle();
                 args.putSerializable("event", ensaio);
                 frag.setArguments(args);
-                MainActivity.getInstance().changeFrag(frag, 0, true);
+                MainMethods.getInstance().changeFrag(frag, 0, true);
             }
         });
     }

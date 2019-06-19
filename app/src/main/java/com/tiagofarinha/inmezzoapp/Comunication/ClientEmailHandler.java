@@ -2,7 +2,7 @@ package com.tiagofarinha.inmezzoapp.Comunication;
 
 import android.content.Intent;
 
-import com.tiagofarinha.inmezzoapp.MainLogic.MainActivity;
+import com.tiagofarinha.inmezzoapp.MainLogic.MainMethods;
 
 public class ClientEmailHandler extends Thread {
 
@@ -25,7 +25,7 @@ public class ClientEmailHandler extends Thread {
         intent.putExtra(Intent.EXTRA_TEXT, body);
 
         intent.setType("message/rfc822");
-        MainActivity.getInstance().startActivity(Intent.createChooser(intent, "Escolha o seu cliente de email"));
+        MainMethods.getInstance().startActivity(Intent.createChooser(intent, "Escolha o seu cliente de email"));
 
         interrupt();
     }

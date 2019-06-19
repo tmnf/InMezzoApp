@@ -2,32 +2,61 @@ package com.tiagofarinha.inmezzoapp.Cache;
 
 import android.support.v4.app.Fragment;
 
-import java.util.HashMap;
-
 public class FragManager {
 
     private static FragManager INSTANCE;
-    private HashMap<String, Fragment> fragments;
+
+    private No prim, ult;
 
     public FragManager() {
-        fragments = new HashMap<>();
         INSTANCE = this;
+
+        prim = null;
+        ult = null;
     }
 
     public static FragManager getInstance() {
+        if (INSTANCE == null)
+            INSTANCE = new FragManager();
         return INSTANCE;
     }
 
-    public HashMap<String, Fragment> getFragments() {
-        return fragments;
-    }
-
     public Fragment findFragment(String tag) {
-        return fragments.get(tag);
+        No aux = prim;
+
+        boolean encontrei = false;
+        while (aux != null && !encontrei) {
+            if (aux.tag.equals(tag))
+                encontrei = true;
+            else
+                aux = aux.seg;
+        }
+
+        if (aux != null)
+            return aux.value;
+        else
+            return null;
     }
 
     public void addToFragList(Fragment frag, String tag) {
-        fragments.put(tag, frag);
+        No aux = new No();
+        aux.seg = null;
+        aux.value = frag;
+        aux.tag = tag;
+
+        if (prim == null)
+            prim = aux;
+
+        if (ult != null)
+            ult.seg = aux;
+
+        ult = aux;
+    }
+
+    private class No {
+        Fragment value;
+        No seg;
+        String tag;
     }
 
 }

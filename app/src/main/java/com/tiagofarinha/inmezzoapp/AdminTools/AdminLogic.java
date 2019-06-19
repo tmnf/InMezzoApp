@@ -11,7 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.tiagofarinha.inmezzoapp.AdminTools.UserCreation.UserCreator;
-import com.tiagofarinha.inmezzoapp.MainLogic.MainActivity;
+import com.tiagofarinha.inmezzoapp.MainLogic.MainMethods;
 import com.tiagofarinha.inmezzoapp.R;
 import com.tiagofarinha.inmezzoapp.Utils.Utils;
 
@@ -68,7 +68,7 @@ public class AdminLogic extends Fragment {
         add_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MainActivity.getInstance().closeKeyboard();
+                MainMethods.getInstance().closeKeyboard();
                 createUser(fields);
             }
         });

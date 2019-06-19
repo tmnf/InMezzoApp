@@ -11,7 +11,7 @@ import android.widget.ListView;
 
 import com.tiagofarinha.inmezzoapp.Adapter.PortfolioAdapter;
 import com.tiagofarinha.inmezzoapp.Cache.ResourceLoader;
-import com.tiagofarinha.inmezzoapp.MainLogic.MainActivity;
+import com.tiagofarinha.inmezzoapp.MainLogic.MainMethods;
 import com.tiagofarinha.inmezzoapp.R;
 
 public class PortfolioLogic extends Fragment {
@@ -32,7 +32,7 @@ public class PortfolioLogic extends Fragment {
     }
 
     private void getPortfolio() {
-        portfolioAdapter = new PortfolioAdapter(MainActivity.getInstance(), ResourceLoader.getInstance().getPortfolio(), R.layout.portfolio_row);
+        portfolioAdapter = new PortfolioAdapter(MainMethods.getInstance().getContext(), ResourceLoader.getInstance().getPortfolio(), R.layout.portfolio_row);
         listView.setAdapter(portfolioAdapter);
     }
 }

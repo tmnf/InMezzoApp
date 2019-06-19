@@ -18,7 +18,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 import com.tiagofarinha.inmezzoapp.Cache.ResourceLoader;
 import com.tiagofarinha.inmezzoapp.Fragments.LoginLogic;
-import com.tiagofarinha.inmezzoapp.MainLogic.MainActivity;
+import com.tiagofarinha.inmezzoapp.MainLogic.MainMethods;
 import com.tiagofarinha.inmezzoapp.Models.PicInfo;
 import com.tiagofarinha.inmezzoapp.Models.User;
 import com.tiagofarinha.inmezzoapp.R;
@@ -111,7 +111,7 @@ public class LoginUtils {
                     admin.setVisible(true);
                 else admin.setVisible(false);
 
-                MainActivity.getInstance().setAuxUser(user);
+                MainMethods.getInstance().setAuxUser(user);
                 MenuUtils.filterMenuItem(R.id.menu_inicio);
             }
 

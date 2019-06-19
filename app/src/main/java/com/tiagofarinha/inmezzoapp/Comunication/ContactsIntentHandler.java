@@ -3,7 +3,7 @@ package com.tiagofarinha.inmezzoapp.Comunication;
 import android.content.Intent;
 import android.net.Uri;
 
-import com.tiagofarinha.inmezzoapp.MainLogic.MainActivity;
+import com.tiagofarinha.inmezzoapp.MainLogic.MainMethods;
 
 public class ContactsIntentHandler extends Thread {
 
@@ -33,7 +33,7 @@ public class ContactsIntentHandler extends Thread {
 
     private void initPhoneCall() {
         Intent intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", contact, null));
-        MainActivity.getInstance().startActivity(intent);
+        MainMethods.getInstance().startActivity(intent);
     }
 
     private void initEmail() {
@@ -43,7 +43,7 @@ public class ContactsIntentHandler extends Thread {
         intent.putExtra(Intent.EXTRA_EMAIL, email);
         intent.setType("message/rfc822");
 
-        MainActivity.getInstance().startActivity(Intent.createChooser(intent, "Escolha o Seu Cliente de Email"));
+        MainMethods.getInstance().startActivity(Intent.createChooser(intent, "Escolha o Seu Cliente de Email"));
     }
 
 

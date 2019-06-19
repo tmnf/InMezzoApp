@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.tiagofarinha.inmezzoapp.MainLogic.MainActivity;
+import com.tiagofarinha.inmezzoapp.MainLogic.MainMethods;
 import com.tiagofarinha.inmezzoapp.R;
 import com.tiagofarinha.inmezzoapp.Utils.LoginUtils;
 import com.tiagofarinha.inmezzoapp.Utils.Utils;
@@ -38,7 +38,7 @@ public class LoginLogic extends Fragment {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MainActivity.getInstance().closeKeyboard();
+                MainMethods.getInstance().closeKeyboard();
                 tryLogin(email.getText().toString(), pass.getText().toString());
             }
         });
@@ -57,7 +57,7 @@ public class LoginLogic extends Fragment {
 
     public void checkLoginSucess(boolean success, String message) {
         if (success)
-            MainActivity.getInstance().handleLog(1);
+            MainMethods.getInstance().handleLog(1);
         else
             Utils.showMessage("Erro: " + message);
     }

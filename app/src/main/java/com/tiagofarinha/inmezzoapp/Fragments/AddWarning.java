@@ -13,7 +13,7 @@ import android.widget.EditText;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.tiagofarinha.inmezzoapp.MainLogic.MainActivity;
+import com.tiagofarinha.inmezzoapp.MainLogic.MainMethods;
 import com.tiagofarinha.inmezzoapp.Models.Warning;
 import com.tiagofarinha.inmezzoapp.R;
 import com.tiagofarinha.inmezzoapp.Utils.DateUtils;
@@ -49,7 +49,7 @@ public class AddWarning extends Fragment {
     }
 
     private void addWarning(String text) {
-        Warning warning = new Warning(text, DateUtils.getCurrentDate(), MainActivity.getInstance().getAuxUser());
+        Warning warning = new Warning(text, DateUtils.getCurrentDate(), MainMethods.getInstance().getAuxUser());
 
         DatabaseReference warningRef = FirebaseDatabase.getInstance().getReference().child("warnings");
         warningRef.push().setValue(warning).addOnSuccessListener(new OnSuccessListener<Void>() {

@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.tiagofarinha.inmezzoapp.Cache.ResourceLoader;
 import com.tiagofarinha.inmezzoapp.Interfaces.Adaptable;
-import com.tiagofarinha.inmezzoapp.MainLogic.MainActivity;
+import com.tiagofarinha.inmezzoapp.MainLogic.MainMethods;
 import com.tiagofarinha.inmezzoapp.MainLogic.YoutubeActivity;
 import com.tiagofarinha.inmezzoapp.Models.Post;
 import com.tiagofarinha.inmezzoapp.Models.YoutubeVideo;
@@ -72,9 +72,9 @@ public class PostAdapter extends DefaultAdapter {
         h.thumb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.getInstance(), YoutubeActivity.class);
+                Intent intent = new Intent(getContext(), YoutubeActivity.class);
                 intent.putExtra("url", id);
-                MainActivity.getInstance().startActivity(intent);
+                getContext().startActivity(intent);
             }
         });
     }
@@ -83,7 +83,7 @@ public class PostAdapter extends DefaultAdapter {
         h.pic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MainActivity.getInstance().goToProfilePage(h.post.getOwner());
+                MainMethods.getInstance().goToProfilePage(h.post.getOwner());
             }
         });
     }

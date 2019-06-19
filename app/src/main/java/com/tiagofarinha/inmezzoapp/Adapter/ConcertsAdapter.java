@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.tiagofarinha.inmezzoapp.Fragments.PollLogic;
 import com.tiagofarinha.inmezzoapp.Interfaces.Adaptable;
-import com.tiagofarinha.inmezzoapp.MainLogic.MainActivity;
+import com.tiagofarinha.inmezzoapp.MainLogic.MainMethods;
 import com.tiagofarinha.inmezzoapp.Models.Concert;
 import com.tiagofarinha.inmezzoapp.R;
 
@@ -48,7 +48,7 @@ public class ConcertsAdapter extends DefaultAdapter {
         holder.date.setText("Dia: " + datetime[0]);
         holder.hour.setText("Hora: " + datetime[1]);
 
-        if (MainActivity.getInstance().isLoggedIn())
+        if (MainMethods.getInstance().isLoggedIn())
             addListener(holder, convertView, concert);
 
         return convertView;
@@ -62,7 +62,7 @@ public class ConcertsAdapter extends DefaultAdapter {
                 Bundle args = new Bundle();
                 args.putSerializable("event", concert);
                 frag.setArguments(args);
-                MainActivity.getInstance().changeFrag(frag, 0, true);
+                MainMethods.getInstance().changeFrag(frag, 0, true);
             }
         });
     }

@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.tiagofarinha.inmezzoapp.Interfaces.Adaptable;
-import com.tiagofarinha.inmezzoapp.MainLogic.MainActivity;
+import com.tiagofarinha.inmezzoapp.MainLogic.MainMethods;
 import com.tiagofarinha.inmezzoapp.Models.User;
 import com.tiagofarinha.inmezzoapp.R;
 import com.tiagofarinha.inmezzoapp.Utils.DateUtils;
@@ -60,7 +60,7 @@ public class UserAdapter extends DefaultAdapter {
         h.user_pic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MainActivity.getInstance().goToProfilePage(h.user);
+                MainMethods.getInstance().goToProfilePage(h.user);
             }
         });
     }

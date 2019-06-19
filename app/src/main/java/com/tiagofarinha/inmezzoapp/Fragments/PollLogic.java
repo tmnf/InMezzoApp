@@ -19,7 +19,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.tiagofarinha.inmezzoapp.Adapter.VoteAdapter;
 import com.tiagofarinha.inmezzoapp.Interfaces.Adaptable;
-import com.tiagofarinha.inmezzoapp.MainLogic.MainActivity;
+import com.tiagofarinha.inmezzoapp.MainLogic.MainMethods;
 import com.tiagofarinha.inmezzoapp.Models.Concert;
 import com.tiagofarinha.inmezzoapp.Models.Ensaio;
 import com.tiagofarinha.inmezzoapp.Models.Vote;
@@ -30,14 +30,11 @@ import java.util.ArrayList;
 public class PollLogic extends Fragment {
 
     public static final int GO = 0, DONT = 1;
-    public static final int DIDNT_VOTE = 3;
 
     private Adaptable event;
     private DatabaseReference votes_ref;
 
     private int go, dont;
-
-    private View view;
 
     private DataSnapshot voteSnap;
     private Vote vote;
@@ -55,7 +52,7 @@ public class PollLogic extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.poll_fragment, container, false);
+        View view = inflater.inflate(R.layout.poll_fragment, container, false);
 
         event = (Adaptable) getArguments().getSerializable("event");
         votes_ref = FirebaseDatabase.getInstance().getReference().child("votes");
@@ -91,7 +88,7 @@ public class PollLogic extends Fragment {
         return view;
     }
 
-    private void getComps(View view) {
+    private void getComps() {
         goNum.setText(go + "");
         dontNum.setText(dont + "");
 
@@ -117,8 +114,8 @@ public class PollLogic extends Fragment {
                 dont.add(x.getUser());
         }
 
-        goAdap = new VoteAdapter(MainActivity.getInstance(), go, R.layout.vote_row);
-        dontAdap = new VoteAdapter(MainActivity.getInstance(), dont, R.layout.vote_row);
+        goAdap = new VoteAdapter(MainMethods.getInstance().getContext(), go, R.layout.vote_row);
+        dontAdap = new VoteAdapter(MainMethods.getInstance().getContext(), dont, R.layout.vote_row);
 
         goList.setAdapter(goAdap);
         dontList.setAdapter(dontAdap);
@@ -161,7 +158,7 @@ public class PollLogic extends Fragment {
                     }
                 }
 
-                getComps(view);
+                getComps();
             }
 
             @Override
@@ -180,7 +177,7 @@ public class PollLogic extends Fragment {
 
             votes.add(vote);
 
-            if (vote.getUser().equals(MainActivity.getInstance().getAuxUser())) {
+            if (vote.getUser().equals(MainMethods.getInstance().getAuxUser())) {
                 PollLogic.this.voteSnap = x;
                 PollLogic.this.vote = vote;
             }
@@ -195,7 +192,7 @@ public class PollLogic extends Fragment {
                 return;
         }
 
-        votes_ref.push().setValue(new Vote(event, MainActivity.getInstance().getAuxUser(), value));
+        votes_ref.push().setValue(new Vote(event, MainMethods.getInstance().getAuxUser(), value));
     }
 
     private void removeVote() {

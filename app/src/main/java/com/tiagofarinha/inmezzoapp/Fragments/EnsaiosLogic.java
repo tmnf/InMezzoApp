@@ -11,13 +11,12 @@ import android.widget.ListView;
 
 import com.tiagofarinha.inmezzoapp.Adapter.EnsaioAdapter;
 import com.tiagofarinha.inmezzoapp.Cache.ResourceLoader;
-import com.tiagofarinha.inmezzoapp.MainLogic.MainActivity;
+import com.tiagofarinha.inmezzoapp.MainLogic.MainMethods;
 import com.tiagofarinha.inmezzoapp.R;
 
 public class EnsaiosLogic extends Fragment {
 
     private ListView listView;
-    private EnsaioAdapter ensaiosAdapter;
 
     @Nullable
     @Override
@@ -32,7 +31,7 @@ public class EnsaiosLogic extends Fragment {
     }
 
     private void getEnsaios() {
-        ensaiosAdapter = new EnsaioAdapter(MainActivity.getInstance(), ResourceLoader.getInstance().getEnsaios(), R.layout.ensaio_row);
+        EnsaioAdapter ensaiosAdapter = new EnsaioAdapter(MainMethods.getInstance().getContext(), ResourceLoader.getInstance().getEnsaios(), R.layout.ensaio_row);
         listView.setAdapter(ensaiosAdapter);
     }
 }

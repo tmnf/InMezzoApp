@@ -1,6 +1,7 @@
 package com.tiagofarinha.inmezzoapp.Cache;
 
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -26,11 +27,13 @@ import com.tiagofarinha.inmezzoapp.Models.YoutubeVideo;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class ResourceLoader extends Thread {
+public class ResourceLoader extends AsyncTask {
 
     // CLASS CONSTANTS
     private static final int TOTAL_TASKS = 7;
     private static final int MAX_POSTS = 15, MAX_WARNINGS = 20;
+
+    private SplashScreen ss;
 
     // PUBLIC OBJECT LISTS
     private ArrayList<Adaptable> posts = new ArrayList<>();
@@ -49,12 +52,40 @@ public class ResourceLoader extends Thread {
     private boolean active;
     private int tasks_remaining, pics_remaining;
 
-    public ResourceLoader() {
+    public ResourceLoader(SplashScreen ss) {
         tasks_remaining = TOTAL_TASKS;
 
         INSTANCE = this;
 
+        this.ss = ss;
+
         loadResources();
+    }
+
+    @Override
+    protected void onPostExecute(Object o) {
+        super.onPostExecute(o);
+
+        active = true;
+        ss.ready();
+        ss = null;
+    }
+
+    @Override
+    protected synchronized Object doInBackground(Object[] objects) {
+        try {
+            while (tasks_remaining > 0)
+                wait();
+
+            loadPics();
+
+            while (pics_remaining != 0)
+                wait();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
     public static ResourceLoader getInstance() {
@@ -112,19 +143,6 @@ public class ResourceLoader extends Thread {
         }
     }
 
-    @Override
-    public synchronized void run() {
-        try {
-            while (tasks_remaining > 0)
-                wait();
-
-            loadPics();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        interrupt();
-    }
-
     /* ================ Load Profile Pics ================ */
 
 
@@ -149,16 +167,10 @@ public class ResourceLoader extends Thread {
         }
     }
 
-    private void addPic(Uri uri, int num) {
-        synchronized (pic_info) {
-            pic_info.add(new PicInfo(uri, num));
-            pics_remaining--;
-
-            if (pics_remaining == 0) {
-                active = true;
-                SplashScreen.getInstance().ready();
-            }
-        }
+    private synchronized void addPic(Uri uri, int num) {
+        pic_info.add(new PicInfo(uri, num));
+        pics_remaining--;
+        notify();
     }
 
     /* ================ Load Warning ================ */

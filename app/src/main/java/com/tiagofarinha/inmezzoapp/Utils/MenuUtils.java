@@ -16,15 +16,12 @@ import com.tiagofarinha.inmezzoapp.Fragments.PortfolioLogic;
 import com.tiagofarinha.inmezzoapp.Fragments.ProfileLogic;
 import com.tiagofarinha.inmezzoapp.Fragments.ReservesLogic;
 import com.tiagofarinha.inmezzoapp.Fragments.WarningLogic;
-import com.tiagofarinha.inmezzoapp.MainLogic.MainActivity;
+import com.tiagofarinha.inmezzoapp.MainLogic.MainMethods;
 import com.tiagofarinha.inmezzoapp.R;
 
 public class MenuUtils {
 
     public static void filterMenuItem(int id) {
-
-        MainActivity m = MainActivity.getInstance();
-
         Fragment frag = FragManager.getInstance().findFragment("Frag:" + id);
 
         if (frag == null) {
@@ -57,7 +54,7 @@ public class MenuUtils {
                     frag = new LoginLogic();
                     break;
                 case R.id.menu_logout:
-                    m.handleLog(MainActivity.MODE_LOGOUT);
+                    MainMethods.getInstance().handleLog(MainMethods.MODE_LOGOUT);
                     return;
                 case R.id.menu_perfil:
                     frag = new ProfileLogic();
@@ -74,9 +71,9 @@ public class MenuUtils {
                 default:
                     break;
             }
-            m.changeFrag(frag, id, false);
+            MainMethods.getInstance().changeFrag(frag, id, false);
         }
-        m.changeFrag(frag, id, true);
+        MainMethods.getInstance().changeFrag(frag, id, true);
     }
 
 
