@@ -231,4 +231,8 @@ public class MainActivity extends AppCompatActivity
     public User getAuxUser() {
         return auxUser;
     }
+
+    public boolean isLoggedIn() {
+        return auxUser != null;
+    }
 }

@@ -19,4 +19,5 @@ public class AboutLogic extends Fragment {
 
         return view;
     }
+
 }

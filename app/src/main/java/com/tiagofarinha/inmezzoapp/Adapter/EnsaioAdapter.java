@@ -56,7 +56,7 @@ public class EnsaioAdapter extends DefaultAdapter {
             public void onClick(View v) {
                 Fragment frag = new PollLogic();
                 Bundle args = new Bundle();
-                args.putSerializable("ensaio", ensaio);
+                args.putSerializable("event", ensaio);
                 frag.setArguments(args);
                 MainActivity.getInstance().changeFrag(frag, 0, true);
             }

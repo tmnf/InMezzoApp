@@ -20,6 +20,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.tiagofarinha.inmezzoapp.Adapter.VoteAdapter;
 import com.tiagofarinha.inmezzoapp.Interfaces.Adaptable;
 import com.tiagofarinha.inmezzoapp.MainLogic.MainActivity;
+import com.tiagofarinha.inmezzoapp.Models.Concert;
 import com.tiagofarinha.inmezzoapp.Models.Ensaio;
 import com.tiagofarinha.inmezzoapp.Models.Vote;
 import com.tiagofarinha.inmezzoapp.R;
@@ -31,7 +32,7 @@ public class PollLogic extends Fragment {
     public static final int GO = 0, DONT = 1;
     public static final int DIDNT_VOTE = 3;
 
-    private Ensaio ensaio;
+    private Adaptable event;
     private DatabaseReference votes_ref;
 
     private int go, dont;
@@ -56,7 +57,7 @@ public class PollLogic extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.poll_fragment, container, false);
 
-        ensaio = (Ensaio) getArguments().getSerializable("ensaio");
+        event = (Adaptable) getArguments().getSerializable("event");
         votes_ref = FirebaseDatabase.getInstance().getReference().child("votes");
 
         votes = new ArrayList<>();
@@ -145,20 +146,18 @@ public class PollLogic extends Fragment {
                 go = 0;
                 dont = 0;
                 votes.clear();
+
+                Adaptable localEvent;
+
                 for (DataSnapshot x : dataSnapshot.getChildren()) {
                     Vote vote = x.getValue(Vote.class);
-                    if (vote.getEnsaio().equals(PollLogic.this.ensaio)) {
-                        if (vote.getValue() == GO)
-                            go++;
-                        else
-                            dont++;
 
-                        votes.add(vote);
-
-                        if (vote.getUser().equals(MainActivity.getInstance().getAuxUser())) {
-                            PollLogic.this.voteSnap = x;
-                            PollLogic.this.vote = vote;
-                        }
+                    if (event instanceof Ensaio && vote.getEnsaio() != null) {
+                        localEvent = vote.getEnsaio();
+                        handleVote(localEvent, vote, x);
+                    } else if ((event instanceof Concert && vote.getConcert() != null)) {
+                        localEvent = vote.getConcert();
+                        handleVote(localEvent, vote, x);
                     }
                 }
 
@@ -172,6 +171,22 @@ public class PollLogic extends Fragment {
         });
     }
 
+    private void handleVote(Adaptable localEvent, Vote vote, DataSnapshot x) {
+        if (localEvent.equals(PollLogic.this.event)) {
+            if (vote.getValue() == GO)
+                go++;
+            else
+                dont++;
+
+            votes.add(vote);
+
+            if (vote.getUser().equals(MainActivity.getInstance().getAuxUser())) {
+                PollLogic.this.voteSnap = x;
+                PollLogic.this.vote = vote;
+            }
+        }
+    }
+
     private void addVote(int value) {
         if (voteSnap != null) {
             int voteValue = vote.getValue();
@@ -180,7 +195,7 @@ public class PollLogic extends Fragment {
                 return;
         }
 
-        votes_ref.push().setValue(new Vote(ensaio, MainActivity.getInstance().getAuxUser(), value));
+        votes_ref.push().setValue(new Vote(event, MainActivity.getInstance().getAuxUser(), value));
     }
 
     private void removeVote() {
@@ -188,5 +203,4 @@ public class PollLogic extends Fragment {
         voteSnap = null;
         vote = null;
     }
-
 }

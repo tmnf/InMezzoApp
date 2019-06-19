@@ -1,10 +1,13 @@
 package com.tiagofarinha.inmezzoapp.Fragments;
 
+import android.annotation.SuppressLint;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -23,10 +26,8 @@ import com.tiagofarinha.inmezzoapp.Utils.LoginUtils;
 
 public class ProfileLogic extends Fragment {
 
-    private User user;
-
     private ImageView pic;
-    private TextView name, age, voice;
+    private TextView name, age, voice, settings;
 
     public ProfileLogic() {
     }
@@ -41,10 +42,12 @@ public class ProfileLogic extends Fragment {
         age = view.findViewById(R.id.profile_age);
         voice = view.findViewById(R.id.profile_voice);
 
+        settings = view.findViewById(R.id.profile_configs);
+
         if (getArguments() == null)
             getUser();
         else {
-            user = (User) getArguments().getSerializable("user");
+            User user = (User) getArguments().getSerializable("user");
             refreshGUI(user);
         }
 
@@ -72,6 +75,26 @@ public class ProfileLogic extends Fragment {
         name.setText(user.getUser_name());
         age.setText("Idade: " + DateUtils.getAge(user.getUser_birthday()) + " Anos");
         voice.setText("Voz: " + user.getUser_voice());
+
+        addConfigListener();
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    private void addConfigListener() {
+        settings.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        settings.setTextColor(Color.BLACK);
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        settings.setTextColor(Color.WHITE);
+                        break;
+                }
+                return true;
+            }
+        });
     }
 
 }

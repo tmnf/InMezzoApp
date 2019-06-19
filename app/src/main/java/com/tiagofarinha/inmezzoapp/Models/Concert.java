@@ -26,4 +26,11 @@ public class Concert implements Adaptable {
     public String getDescr() {
         return descr;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        Concert concert = (Concert) obj;
+
+        return concert.getDate().equals(date) && concert.getDescr().equals(descr) && concert.getLocal().equals(local);
+    }
 }

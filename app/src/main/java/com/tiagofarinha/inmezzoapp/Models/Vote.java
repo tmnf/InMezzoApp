@@ -5,6 +5,7 @@ import com.tiagofarinha.inmezzoapp.Interfaces.Adaptable;
 public class Vote implements Adaptable {
 
     private Ensaio ensaio;
+    private Concert concert;
     private User user;
 
     private int value;
@@ -12,14 +13,22 @@ public class Vote implements Adaptable {
     public Vote() {
     }
 
-    public Vote(Ensaio ensaio, User user, int value) {
-        this.ensaio = ensaio;
+    public Vote(Adaptable event, User user, int value) {
+        if (event instanceof Ensaio)
+            this.ensaio = (Ensaio) event;
+        else
+            this.concert = (Concert) event;
+
         this.user = user;
         this.value = value;
     }
 
     public Ensaio getEnsaio() {
         return ensaio;
+    }
+
+    public Concert getConcert() {
+        return concert;
     }
 
     public User getUser() {
