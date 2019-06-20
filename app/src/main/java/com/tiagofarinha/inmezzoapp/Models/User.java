@@ -4,22 +4,22 @@ import com.tiagofarinha.inmezzoapp.Interfaces.Adaptable;
 
 public class User implements Adaptable {
 
-    public static final int USER = 0, ADMIN = 1, COORD = 2;
+    public static final int ADMIN = 1, COORD = 2;
 
-    private String user_name, user_birthday, user_voice, user_email, user_pic;
+    private String user_name, user_birthday, user_voice, user_pic, user_bio;
     private int user_phone, user_mode;
 
     public User() {
     }
 
-    public User(String user_name, String user_birthday, String user_voice, int user_phone, String user_email, String user_pic, int user_mode) {
+    public User(String user_name, String user_birthday, String user_voice, int user_phone, String user_pic, int user_mode) {
         this.user_name = user_name;
         this.user_birthday = user_birthday;
         this.user_voice = user_voice;
         this.user_phone = user_phone;
-        this.user_email = user_email;
         this.user_pic = user_pic;
         this.user_mode = user_mode;
+        this.user_bio = "";
     }
 
     public String getUser_name() {
@@ -34,8 +34,8 @@ public class User implements Adaptable {
         return user_voice;
     }
 
-    public String getUser_email() {
-        return user_email;
+    public String getUser_bio() {
+        return user_bio;
     }
 
     public String getUser_pic() {
@@ -51,7 +51,7 @@ public class User implements Adaptable {
     }
 
     public String toString() {
-        return user_name + user_birthday + user_voice + user_phone + user_email + user_mode;
+        return user_name + user_birthday + user_voice + user_phone + user_mode;
     }
 
     @Override

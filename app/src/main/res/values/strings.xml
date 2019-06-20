@@ -53,6 +53,8 @@
     <string name="reserve_button"> Reservar </string>
     <string name="post_button"> Postar </string>
     <string name="add_button"> Adicionar </string>
+    <string name="password_reset_button"> Alterar Palavra-Passe </string>
+    <string name="save_button"> Guardar </string>
 
     ====== Form Info ======
 
@@ -68,6 +70,7 @@
     <string name="warning"> Aviso </string>
     <string name="descr"> Descrição </string>
     <string name="artist"> Artista/Compositor </string>
+    <string name="bio"> Biografia </string>
 
     <string name="post_inserir"> Inserir Post </string>
     <string name="music_inserir"> Adicionar Música </string>
@@ -89,5 +92,9 @@
     <string name="ensaios_title"> Ensaios </string>
     <string name="admin_title"> Admin Tools </string>
     <string name="warning_title"> Avisos </string>
+
+    ====== Warnings ======
+
+    <string name="connection_failed"> Ups. Parece haver um problema com a sua conexão à rede. Pode usar a aplicação na mesma, mas algumas paginas poderão estar em branco. Por favor, ligue os dados moveis ou o wifi e reinicie a aplicação. </string>
 
 </resources>

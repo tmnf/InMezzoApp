@@ -30,33 +30,32 @@ public class UserCreator extends Thread {
 
     public void run() {
         try {
-            createClient(email, pass, name, birth, voice, Integer.parseInt(phone), Integer.parseInt(mode));
+            createClient();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     // Creates User in Database
-    public void createClient(final String email, final String password, final String user_name, String user_birthday, String user_voice, int user_phone, int mode) {
+    private void createClient() {
         final FirebaseAuth auth = FirebaseAuth.getInstance();
-        final FirebaseDatabase myRef = FirebaseDatabase.getInstance();
 
-        String pic_url = user_phone + ".jpg";
+        String pic_url = phone + ".jpg";
 
-        final User us = new User(user_name, user_birthday, user_voice, user_phone, email, pic_url, mode);
+        final User us = new User(name, birth, voice, Integer.parseInt(phone), pic_url, Integer.parseInt(mode));
 
-        auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+        auth.createUserWithEmailAndPassword(email, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                createObject(email, user_name, us, task.getResult().getUser());
+                createObject(us, task.getResult().getUser());
             }
         });
 
     }
 
     // Associates Auth User To Model User
-    private void createObject(String email, String user_name, User us, FirebaseUser user) {
-        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder().setDisplayName(user_name).build();
+    private void createObject(User us, FirebaseUser user) {
+        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder().setDisplayName(name).build();
         user.updateProfile(profileUpdates);
 
         FirebaseDatabase myRef = FirebaseDatabase.getInstance();
