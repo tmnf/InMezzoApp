@@ -33,23 +33,27 @@ public class AddWarning extends Fragment {
     }
 
     private void getComps(View view) {
-        final EditText text = view.findViewById(R.id.warning_add_text);
+        final EditText text, title;
+
+        text = view.findViewById(R.id.warning_add_text);
+        title = view.findViewById(R.id.warning_add_title_field);
+
         Button warningButton = view.findViewById(R.id.warning_button);
 
         warningButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (text.getText().toString().isEmpty()) {
-                    Utils.showMessage("Campo vazio!");
+                if (text.getText().toString().isEmpty() || title.getText().toString().isEmpty()) {
+                    Utils.showMessage("Campos vazio!");
                     return;
                 }
-                addWarning(text.getText().toString());
+                addWarning(title.getText().toString(), text.getText().toString());
             }
         });
     }
 
-    private void addWarning(String text) {
-        Warning warning = new Warning(text, DateUtils.getCurrentDate(), MainMethods.getInstance().getAuxUser());
+    private void addWarning(String title, String text) {
+        Warning warning = new Warning(title, text, DateUtils.getCurrentDate(), MainMethods.getInstance().getAuxUser());
 
         DatabaseReference warningRef = FirebaseDatabase.getInstance().getReference().child("warnings");
         warningRef.push().setValue(warning).addOnSuccessListener(new OnSuccessListener<Void>() {

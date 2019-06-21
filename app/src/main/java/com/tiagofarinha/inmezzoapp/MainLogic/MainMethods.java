@@ -68,6 +68,10 @@ public class MainMethods {
         /* Starts Initial Fragment */
         startFrag();
 
+        updateGui();
+    }
+
+    public void updateGui() {
         LoginUtils.getInstance().updateGuiAccording(mAuth, navigationView);
     }
 

@@ -72,8 +72,8 @@ public class MenuUtils {
                     break;
             }
             MainMethods.getInstance().changeFrag(frag, id, false);
-        }
-        MainMethods.getInstance().changeFrag(frag, id, true);
+        } else
+            MainMethods.getInstance().changeFrag(frag, id, true);
     }
 
 

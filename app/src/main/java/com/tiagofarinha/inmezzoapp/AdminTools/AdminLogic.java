@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.tiagofarinha.inmezzoapp.AdminTools.UserCreation.AutoUserCreator;
 import com.tiagofarinha.inmezzoapp.AdminTools.UserCreation.UserCreator;
 import com.tiagofarinha.inmezzoapp.MainLogic.MainMethods;
 import com.tiagofarinha.inmezzoapp.R;
@@ -70,6 +71,15 @@ public class AdminLogic extends Fragment {
             public void onClick(View v) {
                 MainMethods.getInstance().closeKeyboard();
                 createUser(fields);
+            }
+        });
+
+        add_button.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                new AutoUserCreator().execute();
+                Utils.showMessage("Robot de Inserção de Utilizadores Iniciado!");
+                return true;
             }
         });
     }

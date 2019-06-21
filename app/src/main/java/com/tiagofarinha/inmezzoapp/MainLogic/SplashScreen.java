@@ -37,6 +37,5 @@ public class SplashScreen extends AppCompatActivity {
                 rl.cancel(true);
             }
         }, TIMEOUT);
-
     }
 }

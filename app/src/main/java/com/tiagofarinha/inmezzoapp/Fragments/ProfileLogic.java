@@ -28,7 +28,7 @@ import com.tiagofarinha.inmezzoapp.Utils.LoginUtils;
 public class ProfileLogic extends Fragment {
 
     private ImageView pic;
-    private TextView name, age, voice, settings;
+    private TextView name, age, voice, settings, bio;
 
     public ProfileLogic() {
     }
@@ -42,12 +42,15 @@ public class ProfileLogic extends Fragment {
         name = view.findViewById(R.id.profile_name);
         age = view.findViewById(R.id.profile_age);
         voice = view.findViewById(R.id.profile_voice);
+        bio = view.findViewById(R.id.profile_bio);
 
         settings = view.findViewById(R.id.profile_configs);
 
         if (getArguments() == null)
             getUser();
         else {
+            settings.setVisibility(View.GONE);
+
             User user = (User) getArguments().getSerializable("user");
             refreshGUI(user);
         }
@@ -76,6 +79,7 @@ public class ProfileLogic extends Fragment {
         name.setText(user.getUser_name());
         age.setText("Idade: " + DateUtils.getAge(user.getUser_birthday()) + " Anos");
         voice.setText("Voz: " + user.getUser_voice());
+        bio.setText(user.getUser_bio());
 
         addConfigListener();
     }

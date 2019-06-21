@@ -79,6 +79,7 @@
                 android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textSize="24sp"
+                android:shadowColor="#111"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

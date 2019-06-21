@@ -36,6 +36,7 @@ public class WarningsAdapter extends DefaultAdapter {
 
         Warning warning = (Warning) obj;
 
+        holder.warning_title.setText(warning.getTitle());
         holder.warning_text.setText(warning.getText());
         holder.warning_user.setText(warning.getUser().getUser_name() + ", " + warning.getPub_date().split(" ")[0]);
 
@@ -43,10 +44,11 @@ public class WarningsAdapter extends DefaultAdapter {
     }
 
     private class ViewHolder {
-        TextView warning_text, warning_user;
+        TextView warning_text, warning_title, warning_user;
 
         public ViewHolder(View view) {
             warning_text = view.findViewById(R.id.warning_text);
+            warning_title = view.findViewById(R.id.warning_title);
             warning_user = view.findViewById(R.id.warning_user);
         }
     }

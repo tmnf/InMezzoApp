@@ -1,6 +1,5 @@
 package com.tiagofarinha.inmezzoapp.MainLogic;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.youtube.player.YouTubeBaseActivity;
@@ -25,8 +24,7 @@ public class YoutubeActivity extends YouTubeBaseActivity {
 
     @Override
     public void onBackPressed() {
-        Intent it = new Intent(getApplicationContext(), MainActivity.class);
-        startActivity(it);
+        finish();
     }
 
 }

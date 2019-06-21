@@ -2,9 +2,11 @@ package com.tiagofarinha.inmezzoapp.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -68,13 +70,26 @@ public class PostAdapter extends DefaultAdapter {
         }
     }
 
-    private void setListener(final String id, ViewHolder h) {
-        h.thumb.setOnClickListener(new View.OnClickListener() {
+    private void setListener(final String id, final ViewHolder h) {
+        h.thumb.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getContext(), YoutubeActivity.class);
-                intent.putExtra("url", id);
-                getContext().startActivity(intent);
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        h.thumb.setAlpha(0.6f);
+                        h.play.setColorFilter(Color.BLACK);
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        h.thumb.setAlpha(1f);
+                        h.play.setColorFilter(Color.WHITE);
+                        Intent intent = new Intent(getContext(), YoutubeActivity.class);
+                        intent.putExtra("url", id);
+                        getContext().startActivity(intent);
+                        break;
+                }
+
+
+                return true;
             }
         });
     }
