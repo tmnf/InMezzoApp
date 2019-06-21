@@ -15,7 +15,6 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private MainMethods mm;
-    private boolean firstTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

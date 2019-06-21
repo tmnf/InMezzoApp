@@ -16,8 +16,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
+import com.tiagofarinha.inmezzoapp.Cache.ResourceLoader;
 import com.tiagofarinha.inmezzoapp.Fragments.LoginLogic;
 import com.tiagofarinha.inmezzoapp.MainLogic.MainMethods;
+import com.tiagofarinha.inmezzoapp.Models.PicInfo;
 import com.tiagofarinha.inmezzoapp.Models.User;
 import com.tiagofarinha.inmezzoapp.R;
 import com.tiagofarinha.inmezzoapp.UserClasses.LoginHandler;
@@ -121,8 +123,10 @@ public class LoginUtils {
     }
 
 
-    public static void putInto(ImageView view, User user) {
-        fillView(view, Uri.parse(user.getUser_pic()));
+    public static void putInto(final ImageView view, User user) {
+        for (PicInfo x : ResourceLoader.getInstance().getPic_info())
+            if (x.getNum() == user.getUser_phone())
+                fillView(view, x.getUri());
     }
 
     public static void fillView(ImageView view, Uri uri) {

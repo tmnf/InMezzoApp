@@ -17,6 +17,10 @@ import com.tiagofarinha.inmezzoapp.R;
 
 public class ContactsLogic extends Fragment {
 
+    public static final String YOUTUBE_URL = "https://www.youtube.com/channel/UCfd0p-mr1n2jgECeL-nPLgw";
+    public static final String FACEBOOK_URL = "https://www.facebook.com/InMezzoCoro/";
+    public static final String INSTAGRAM_URL = "inmezzo.orfeao";
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -30,11 +34,40 @@ public class ContactsLogic extends Fragment {
     @SuppressLint("ClickableViewAccessibility")
     private void getComps(View view) {
 
-        final TextView email, phone1, phone2;
+        final TextView email, phone1, phone2, facebook, instagram, youtube;
 
         email = view.findViewById(R.id.email_texto);
         phone1 = view.findViewById(R.id.contacto1_texto);
-        phone2 = view.findViewById(R.id.facebook_texto);
+        phone2 = view.findViewById(R.id.contacto2_texto);
+
+        facebook = view.findViewById(R.id.facebook_texto);
+        instagram = view.findViewById(R.id.instagram_texto);
+        youtube = view.findViewById(R.id.youtube_texto);
+
+
+        facebook.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                actionHandler(event, facebook, ContactsIntentHandler.FACEBOOK);
+                return true;
+            }
+        });
+
+        instagram.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                actionHandler(event, instagram, ContactsIntentHandler.INSTAGRAM);
+                return false;
+            }
+        });
+
+        youtube.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                actionHandler(event, youtube, ContactsIntentHandler.YOUTUBE);
+                return true;
+            }
+        });
 
         email.setOnTouchListener(new View.OnTouchListener() {
             @Override

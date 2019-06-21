@@ -4,16 +4,20 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.tiagofarinha.inmezzoapp.Interfaces.Adaptable;
 import com.tiagofarinha.inmezzoapp.MainLogic.SplashScreen;
 import com.tiagofarinha.inmezzoapp.Models.Concert;
 import com.tiagofarinha.inmezzoapp.Models.Ensaio;
 import com.tiagofarinha.inmezzoapp.Models.Music;
+import com.tiagofarinha.inmezzoapp.Models.PicInfo;
 import com.tiagofarinha.inmezzoapp.Models.Post;
 import com.tiagofarinha.inmezzoapp.Models.User;
 import com.tiagofarinha.inmezzoapp.Models.Vote;
@@ -39,7 +43,8 @@ public class ResourceLoader extends AsyncTask {
     private ArrayList<Adaptable> portfolio = new ArrayList<>();
     private ArrayList<Adaptable> concerts = new ArrayList<>();
     private ArrayList<Adaptable> ensaios = new ArrayList<>();
-    public ArrayList<YoutubeVideo> videos = new ArrayList<>();
+    private ArrayList<PicInfo> pic_info = new ArrayList<>();
+    private ArrayList<YoutubeVideo> videos = new ArrayList<>();
     private ArrayList<Adaptable> warnings = new ArrayList<>();
 
     // CLASS INSTANCE
@@ -47,7 +52,7 @@ public class ResourceLoader extends AsyncTask {
 
     // CONTROL VARIABLES
     private boolean active;
-    private int tasks_remaining;
+    private int tasks_remaining, pics_remaining;
 
     public ResourceLoader(SplashScreen ss) {
         tasks_remaining = TOTAL_TASKS;
@@ -68,6 +73,7 @@ public class ResourceLoader extends AsyncTask {
         portfolio.clear();
         concerts.clear();
         ensaios.clear();
+        pic_info.clear();
         videos.clear();
         warnings.clear();
         active = false;
@@ -87,6 +93,11 @@ public class ResourceLoader extends AsyncTask {
     protected synchronized Object doInBackground(Object[] objects) {
         try {
             while (tasks_remaining > 0)
+                wait();
+
+            loadPics();
+
+            while (pics_remaining != 0)
                 wait();
         } catch (Exception e) {
             e.printStackTrace();
@@ -176,6 +187,36 @@ public class ResourceLoader extends AsyncTask {
             tasks_remaining--;
             notify();
         }
+    }
+
+    /* ================ Load Profile Pics ================ */
+
+
+    private void loadPics() {
+        StorageReference pic_ref = FirebaseStorage.getInstance().getReference().child("profile_images");
+
+        pic_info.clear();
+        for (Adaptable x : users) {
+
+            final User aux = (User) x;
+            final String user_pic = aux.getUser_pic();
+
+            pics_remaining = users.size();
+
+            StorageReference ref = pic_ref.child(user_pic);
+            ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                @Override
+                public void onSuccess(Uri uri) {
+                    addPic(uri, aux.getUser_phone());
+                }
+            });
+        }
+    }
+
+    private synchronized void addPic(Uri uri, int num) {
+        pic_info.add(new PicInfo(uri, num));
+        pics_remaining--;
+        notify();
     }
 
     /* ================ Load Warning ================ */
@@ -414,6 +455,10 @@ public class ResourceLoader extends AsyncTask {
 
     public ArrayList<Adaptable> getEnsaios() {
         return ensaios;
+    }
+
+    public ArrayList<PicInfo> getPic_info() {
+        return pic_info;
     }
 
     public ArrayList<Adaptable> getWarnings() {
