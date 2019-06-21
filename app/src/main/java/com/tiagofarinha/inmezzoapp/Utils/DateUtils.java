@@ -27,6 +27,25 @@ public class DateUtils {
         return curr_year - year - before;
     }
 
+    public static boolean hasPassed(String date) {
+        String[] dateInfo = date.split("/");
+
+        int day, month, year;
+
+        day = Integer.parseInt(dateInfo[0]);
+        month = Integer.parseInt(dateInfo[1]);
+        year = Integer.parseInt(dateInfo[2]);
+
+        if (year > Calendar.getInstance().get(Calendar.YEAR))
+            return false;
+        if (year < Calendar.getInstance().get(Calendar.YEAR))
+            return true;
+
+        if (month > Calendar.getInstance().get(Calendar.MONTH) + 1)
+            return false;
+        return month != Calendar.getInstance().get(Calendar.MONTH) + 1 || day <= Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
+    }
+
     public static String getCurrentDate() {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 

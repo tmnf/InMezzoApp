@@ -1,5 +1,6 @@
 package com.tiagofarinha.inmezzoapp.Adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -70,6 +71,7 @@ public class PostAdapter extends DefaultAdapter {
         }
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private void setListener(final String id, final ViewHolder h) {
         h.thumb.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -85,6 +87,10 @@ public class PostAdapter extends DefaultAdapter {
                         Intent intent = new Intent(getContext(), YoutubeActivity.class);
                         intent.putExtra("url", id);
                         getContext().startActivity(intent);
+                        break;
+                    default:
+                        h.thumb.setAlpha(1f);
+                        h.play.setColorFilter(Color.WHITE);
                         break;
                 }
 
