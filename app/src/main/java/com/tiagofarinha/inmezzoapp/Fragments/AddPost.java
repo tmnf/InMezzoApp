@@ -10,16 +10,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.tiagofarinha.inmezzoapp.Cache.ResourceLoader;
+import com.tiagofarinha.inmezzoapp.MainLogic.MainMethods;
 import com.tiagofarinha.inmezzoapp.Models.Post;
-import com.tiagofarinha.inmezzoapp.Models.User;
 import com.tiagofarinha.inmezzoapp.Models.YoutubeContainer;
 import com.tiagofarinha.inmezzoapp.R;
 import com.tiagofarinha.inmezzoapp.Utils.MenuUtils;
@@ -68,37 +64,31 @@ public class AddPost extends Fragment {
 
     private void createPost() {
         Utils.showMessage("A publicar...");
-        final DatabaseReference postsRef = FirebaseDatabase.getInstance().getReference().child("posts");
+        DatabaseReference postsRef = FirebaseDatabase.getInstance().getReference().child("posts");
 
-        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        Post aux = new Post(post_text.getText().toString(), url.getText().toString(), MainMethods.getInstance().getAuxUser());
 
-        FirebaseDatabase.getInstance().getReference().child("users").child(currentUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+        if (!url.getText().toString().isEmpty())
+            saveVideo(url.getText().toString(), aux);
+
+        postsRef.push().setValue(aux).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                User user = dataSnapshot.getValue(User.class);
-                Post aux = new Post(post_text.getText().toString(), url.getText().toString(), user);
-
-                if (!url.getText().toString().isEmpty())
-                    saveVideo(url.getText().toString());
-
-                postsRef.push().setValue(aux);
-                onSuccess();
+            public void onSuccess(Void aVoid) {
+                AddPost.this.onSuccess();
             }
-
+        }).addOnFailureListener(new OnFailureListener() {
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+            public void onFailure(@NonNull Exception e) {
                 Utils.showMessage("Erro ao publicar!");
             }
         });
     }
 
-    public void saveVideo(String url) {
-        YoutubeContainer video = new YoutubeContainer(url);
+    public void saveVideo(String url, Post post) {
+        YoutubeContainer video = new YoutubeContainer(url, post);
 
         DatabaseReference videosRef = FirebaseDatabase.getInstance().getReference().child("videos");
         videosRef.push().setValue(video);
-
-        ResourceLoader.getInstance().addToVideoList(url, video.getId());
     }
 
     public void onSuccess() {

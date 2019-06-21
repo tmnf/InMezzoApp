@@ -3,10 +3,12 @@ package com.tiagofarinha.inmezzoapp.Models;
 public class YoutubeContainer {
 
     protected String url, id;
+    protected Post post;
 
-    public YoutubeContainer(String url) {
+    public YoutubeContainer(String url, Post post) {
         this.url = url;
         this.id = generateID();
+        this.post = post;
     }
 
     public YoutubeContainer() {
@@ -33,5 +35,9 @@ public class YoutubeContainer {
 
     public String getId() {
         return id;
+    }
+
+    public Post getPost() {
+        return post;
     }
 }

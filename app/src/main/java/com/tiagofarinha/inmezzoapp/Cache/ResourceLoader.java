@@ -4,25 +4,23 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 import com.tiagofarinha.inmezzoapp.Interfaces.Adaptable;
 import com.tiagofarinha.inmezzoapp.MainLogic.SplashScreen;
 import com.tiagofarinha.inmezzoapp.Models.Concert;
 import com.tiagofarinha.inmezzoapp.Models.Ensaio;
 import com.tiagofarinha.inmezzoapp.Models.Music;
-import com.tiagofarinha.inmezzoapp.Models.PicInfo;
 import com.tiagofarinha.inmezzoapp.Models.Post;
 import com.tiagofarinha.inmezzoapp.Models.User;
+import com.tiagofarinha.inmezzoapp.Models.Vote;
 import com.tiagofarinha.inmezzoapp.Models.Warning;
 import com.tiagofarinha.inmezzoapp.Models.YoutubeContainer;
 import com.tiagofarinha.inmezzoapp.Models.YoutubeVideo;
+import com.tiagofarinha.inmezzoapp.Utils.DateUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -41,7 +39,6 @@ public class ResourceLoader extends AsyncTask {
     private ArrayList<Adaptable> portfolio = new ArrayList<>();
     private ArrayList<Adaptable> concerts = new ArrayList<>();
     private ArrayList<Adaptable> ensaios = new ArrayList<>();
-    public ArrayList<PicInfo> pic_info = new ArrayList<>();
     public ArrayList<YoutubeVideo> videos = new ArrayList<>();
     private ArrayList<Adaptable> warnings = new ArrayList<>();
 
@@ -50,7 +47,7 @@ public class ResourceLoader extends AsyncTask {
 
     // CONTROL VARIABLES
     private boolean active;
-    private int tasks_remaining, pics_remaining;
+    private int tasks_remaining;
 
     public ResourceLoader(SplashScreen ss) {
         tasks_remaining = TOTAL_TASKS;
@@ -71,7 +68,6 @@ public class ResourceLoader extends AsyncTask {
         portfolio.clear();
         concerts.clear();
         ensaios.clear();
-        pic_info.clear();
         videos.clear();
         warnings.clear();
         active = false;
@@ -91,11 +87,6 @@ public class ResourceLoader extends AsyncTask {
     protected synchronized Object doInBackground(Object[] objects) {
         try {
             while (tasks_remaining > 0)
-                wait();
-
-            loadPics();
-
-            while (pics_remaining != 0)
                 wait();
         } catch (Exception e) {
             e.printStackTrace();
@@ -122,7 +113,7 @@ public class ResourceLoader extends AsyncTask {
         return aux;
     }
 
-    public static void deleteExciding(ArrayList<Adaptable> list, int max, String type) {
+    private void deleteExciding(ArrayList<Adaptable> list, int max, String type) {
         if (list.size() > max) {
             final DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child(type);
             final int toDelete = list.size() - max;
@@ -152,41 +143,39 @@ public class ResourceLoader extends AsyncTask {
         }
     }
 
+    private void deleteVotes(final Adaptable event) {
+        final DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("votes");
+
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                ArrayList<String> keysToDelete = new ArrayList<>();
+
+                for (DataSnapshot x : dataSnapshot.getChildren()) {
+                    Vote aux = x.getValue(Vote.class);
+
+                    if (aux.getConcert() != null && aux.getConcert().equals(event))
+                        keysToDelete.add(x.getKey());
+                    else if (aux.getEnsaio() != null && aux.getEnsaio().equals(event))
+                        keysToDelete.add(x.getKey());
+
+                    for (String key : keysToDelete)
+                        ref.child(key).removeValue();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
     private synchronized void taskOver() {
         if (!active) {
             tasks_remaining--;
             notify();
         }
-    }
-
-    /* ================ Load Profile Pics ================ */
-
-
-    private void loadPics() {
-        StorageReference pic_ref = FirebaseStorage.getInstance().getReference().child("profile_images");
-
-        pic_info.clear();
-        for (Adaptable x : users) {
-
-            final User aux = (User) x;
-            final String user_pic = aux.getUser_pic();
-
-            pics_remaining = users.size();
-
-            StorageReference ref = pic_ref.child(user_pic);
-            ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                @Override
-                public void onSuccess(Uri uri) {
-                    addPic(uri, aux.getUser_phone());
-                }
-            });
-        }
-    }
-
-    private synchronized void addPic(Uri uri, int num) {
-        pic_info.add(new PicInfo(uri, num));
-        pics_remaining--;
-        notify();
     }
 
     /* ================ Load Warning ================ */
@@ -232,10 +221,10 @@ public class ResourceLoader extends AsyncTask {
         });
     }
 
-    public void addToVideoList(String video_url, String video_id) {
+    private void addToVideoList(String video_url, Post post, String video_id) {
         synchronized (videos) {
             Uri download_url = Uri.parse("https://img.youtube.com/vi/" + video_id + "/maxresdefault.jpg");
-            videos.add(new YoutubeVideo(video_url, download_url));
+            videos.add(new YoutubeVideo(video_url, post, download_url));
         }
     }
 
@@ -274,7 +263,7 @@ public class ResourceLoader extends AsyncTask {
                 for (DataSnapshot x : dataSnapshot.getChildren()) {
                     YoutubeContainer aux = x.getValue(YoutubeContainer.class);
 
-                    addToVideoList(aux.getUrl(), aux.getId());
+                    addToVideoList(aux.getUrl(), aux.getPost(), aux.getId());
                 }
 
                 taskOver();
@@ -312,14 +301,26 @@ public class ResourceLoader extends AsyncTask {
     /* ================ Load Concerts ================ */
 
     private void loadConcerts() {
-        DatabaseReference concerts_ref = FirebaseDatabase.getInstance().getReference().child("concerts");
+        final DatabaseReference concerts_ref = FirebaseDatabase.getInstance().getReference().child("concerts");
 
         concerts_ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 concerts.clear();
-                for (DataSnapshot x : dataSnapshot.getChildren())
-                    concerts.add(x.getValue(Concert.class));
+                ArrayList<String> keysToDelete = new ArrayList<>();
+                for (DataSnapshot x : dataSnapshot.getChildren()) {
+                    Concert aux = x.getValue(Concert.class);
+                    String[] date = aux.getDate().split(",");
+
+                    if (DateUtils.hasPassed(date[0])) {
+                        keysToDelete.add(x.getKey());
+                        deleteVotes(aux);
+                    } else
+                        concerts.add(x.getValue(Concert.class));
+                }
+
+                for (String key : keysToDelete)
+                    concerts_ref.child(key).removeValue();
 
                 taskOver();
             }
@@ -334,14 +335,26 @@ public class ResourceLoader extends AsyncTask {
     /* ================ Load Ensaios ================ */
 
     private void loadEnsaios() {
-        DatabaseReference ensaios_ref = FirebaseDatabase.getInstance().getReference().child("ensaios");
+        final DatabaseReference ensaios_ref = FirebaseDatabase.getInstance().getReference().child("ensaios");
 
         ensaios_ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 ensaios.clear();
-                for (DataSnapshot x : dataSnapshot.getChildren())
-                    ensaios.add(x.getValue(Ensaio.class));
+                ArrayList<String> keysToDelete = new ArrayList<>();
+                for (DataSnapshot x : dataSnapshot.getChildren()) {
+                    Ensaio aux = x.getValue(Ensaio.class);
+                    String[] date = aux.getDate().split(",");
+
+                    if (DateUtils.hasPassed(date[0])) {
+                        keysToDelete.add(x.getKey());
+                        deleteVotes(aux);
+                    } else
+                        ensaios.add(x.getValue(Ensaio.class));
+
+                    for (String key : keysToDelete)
+                        ensaios_ref.child(key).removeValue();
+                }
 
                 taskOver();
             }
@@ -403,19 +416,7 @@ public class ResourceLoader extends AsyncTask {
         return ensaios;
     }
 
-    public ArrayList<PicInfo> getPic_info() {
-        return pic_info;
-    }
-
-    public ArrayList<YoutubeVideo> getVideos() {
-        return videos;
-    }
-
     public ArrayList<Adaptable> getWarnings() {
         return warnings;
-    }
-
-    public boolean isActive() {
-        return active;
     }
 }

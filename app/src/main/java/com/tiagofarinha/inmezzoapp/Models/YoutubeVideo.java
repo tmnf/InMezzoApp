@@ -6,8 +6,8 @@ public class YoutubeVideo extends YoutubeContainer {
 
     private Uri thumbnail;
 
-    public YoutubeVideo(String url, Uri thumbnail) {
-        super(url);
+    public YoutubeVideo(String url, Post post, Uri thumbnail) {
+        super(url, post);
 
         this.thumbnail = thumbnail;
     }
