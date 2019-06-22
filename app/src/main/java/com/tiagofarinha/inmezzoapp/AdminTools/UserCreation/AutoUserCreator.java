@@ -14,7 +14,6 @@ public class AutoUserCreator extends AsyncTask {
     public AutoUserCreator() {
         users = MainMethods.getInstance().getContext().getResources().getStringArray(R.array.usersToAdd);
         Log.d("USERS", "Para adicionar: " + users.length);
-
     }
 
     @Override

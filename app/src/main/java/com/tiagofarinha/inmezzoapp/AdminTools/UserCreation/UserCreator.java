@@ -10,6 +10,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.FirebaseDatabase;
+import com.tiagofarinha.inmezzoapp.AdminTools.AdminLogic;
 import com.tiagofarinha.inmezzoapp.Models.User;
 
 public class UserCreator extends Thread {
@@ -50,7 +51,6 @@ public class UserCreator extends Thread {
                 createObject(us, task.getResult().getUser());
             }
         });
-
     }
 
     // Associates Auth User To Model User
@@ -63,7 +63,7 @@ public class UserCreator extends Thread {
 
         FirebaseAuth.getInstance().sendPasswordResetEmail(email);
 
-        //AdminLogic.getInstance().onSucess();
+        AdminLogic.getInstance().onSucess();
 
         Log.d("USERS", name + " Adicionado");
         interrupt();

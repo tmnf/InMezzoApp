@@ -4,6 +4,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -37,13 +38,14 @@ public class ResourceLoader extends AsyncTask {
 
     private SplashScreen ss;
 
-    // PUBLIC OBJECT LISTS
+    // OBJECT LISTS
     private ArrayList<Adaptable> posts = new ArrayList<>();
     private ArrayList<Adaptable> users = new ArrayList<>();
     private ArrayList<Adaptable> portfolio = new ArrayList<>();
     private ArrayList<Adaptable> concerts = new ArrayList<>();
     private ArrayList<Adaptable> ensaios = new ArrayList<>();
     private ArrayList<PicInfo> pic_info = new ArrayList<>();
+
     private ArrayList<YoutubeVideo> videos = new ArrayList<>();
     private ArrayList<Adaptable> warnings = new ArrayList<>();
 
@@ -61,7 +63,12 @@ public class ResourceLoader extends AsyncTask {
 
         this.ss = ss;
 
-        loadResources();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                loadResources();
+            }
+        }).start();
     }
 
     @Override
@@ -76,8 +83,9 @@ public class ResourceLoader extends AsyncTask {
         pic_info.clear();
         videos.clear();
         warnings.clear();
-        active = false;
+        active = true;
         ss.ready();
+        ss = null;
     }
 
     @Override
@@ -196,6 +204,7 @@ public class ResourceLoader extends AsyncTask {
         StorageReference pic_ref = FirebaseStorage.getInstance().getReference().child("profile_images");
 
         pic_info.clear();
+        StorageReference ref;
         for (Adaptable x : users) {
 
             final User aux = (User) x;
@@ -203,11 +212,16 @@ public class ResourceLoader extends AsyncTask {
 
             pics_remaining = users.size();
 
-            StorageReference ref = pic_ref.child(user_pic);
+            ref = pic_ref.child(user_pic);
             ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                 @Override
                 public void onSuccess(Uri uri) {
                     addPic(uri, aux.getUser_phone());
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    PicFailed();
                 }
             });
         }
@@ -215,6 +229,11 @@ public class ResourceLoader extends AsyncTask {
 
     private synchronized void addPic(Uri uri, int num) {
         pic_info.add(new PicInfo(uri, num));
+        pics_remaining--;
+        notify();
+    }
+
+    private synchronized void PicFailed() {
         pics_remaining--;
         notify();
     }
