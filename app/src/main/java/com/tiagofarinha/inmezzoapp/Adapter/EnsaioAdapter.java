@@ -45,12 +45,12 @@ public class EnsaioAdapter extends DefaultAdapter {
         holder.hour.setText(datetime[1]);
         holder.descr.setText(ensaio.getDescr());
 
-        addListener(holder, convertView, ensaio);
+        addListener(convertView, ensaio);
 
         return convertView;
     }
 
-    private void addListener(ViewHolder holder, View convertView, final Ensaio ensaio) {
+    private void addListener(View convertView, final Ensaio ensaio) {
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -66,7 +66,7 @@ public class EnsaioAdapter extends DefaultAdapter {
     private class ViewHolder {
         TextView date, hour, descr;
 
-        public ViewHolder(View view) {
+        private ViewHolder(View view) {
             date = view.findViewById(R.id.ensaio_date_show);
             hour = view.findViewById(R.id.ensaio_hour_show);
             descr = view.findViewById(R.id.ensaio_descr_show);

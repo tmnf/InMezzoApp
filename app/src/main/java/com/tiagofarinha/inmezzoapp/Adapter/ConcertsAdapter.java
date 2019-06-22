@@ -40,21 +40,28 @@ public class ConcertsAdapter extends DefaultAdapter {
 
         Concert concert = (Concert) obj;
 
+        String aux;
+
         holder.descr.setText(concert.getDescr());
-        holder.local.setText("Local: " + concert.getLocal());
+
+        aux = "Local: " + concert.getLocal();
+        holder.local.setText(aux);
 
         String[] datetime = concert.getDate().split(",");
 
-        holder.date.setText("Dia: " + datetime[0]);
-        holder.hour.setText("Hora: " + datetime[1]);
+        aux = "Dia: " + datetime[0];
+        holder.date.setText(aux);
+
+        aux = "Hora: " + datetime[1];
+        holder.hour.setText(aux);
 
         if (MainMethods.getInstance().isLoggedIn())
-            addListener(holder, convertView, concert);
+            addListener(convertView, concert);
 
         return convertView;
     }
 
-    private void addListener(ViewHolder holder, View convertView, final Concert concert) {
+    private void addListener(View convertView, final Concert concert) {
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,7 +78,7 @@ public class ConcertsAdapter extends DefaultAdapter {
 
         TextView descr, date, hour, local;
 
-        public ViewHolder(View view) {
+        private ViewHolder(View view) {
             descr = view.findViewById(R.id.concert_title_show);
             local = view.findViewById(R.id.concert_local_show);
             date = view.findViewById(R.id.concert_date_show);

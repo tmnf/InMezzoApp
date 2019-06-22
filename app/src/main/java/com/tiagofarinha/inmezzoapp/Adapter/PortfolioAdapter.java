@@ -27,27 +27,27 @@ public class PortfolioAdapter extends DefaultAdapter {
 
         if (convertView == null) {
             convertView = LayoutInflater.from(mContext).inflate(layoutId, parent, false);
-            holder = new ViewHolder(convertView, (Music) obj);
+            holder = new ViewHolder(convertView);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
 
+        Music music = (Music) obj;
+
         /* DATA HANDLE */
-        holder.title.setText(holder.music.getName());
-        holder.artist.setText("- " + holder.music.getArtist());
+        holder.title.setText(music.getName());
+
+        String artist = "- " + music.getArtist();
+        holder.artist.setText(artist);
 
         return convertView;
     }
 
     private class ViewHolder {
-        Music music;
-
         TextView title, artist;
 
-        public ViewHolder(View view, Music music) {
-            this.music = music;
-
+        private ViewHolder(View view) {
             title = view.findViewById(R.id.portfolio_title_show);
             artist = view.findViewById(R.id.portfolio_artist_show);
         }

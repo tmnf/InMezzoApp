@@ -29,6 +29,7 @@ import com.tiagofarinha.inmezzoapp.Utils.DateUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 
 public class ResourceLoader extends AsyncTask {
 
@@ -62,13 +63,13 @@ public class ResourceLoader extends AsyncTask {
         INSTANCE = this;
 
         this.ss = ss;
+    }
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                loadResources();
-            }
-        }).start();
+    @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
+
+        loadResources();
     }
 
     @Override
@@ -299,6 +300,29 @@ public class ResourceLoader extends AsyncTask {
                 users.clear();
                 for (DataSnapshot x : dataSnapshot.getChildren())
                     users.add(x.getValue(User.class));
+
+                Collections.sort(users, new Comparator<Adaptable>() {
+                    @Override
+                    public int compare(Adaptable o1, Adaptable o2) {
+                        User aux1, aux2;
+                        aux1 = (User) o1;
+                        aux2 = (User) o2;
+
+                        if (aux1.getUser_mode() == 1 && (aux2.getUser_mode() == 0 || aux2.getUser_mode() == 2))
+                            return 1;
+
+                        if (aux1.getUser_mode() == 2)
+                            return -1;
+
+                        if (aux1.getUser_mode() == 0 && aux2.getUser_mode() == 2)
+                            return 1;
+
+                        if (aux1.getUser_mode() == 0 && aux2.getUser_mode() == 1)
+                            return -1;
+
+                        return 0;
+                    }
+                });
 
                 taskOver();
             }

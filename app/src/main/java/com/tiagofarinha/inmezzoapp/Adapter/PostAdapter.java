@@ -38,27 +38,27 @@ public class PostAdapter extends DefaultAdapter {
 
         if (convertView == null) {
             convertView = LayoutInflater.from(mContext).inflate(layoutId, parent, false);
-            holder = new ViewHolder(convertView, (Post) obj);
+            holder = new ViewHolder(convertView);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        holder.post = (Post) obj;
+        Post post = (Post) obj;
 
-        LoginUtils.putInto(holder.pic, holder.post.getOwner());
-        holder.post_name.setText(holder.post.getOwner().getUser_name());
-        holder.post_pub_date.setText(holder.post.getDate_pub());
-        holder.post_text.setText(holder.post.getPost_text());
+        LoginUtils.putInto(holder.pic, post.getOwner());
+        holder.post_name.setText(post.getOwner().getUser_name());
+        holder.post_pub_date.setText(post.getDate_pub());
+        holder.post_text.setText(post.getPost_text());
 
-        addUserListener(holder);
-        youtubeViewHandle(holder);
+        addUserListener(holder, post);
+        youtubeViewHandle(holder, post);
 
         return convertView;
     }
 
-    private void youtubeViewHandle(ViewHolder h) {
-        YoutubeVideo video = ResourceLoader.getInstance().findVideoWithUrl(h.post.getUrl());
+    private void youtubeViewHandle(ViewHolder h, Post post) {
+        YoutubeVideo video = ResourceLoader.getInstance().findVideoWithUrl(post.getUrl());
         if (video == null) {
             h.thumb.setVisibility(View.GONE);
             h.play.setVisibility(View.GONE);
@@ -94,17 +94,16 @@ public class PostAdapter extends DefaultAdapter {
                         break;
                 }
 
-
                 return true;
             }
         });
     }
 
-    private void addUserListener(final ViewHolder h) {
+    private void addUserListener(final ViewHolder h, final Post post) {
         h.pic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MainMethods.getInstance().goToProfilePage(h.post.getOwner());
+                MainMethods.getInstance().goToProfilePage(post.getOwner());
             }
         });
     }
@@ -114,11 +113,8 @@ public class PostAdapter extends DefaultAdapter {
         TextView post_name, post_pub_date, post_text;
         ImageView pic, thumb, play;
         ConstraintLayout container;
-        Post post;
 
-        ViewHolder(View convertView, Post post) {
-            this.post = post;
-
+        ViewHolder(View convertView) {
             pic = convertView.findViewById(R.id.post_pic);
             post_name = convertView.findViewById(R.id.post_name);
             post_pub_date = convertView.findViewById(R.id.post_pub_date);

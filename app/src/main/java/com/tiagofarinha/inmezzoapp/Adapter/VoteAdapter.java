@@ -36,7 +36,8 @@ public class VoteAdapter extends DefaultAdapter {
 
         User user = (User) obj;
 
-        holder.vote_username.setText("- " + user.getUser_name());
+        String username = "- " + user.getUser_name();
+        holder.vote_username.setText(username);
 
         return convertView;
     }
@@ -45,7 +46,7 @@ public class VoteAdapter extends DefaultAdapter {
 
         TextView vote_username;
 
-        public ViewHolder(View view) {
+        private ViewHolder(View view) {
             vote_username = view.findViewById(R.id.vote_username);
         }
     }

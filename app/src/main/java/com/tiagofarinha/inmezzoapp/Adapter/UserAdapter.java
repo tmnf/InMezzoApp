@@ -3,6 +3,7 @@ package com.tiagofarinha.inmezzoapp.Adapter;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,48 +33,53 @@ public class UserAdapter extends DefaultAdapter {
 
         if (convertView == null) {
             convertView = LayoutInflater.from(mContext).inflate(layoutId, parent, false);
-            holder = new ViewHolder(convertView, (User) obj);
+            holder = new ViewHolder(convertView);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
 
+        User user = (User) obj;
+
         /* Data Handle */
-        LoginUtils.putInto(holder.user_pic, holder.user);
+        LoginUtils.putInto(holder.user_pic, user);
 
         // APAGAR ISTO //
-        if (holder.user.getUser_mode() == 1)
+        if (user.getUser_mode() == 1)
             holder.user_name.setTextColor(Color.YELLOW);
-        else if (holder.user.getUser_mode() == 2)
+        else if (user.getUser_mode() == 2)
             holder.user_name.setTextColor(Color.BLUE);
+        else
+            holder.user_name.setTextColor(Color.WHITE);
 
-        holder.user_name.setText(holder.user.getUser_name());
-        holder.user_age.setText(DateUtils.getAge(holder.user.getUser_birthday()) + " Anos");
-        holder.user_voice.setText(holder.user.getUser_voice());
+        holder.user_name.setText(user.getUser_name());
 
-        addListener(holder);
+        Log.d("Users", user.getUser_birthday());
+        String age = DateUtils.getAge(user.getUser_birthday()) + " Anos";
+
+        holder.user_age.setText(age);
+
+        holder.user_voice.setText(user.getUser_voice());
+
+        addListener(holder, user);
 
         return convertView;
     }
 
-    private void addListener(final ViewHolder h) {
+    private void addListener(final ViewHolder h, final User user) {
         h.user_pic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MainMethods.getInstance().goToProfilePage(h.user);
+                MainMethods.getInstance().goToProfilePage(user);
             }
         });
     }
 
     private class ViewHolder {
-        User user;
-
         ImageView user_pic;
         TextView user_name, user_age, user_voice;
 
-        public ViewHolder(View view, User user) {
-            this.user = user;
-
+        private ViewHolder(View view) {
             user_pic = view.findViewById(R.id.member_pic);
             user_name = view.findViewById(R.id.member_name);
             user_age = view.findViewById(R.id.member_age);

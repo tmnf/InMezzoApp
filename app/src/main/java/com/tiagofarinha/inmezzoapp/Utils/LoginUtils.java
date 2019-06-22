@@ -122,11 +122,13 @@ public class LoginUtils {
         });
     }
 
-
     public static void putInto(final ImageView view, User user) {
         for (PicInfo x : ResourceLoader.getInstance().getPic_info())
-            if (x.getNum() == user.getUser_phone())
+            if (x.getNum() == user.getUser_phone()) {
                 fillView(view, x.getUri());
+                return;
+            }
+        view.setImageResource(R.drawable.empty_photo);
     }
 
     public static void fillView(ImageView view, Uri uri) {
