@@ -35,9 +35,13 @@ public class FragManager {
     public Fragment findFragment(String tag) {
         Fragment aux = null;
 
-        for (int i = 0; i != MAX_FRAGS || tags[i] != null; i++)
-            if (tags[i].equals(tag))
-                aux = frags.get(i);
+        try {
+            for (int i = 0; i != MAX_FRAGS || tags[i] != null; i++)
+                if (tags[i].equals(tag))
+                    aux = frags.get(i);
+        } catch (Exception e) {
+            aux = null;
+        }
 
         return aux;
     }

@@ -20,7 +20,7 @@ import java.util.ArrayList;
 public class CandidaturasLogic extends Fragment {
 
     private EditText name, birth, email, phone;
-    private ArrayList<String> info;
+    private ArrayList<EditText> info;
 
     @Nullable
     @Override
@@ -33,17 +33,17 @@ public class CandidaturasLogic extends Fragment {
         phone = view.findViewById(R.id.telemovel_candi_field);
 
         info = new ArrayList<>();
-        info.add(name.getText().toString());
-        info.add(birth.getText().toString());
-        info.add(email.getText().toString());
-        info.add(phone.getText().toString());
+        info.add(name);
+        info.add(birth);
+        info.add(email);
+        info.add(phone);
 
         Button submit = view.findViewById(R.id.candidaturas_button);
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                for (String x : info)
-                    if (x.isEmpty()) {
+                for (EditText x : info)
+                    if (x.getText().toString().isEmpty()) {
                         Utils.showMessage("Campos vazios ou inválidos!");
                         return;
                     }
@@ -56,8 +56,9 @@ public class CandidaturasLogic extends Fragment {
     }
 
     public void sendMail() {
-        String subject = ClientEmailUtils.getFormatedSubject(info.get(0), ClientEmailUtils.CANDIDATURE);
-        String message = ClientEmailUtils.getFormatedCandidatureBody(info.get(0), info.get(1), info.get(2), info.get(3));
+        String subject = ClientEmailUtils.getFormatedSubject(info.get(0).getText().toString(), ClientEmailUtils.CANDIDATURE);
+        String message = ClientEmailUtils.getFormatedCandidatureBody(info.get(0).getText().toString(), info.get(1).getText().toString(),
+                info.get(2).getText().toString(), info.get(3).getText().toString());
 
         new ClientEmailHandler(subject, message).start();
 
