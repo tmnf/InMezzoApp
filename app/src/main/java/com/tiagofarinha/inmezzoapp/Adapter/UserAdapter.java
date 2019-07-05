@@ -3,7 +3,6 @@ package com.tiagofarinha.inmezzoapp.Adapter;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,7 +53,6 @@ public class UserAdapter extends DefaultAdapter {
 
         holder.user_name.setText(user.getUser_name());
 
-        Log.d("Users", user.getUser_birthday());
         String age = DateUtils.getAge(user.getUser_birthday()) + " Anos";
 
         holder.user_age.setText(age);
