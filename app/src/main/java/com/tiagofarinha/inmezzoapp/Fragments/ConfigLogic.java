@@ -89,6 +89,11 @@ public class ConfigLogic extends Fragment {
         emailText = email.getText().toString();
         bioText = bio.getText().toString();
 
+        if (!emailText.contains("@") || !emailText.contains(".com") || !emailText.contains(".pt")) {
+            Utils.showMessage("Insira um email válido!");
+            return;
+        }
+
         if (!(nameText.equals(currName) && emailText.equals(currEmail) && bioText.equals(currBio)))
             new ConfigHandler(this, nameText, emailText, bioText).execute();
         else

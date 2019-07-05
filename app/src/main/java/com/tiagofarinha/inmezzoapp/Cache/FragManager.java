@@ -2,17 +2,28 @@ package com.tiagofarinha.inmezzoapp.Cache;
 
 import android.support.v4.app.Fragment;
 
+import java.util.LinkedList;
+
 public class FragManager {
 
     private static FragManager INSTANCE;
 
-    private No prim, ult;
+    private final static int MAX_FRAGS = 15;
+
+    private LinkedList<Fragment> frags;
+    private String[] tags;
+
+    private int current;
 
     public FragManager() {
         INSTANCE = this;
 
-        prim = null;
-        ult = null;
+        frags = new LinkedList<>();
+        tags = new String[MAX_FRAGS];
+    }
+
+    public static void start() {
+        getInstance();
     }
 
     public static FragManager getInstance() {
@@ -22,41 +33,19 @@ public class FragManager {
     }
 
     public Fragment findFragment(String tag) {
-        No aux = prim;
+        Fragment aux = null;
 
-        boolean encontrei = false;
-        while (aux != null && !encontrei) {
-            if (aux.tag.equals(tag))
-                encontrei = true;
-            else
-                aux = aux.seg;
-        }
+        for (int i = 0; i != MAX_FRAGS || tags[i] != null; i++)
+            if (tags[i].equals(tag))
+                aux = frags.get(i);
 
-        if (aux != null)
-            return aux.value;
-        else
-            return null;
+        return aux;
     }
 
     public void addToFragList(Fragment frag, String tag) {
-        No aux = new No();
-        aux.seg = null;
-        aux.value = frag;
-        aux.tag = tag;
-
-        if (prim == null)
-            prim = aux;
-
-        if (ult != null)
-            ult.seg = aux;
-
-        ult = aux;
+        if (current + 1 != MAX_FRAGS) {
+            frags.add(frag);
+            tags[current++] = tag;
+        }
     }
-
-    private class No {
-        Fragment value;
-        No seg;
-        String tag;
-    }
-
 }

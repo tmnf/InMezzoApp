@@ -124,12 +124,12 @@ public class ResourceLoader extends AsyncTask {
     public YoutubeVideo findVideoWithUrl(String url) {
         YoutubeVideo aux = null;
 
-        for (YoutubeVideo x : videos) {
+        for (YoutubeVideo x : videos)
             if (x.getUrl().equals(url)) {
                 aux = x;
                 break;
             }
-        }
+
         return aux;
     }
 

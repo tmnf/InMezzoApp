@@ -77,8 +77,15 @@ public class ProfileLogic extends Fragment {
     public void refreshGUI(User user) {
         LoginUtils.putInto(pic, user);
         name.setText(user.getUser_name());
-        age.setText("Idade: " + DateUtils.getAge(user.getUser_birthday()) + " Anos");
-        voice.setText("Voz: " + user.getUser_voice());
+
+        String age_text, voice_text;
+
+        age_text = "Idade: " + DateUtils.getAge(user.getUser_birthday()) + " Anos";
+        voice_text = "Voz: " + user.getUser_voice();
+
+        age.setText(age_text);
+        voice.setText(voice_text);
+
         bio.setText(user.getUser_bio());
 
         addConfigListener();

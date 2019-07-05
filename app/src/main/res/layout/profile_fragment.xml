@@ -41,7 +41,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="40dp"
-        android:drawableLeft="@drawable/settings_icon"
+        android:drawableStart="@drawable/settings_icon"
         android:fontFamily="@font/bookman_bold"
         android:text="@string/configs"
         android:textColor="@color/white"

@@ -1,6 +1,6 @@
 package com.tiagofarinha.inmezzoapp.Comunication;
 
-public class ClienteEmailUtils {
+public class ClientEmailUtils {
 
     /* Generates Text To Client Emails*/
 

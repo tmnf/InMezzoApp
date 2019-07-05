@@ -66,12 +66,12 @@ public class MainMethods {
         initComps();
 
         /* Starts Initial Fragment */
-        startFrag();
+        MenuUtils.filterMenuItem(R.id.menu_inicio);
 
         updateGui();
     }
 
-    public void updateGui() {
+    private void updateGui() {
         LoginUtils.getInstance().updateGuiAccording(mAuth, navigationView);
     }
 
@@ -79,16 +79,12 @@ public class MainMethods {
         return INSTANCE;
     }
 
-    private void startFrag() {
-        MenuUtils.filterMenuItem(R.id.menu_inicio);
-    }
-
     private void initComps() {
         Button menu_button = mainActivity.findViewById(R.id.menu_button);
         post_button = mainActivity.findViewById(R.id.post_button);
 
         // START FRAG MANAGER
-        new FragManager();
+        FragManager.start();
 
         menu_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -204,10 +200,6 @@ public class MainMethods {
             inm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
 
-    }
-
-    public Button getPost_button() {
-        return post_button;
     }
 
     public User getAuxUser() {

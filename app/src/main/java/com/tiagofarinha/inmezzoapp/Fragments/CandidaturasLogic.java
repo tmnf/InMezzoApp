@@ -11,7 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.tiagofarinha.inmezzoapp.Comunication.ClientEmailHandler;
-import com.tiagofarinha.inmezzoapp.Comunication.ClienteEmailUtils;
+import com.tiagofarinha.inmezzoapp.Comunication.ClientEmailUtils;
 import com.tiagofarinha.inmezzoapp.R;
 import com.tiagofarinha.inmezzoapp.Utils.Utils;
 
@@ -56,8 +56,8 @@ public class CandidaturasLogic extends Fragment {
     }
 
     public void sendMail() {
-        String subject = ClienteEmailUtils.getFormatedSubject(info.get(0), ClienteEmailUtils.CANDIDATURE);
-        String message = ClienteEmailUtils.getFormatedCandidatureBody(info.get(0), info.get(1), info.get(2), info.get(3));
+        String subject = ClientEmailUtils.getFormatedSubject(info.get(0), ClientEmailUtils.CANDIDATURE);
+        String message = ClientEmailUtils.getFormatedCandidatureBody(info.get(0), info.get(1), info.get(2), info.get(3));
 
         new ClientEmailHandler(subject, message).start();
 

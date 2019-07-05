@@ -10,7 +10,7 @@ public class ContactsIntentHandler extends Thread {
 
     /* Handles Contact Intents */
 
-    public final static int PHONE = 0, EMAIL = 1, FACEBOOK = 2, INSTAGRAM = 3, YOUTUBE = 4;
+    public final static int PHONE = 0, EMAIL = 1, FACEBOOK = 2, INSTAGRAM = 3, YOUTUBE = 4, SUPPORT_EMAIL = 5;
 
     private int mode;
     private String contact;
@@ -26,7 +26,7 @@ public class ContactsIntentHandler extends Thread {
                 initPhoneCall();
                 break;
             case EMAIL:
-                initEmail();
+                initEmail(contact);
                 break;
             case FACEBOOK:
                 initFacebook();
@@ -37,9 +37,17 @@ public class ContactsIntentHandler extends Thread {
             case YOUTUBE:
                 initYoutube();
                 break;
+            case SUPPORT_EMAIL:
+                initSupportEmail();
+                break;
         }
 
         interrupt();
+    }
+
+
+    private void initSupportEmail() {
+        initEmail(ContactsLogic.SUPPORT_EMAIL);
     }
 
 
@@ -80,7 +88,7 @@ public class ContactsIntentHandler extends Thread {
         startActivity(intent);
     }
 
-    private void initEmail() {
+    private void initEmail(String contact) {
         String[] email = {contact};
 
         Intent intent = new Intent(Intent.ACTION_SEND);

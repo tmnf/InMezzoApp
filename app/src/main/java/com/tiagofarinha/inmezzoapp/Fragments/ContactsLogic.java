@@ -21,6 +21,8 @@ public class ContactsLogic extends Fragment {
     public static final String FACEBOOK_URL = "https://www.facebook.com/InMezzoCoro/";
     public static final String INSTAGRAM_URL = "inmezzo.orfeao";
 
+    public static final String SUPPORT_EMAIL = "tiagomnf1999@gmail.com";
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -34,7 +36,7 @@ public class ContactsLogic extends Fragment {
     @SuppressLint("ClickableViewAccessibility")
     private void getComps(View view) {
 
-        final TextView email, phone1, phone2, facebook, instagram, youtube;
+        final TextView email, phone1, phone2, facebook, instagram, youtube, support;
 
         email = view.findViewById(R.id.email_texto);
         phone1 = view.findViewById(R.id.contacto1_texto);
@@ -43,6 +45,16 @@ public class ContactsLogic extends Fragment {
         facebook = view.findViewById(R.id.facebook_texto);
         instagram = view.findViewById(R.id.instagram_texto);
         youtube = view.findViewById(R.id.youtube_texto);
+
+        support = view.findViewById(R.id.support_texto);
+
+        support.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                actionHandler(event, support, ContactsIntentHandler.SUPPORT_EMAIL);
+                return true;
+            }
+        });
 
 
         facebook.setOnTouchListener(new View.OnTouchListener() {
