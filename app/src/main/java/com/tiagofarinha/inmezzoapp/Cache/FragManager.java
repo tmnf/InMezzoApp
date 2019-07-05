@@ -18,6 +18,7 @@ public class FragManager {
     public FragManager() {
         INSTANCE = this;
 
+        current = 0;
         frags = new LinkedList<>();
         tags = new String[MAX_FRAGS];
     }
@@ -35,13 +36,9 @@ public class FragManager {
     public Fragment findFragment(String tag) {
         Fragment aux = null;
 
-        try {
-            for (int i = 0; i != MAX_FRAGS || tags[i] != null; i++)
-                if (tags[i].equals(tag))
-                    aux = frags.get(i);
-        } catch (Exception e) {
-            aux = null;
-        }
+        for (int i = 0; i != frags.size(); i++)
+            if (tags[i].equals(tag))
+                aux = frags.get(i);
 
         return aux;
     }
@@ -49,7 +46,8 @@ public class FragManager {
     public void addToFragList(Fragment frag, String tag) {
         if (current + 1 != MAX_FRAGS) {
             frags.add(frag);
-            tags[current++] = tag;
+            tags[current] = tag;
+            current++;
         }
     }
 }

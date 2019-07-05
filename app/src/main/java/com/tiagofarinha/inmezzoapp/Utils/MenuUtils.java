@@ -1,6 +1,7 @@
 package com.tiagofarinha.inmezzoapp.Utils;
 
 import android.support.v4.app.Fragment;
+import android.util.Log;
 
 import com.tiagofarinha.inmezzoapp.AdminTools.AdminLogic;
 import com.tiagofarinha.inmezzoapp.Cache.FragManager;
@@ -23,6 +24,8 @@ public class MenuUtils {
 
     public static void filterMenuItem(int id) {
         Fragment frag = FragManager.getInstance().findFragment("Frag:" + id);
+
+        Log.d("Frag", (frag == null) + "");
 
         if (frag == null) {
             switch (id) {
