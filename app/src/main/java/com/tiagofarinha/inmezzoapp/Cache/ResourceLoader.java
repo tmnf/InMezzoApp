@@ -16,6 +16,8 @@ import com.google.firebase.storage.StorageReference;
 import com.tiagofarinha.inmezzoapp.Interfaces.Adaptable;
 import com.tiagofarinha.inmezzoapp.Interfaces.Votable;
 import com.tiagofarinha.inmezzoapp.MainLogic.SplashScreen;
+import com.tiagofarinha.inmezzoapp.Models.Concert;
+import com.tiagofarinha.inmezzoapp.Models.Ensaio;
 import com.tiagofarinha.inmezzoapp.Models.MezzoDate;
 import com.tiagofarinha.inmezzoapp.Models.Music;
 import com.tiagofarinha.inmezzoapp.Models.PicInfo;
@@ -174,19 +176,18 @@ public class ResourceLoader extends AsyncTask {
                 for (DataSnapshot x : dataSnapshot.getChildren()) {
                     Vote aux = x.getValue(Vote.class);
 
-                    if (aux.getConcert() != null && aux.getConcert().equals(event))
+                    if (event instanceof Concert) {
+                        if (aux.getConcert() != null && aux.getConcert().equals(event))
+                            keysToDelete.add(x.getKey());
+                    } else if (aux.getEnsaio() != null && aux.getEnsaio().equals(event))
                         keysToDelete.add(x.getKey());
-                    else if (aux.getEnsaio() != null && aux.getEnsaio().equals(event))
-                        keysToDelete.add(x.getKey());
-
-                    for (String key : keysToDelete)
-                        ref.child(key).removeValue();
                 }
-            }
 
+                for (String key : keysToDelete)
+                    ref.child(key).removeValue();
+            }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
             }
         });
     }
@@ -328,7 +329,6 @@ public class ResourceLoader extends AsyncTask {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
             }
         });
     }
@@ -342,7 +342,6 @@ public class ResourceLoader extends AsyncTask {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 videos.clear();
-
                 for (DataSnapshot x : dataSnapshot.getChildren()) {
                     YoutubeContainer aux = x.getValue(YoutubeContainer.class);
 
@@ -351,10 +350,8 @@ public class ResourceLoader extends AsyncTask {
 
                 taskOver();
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
             }
         });
     }
@@ -373,17 +370,15 @@ public class ResourceLoader extends AsyncTask {
 
                 taskOver();
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
             }
         });
     }
 
     /* ================ Load Concerts ================ */
 
-    private void loadVotables(String ref, final ArrayList<Adaptable> list) {
+    private void loadVotables(final String ref, final ArrayList<Adaptable> list) {
         final DatabaseReference dr = FirebaseDatabase.getInstance().getReference().child(ref);
 
         dr.addValueEventListener(new ValueEventListener() {
@@ -392,7 +387,13 @@ public class ResourceLoader extends AsyncTask {
                 list.clear();
                 ArrayList<String> keysToDelete = new ArrayList<>();
                 for (DataSnapshot x : dataSnapshot.getChildren()) {
-                    Votable aux = x.getValue(Votable.class);
+                    Votable aux = null;
+
+                    if (ref.equals("concerts"))
+                        aux = x.getValue(Concert.class);
+                    else if (ref.equals("ensaios"))
+                        aux = x.getValue(Ensaio.class);
+
                     String[] date = aux.getDate().split(",");
 
                     if (DateUtils.hasPassed(date[0])) {
@@ -400,14 +401,14 @@ public class ResourceLoader extends AsyncTask {
                         deleteVotes(aux);
                     } else
                         list.add(aux);
-
-                    for (String key : keysToDelete)
-                        dr.child(key).removeValue();
-
-                    orderList(list);
-
-                    taskOver();
                 }
+
+                for (String key : keysToDelete)
+                    dr.child(key).removeValue();
+
+                orderList(list);
+
+                taskOver();
             }
 
             @Override
@@ -466,7 +467,6 @@ public class ResourceLoader extends AsyncTask {
                 for (DataSnapshot x : dataSnapshot.getChildren()) {
                     if (i > MAX_POSTS)
                         break;
-
                     posts.add(x.getValue(Post.class));
                     i++;
                 }
@@ -476,10 +476,8 @@ public class ResourceLoader extends AsyncTask {
                 deleteExciding(posts, MAX_POSTS, "posts");
                 taskOver();
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
             }
         });
     }
