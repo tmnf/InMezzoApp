@@ -53,7 +53,7 @@ public class AddWarning extends Fragment {
     }
 
     private void addWarning(String title, String text) {
-        Warning warning = new Warning(title, text, DateUtils.getCurrentDate(), MainMethods.getInstance().getAuxUser());
+        Warning warning = new Warning(title, text, DateUtils.getCurrentDateInText(), MainMethods.getInstance().getAuxUser());
 
         DatabaseReference warningRef = FirebaseDatabase.getInstance().getReference().child("warnings");
         warningRef.push().setValue(warning).addOnSuccessListener(new OnSuccessListener<Void>() {

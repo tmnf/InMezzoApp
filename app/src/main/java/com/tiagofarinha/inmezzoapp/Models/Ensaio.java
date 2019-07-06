@@ -1,8 +1,8 @@
 package com.tiagofarinha.inmezzoapp.Models;
 
-import com.tiagofarinha.inmezzoapp.Interfaces.Adaptable;
+import com.tiagofarinha.inmezzoapp.Interfaces.Votable;
 
-public class Ensaio implements Adaptable {
+public class Ensaio implements Votable {
 
     private String date, descr;
 

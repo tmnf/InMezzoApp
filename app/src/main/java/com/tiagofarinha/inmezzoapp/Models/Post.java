@@ -12,7 +12,7 @@ public class Post implements Adaptable {
     public Post(String post_text, String url, User owner) {
         this.post_text = post_text;
         this.url = url;
-        this.date_pub = DateUtils.getCurrentDate();
+        this.date_pub = DateUtils.getCurrentDateInText();
         this.owner = owner;
     }
 

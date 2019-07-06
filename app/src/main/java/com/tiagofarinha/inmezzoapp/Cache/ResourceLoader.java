@@ -14,9 +14,9 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.tiagofarinha.inmezzoapp.Interfaces.Adaptable;
+import com.tiagofarinha.inmezzoapp.Interfaces.Votable;
 import com.tiagofarinha.inmezzoapp.MainLogic.SplashScreen;
-import com.tiagofarinha.inmezzoapp.Models.Concert;
-import com.tiagofarinha.inmezzoapp.Models.Ensaio;
+import com.tiagofarinha.inmezzoapp.Models.MezzoDate;
 import com.tiagofarinha.inmezzoapp.Models.Music;
 import com.tiagofarinha.inmezzoapp.Models.PicInfo;
 import com.tiagofarinha.inmezzoapp.Models.Post;
@@ -207,7 +207,6 @@ public class ResourceLoader extends AsyncTask {
         pic_info.clear();
         StorageReference ref;
         for (Adaptable x : users) {
-
             final User aux = (User) x;
             final String user_pic = aux.getUser_pic();
 
@@ -384,70 +383,75 @@ public class ResourceLoader extends AsyncTask {
 
     /* ================ Load Concerts ================ */
 
-    private void loadConcerts() {
-        final DatabaseReference concerts_ref = FirebaseDatabase.getInstance().getReference().child("concerts");
+    private void loadVotables(String ref, final ArrayList<Adaptable> list) {
+        final DatabaseReference dr = FirebaseDatabase.getInstance().getReference().child(ref);
 
-        concerts_ref.addValueEventListener(new ValueEventListener() {
+        dr.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                concerts.clear();
+                list.clear();
                 ArrayList<String> keysToDelete = new ArrayList<>();
                 for (DataSnapshot x : dataSnapshot.getChildren()) {
-                    Concert aux = x.getValue(Concert.class);
+                    Votable aux = x.getValue(Votable.class);
                     String[] date = aux.getDate().split(",");
 
                     if (DateUtils.hasPassed(date[0])) {
                         keysToDelete.add(x.getKey());
                         deleteVotes(aux);
                     } else
-                        concerts.add(x.getValue(Concert.class));
+                        list.add(aux);
+
+                    for (String key : keysToDelete)
+                        dr.child(key).removeValue();
+
+                    orderList(list);
+
+                    taskOver();
                 }
-
-                for (String key : keysToDelete)
-                    concerts_ref.child(key).removeValue();
-
-                taskOver();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
             }
         });
+    }
+
+    private void orderList(ArrayList<Adaptable> list) {
+        Collections.sort(list, new Comparator<Adaptable>() {
+            @Override
+            public int compare(Adaptable o1, Adaptable o2) {
+                Votable v1, v2;
+                v1 = (Votable) o1;
+                v2 = (Votable) o2;
+                MezzoDate date1 = DateUtils.parseToDate(v1.getDate().split(",")[0]);
+                MezzoDate date2 = DateUtils.parseToDate(v2.getDate().split(",")[0]);
+
+                if (date1.getYear() > date2.getYear())
+                    return 1;
+                if (date1.getYear() < date2.getYear())
+                    return -1;
+                if (date1.getMonth() > date2.getMonth())
+                    return 1;
+                if (date1.getMonth() < date2.getMonth())
+                    return -1;
+                if (date1.getDay() > date2.getDay())
+                    return 1;
+                if (date1.getDay() < date2.getDay())
+                    return -1;
+
+                return 0;
+            }
+        });
+    }
+
+    private void loadConcerts() {
+        loadVotables("concerts", concerts);
     }
 
     /* ================ Load Ensaios ================ */
 
     private void loadEnsaios() {
-        final DatabaseReference ensaios_ref = FirebaseDatabase.getInstance().getReference().child("ensaios");
-
-        ensaios_ref.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                ensaios.clear();
-                ArrayList<String> keysToDelete = new ArrayList<>();
-                for (DataSnapshot x : dataSnapshot.getChildren()) {
-                    Ensaio aux = x.getValue(Ensaio.class);
-                    String[] date = aux.getDate().split(",");
-
-                    if (DateUtils.hasPassed(date[0])) {
-                        keysToDelete.add(x.getKey());
-                        deleteVotes(aux);
-                    } else
-                        ensaios.add(x.getValue(Ensaio.class));
-
-                    for (String key : keysToDelete)
-                        ensaios_ref.child(key).removeValue();
-                }
-
-                taskOver();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
+        loadVotables("ensaios", ensaios);
     }
 
     private void loadPosts() {
