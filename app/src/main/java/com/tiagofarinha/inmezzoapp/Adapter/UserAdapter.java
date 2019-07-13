@@ -1,8 +1,6 @@
 package com.tiagofarinha.inmezzoapp.Adapter;
 
-import android.content.Context;
 import android.graphics.Color;
-import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,8 +20,8 @@ import java.util.ArrayList;
 
 public class UserAdapter extends DefaultAdapter {
 
-    public UserAdapter(@NonNull Context mContext, ArrayList<Adaptable> objects, int layoutId) {
-        super(mContext, objects, layoutId);
+    public UserAdapter(ArrayList<Adaptable> objects, int layoutId) {
+        super(objects, layoutId);
     }
 
     @Override

@@ -11,7 +11,6 @@ import android.widget.ListView;
 
 import com.tiagofarinha.inmezzoapp.Adapter.ConcertsAdapter;
 import com.tiagofarinha.inmezzoapp.Cache.ResourceLoader;
-import com.tiagofarinha.inmezzoapp.MainLogic.MainMethods;
 import com.tiagofarinha.inmezzoapp.R;
 
 public class ConcertsLogic extends Fragment {
@@ -32,7 +31,7 @@ public class ConcertsLogic extends Fragment {
     }
 
     private void getConcerts() {
-        concertsAdapter = new ConcertsAdapter(MainMethods.getInstance().getContext(), ResourceLoader.getInstance().getConcerts(), R.layout.concert_row);
+        concertsAdapter = new ConcertsAdapter(ResourceLoader.getInstance().getConcerts(), R.layout.concert_row);
         listView.setAdapter(concertsAdapter);
     }
 }

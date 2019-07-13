@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 
 import com.tiagofarinha.inmezzoapp.Interfaces.Adaptable;
+import com.tiagofarinha.inmezzoapp.MainLogic.MainMethods;
 
 import java.util.ArrayList;
 
@@ -19,10 +20,10 @@ public abstract class DefaultAdapter extends ArrayAdapter<Adaptable> {
     protected ArrayList<Adaptable> objects;
     protected int layoutId;
 
-    public DefaultAdapter(@NonNull Context mContext, ArrayList<Adaptable> objects, int layoutId) {
-        super(mContext, 0, objects);
+    public DefaultAdapter(ArrayList<Adaptable> objects, int layoutId) {
+        super(MainMethods.getInstance().getContext(), 0, objects);
 
-        this.mContext = mContext;
+        this.mContext = MainMethods.getInstance().getContext();
         this.objects = objects;
         this.layoutId = layoutId;
     }

@@ -80,6 +80,10 @@
     <string name="ensaio_inserir"> Adicionar Ensaio </string>
     <string name="warning_add"> Adicionar Aviso </string>
 
+    <string name="vote_go"> Vou </string>
+    <string name="vote_maybe"> Talvez </string>
+    <string name="vote_dont"> Não Vou </string>
+
     ====== Page Titles ======
 
     <string name="feed_title"> Últimas Mensagens </string>

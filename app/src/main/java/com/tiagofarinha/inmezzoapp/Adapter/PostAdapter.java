@@ -1,10 +1,8 @@
 package com.tiagofarinha.inmezzoapp.Adapter;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -28,8 +26,8 @@ import java.util.ArrayList;
 
 public class PostAdapter extends DefaultAdapter {
 
-    public PostAdapter(@NonNull Context mContext, ArrayList<Adaptable> objects, int layoutId) {
-        super(mContext, objects, layoutId);
+    public PostAdapter(ArrayList<Adaptable> objects, int layoutId) {
+        super(objects, layoutId);
     }
 
     @Override

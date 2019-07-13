@@ -29,25 +29,21 @@ import java.util.ArrayList;
 
 public class PollLogic extends Fragment {
 
-    public static final int GO = 0, DONT = 1;
+    public static final int GO = 0, DONT = 1, MAYBE = 2;
 
     private Adaptable event;
     private DatabaseReference votes_ref;
 
-    private int go, dont;
-
     private DataSnapshot voteSnap;
     private Vote vote;
 
-    private Button goButt, dontButt;
-    private TextView goNum, dontNum;
-    private ProgressBar progGo, progDont;
+    private Button goButt, dontButt, maybeButt;
+    private TextView goNum, dontNum, maybeNum;
+    private ProgressBar progGo, progDont, progMaybe;
 
-    private ListView goList, dontList;
+    private ListView goList, dontList, maybeList;
 
     private ArrayList<Vote> votes;
-
-    private VoteAdapter goAdap, dontAdap;
 
     @Nullable
     @Override
@@ -61,14 +57,19 @@ public class PollLogic extends Fragment {
 
         goNum = view.findViewById(R.id.poll_vou_num);
         dontNum = view.findViewById(R.id.poll_nao_num);
+        maybeNum = view.findViewById(R.id.poll_maybe_num);
+
         goButt = view.findViewById(R.id.vou_button);
         dontButt = view.findViewById(R.id.nao_button);
+        maybeButt = view.findViewById(R.id.maybe_button);
 
         progGo = view.findViewById(R.id.poll_vou);
         progDont = view.findViewById(R.id.poll_nao);
+        progMaybe = view.findViewById(R.id.poll_talvez);
 
         goList = view.findViewById(R.id.poll_go_list);
         dontList = view.findViewById(R.id.poll_dont_list);
+        maybeList = view.findViewById(R.id.poll_maybe_list);
 
         goButt.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,6 +83,12 @@ public class PollLogic extends Fragment {
                 addVote(DONT);
             }
         });
+        maybeButt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addVote(MAYBE);
+            }
+        });
 
         getVotes();
 
@@ -89,97 +96,136 @@ public class PollLogic extends Fragment {
     }
 
     private void getComps() {
-        goNum.setText(go + "");
-        dontNum.setText(dont + "");
+        generateLists();
+        checkTextures();
+    }
 
-        progGo.setMax(go + dont);
-        progDont.setMax(go + dont);
+    private void setNumbers(int go, int dont, int maybe) {
+        int max = go + dont + maybe;
+
+        progGo.setMax(max);
+        progDont.setMax(max);
+        progMaybe.setMax(max);
 
         progGo.setProgress(go);
         progDont.setProgress(dont);
+        progMaybe.setProgress(maybe);
 
-        generateLists();
-
-        checkTextures();
+        goNum.setText(go + "");
+        maybeNum.setText(maybe + "");
+        dontNum.setText(dont + "");
     }
 
     private void generateLists() {
         ArrayList<Adaptable> go = new ArrayList<>();
+        ArrayList<Adaptable> maybe = new ArrayList<>();
         ArrayList<Adaptable> dont = new ArrayList<>();
 
         for (Vote x : votes) {
-            if (x.getValue() == GO)
-                go.add(x.getUser());
-            else
-                dont.add(x.getUser());
+            switch (x.getValue()) {
+                case GO:
+                    go.add(x.getUser());
+                    break;
+                case DONT:
+                    dont.add(x.getUser());
+                    break;
+                case MAYBE:
+                    maybe.add(x.getUser());
+                    break;
+            }
         }
 
-        goAdap = new VoteAdapter(MainMethods.getInstance().getContext(), go, R.layout.vote_row);
-        dontAdap = new VoteAdapter(MainMethods.getInstance().getContext(), dont, R.layout.vote_row);
+        setNumbers(go.size(), dont.size(), maybe.size());
 
-        goList.setAdapter(goAdap);
-        dontList.setAdapter(dontAdap);
+        VoteAdapter adapt = null;
+
+        // GO
+        VoteAdapter ad1 = new VoteAdapter(go, R.layout.vote_row);
+        goList.setAdapter(ad1);
+
+        // DONT
+        VoteAdapter ad2 = new VoteAdapter(dont, R.layout.vote_row);
+        dontList.setAdapter(ad2);
+
+        //Maybe
+        VoteAdapter ad3 = new VoteAdapter(maybe, R.layout.vote_row);
+        maybeList.setAdapter(ad3);
     }
 
     private void checkTextures() {
         if (vote == null) {
-            goButt.setBackgroundResource(R.drawable.login_button);
-            dontButt.setBackgroundResource(R.drawable.login_button);
+            changeTexture(goButt, true);
+            changeTexture(dontButt, true);
+            changeTexture(maybeButt, true);
         } else {
-            if (vote.getValue() == GO) {
-                goButt.setBackgroundResource(R.drawable.login_pressed);
-                dontButt.setBackgroundResource(R.drawable.login_button);
-            } else {
-                goButt.setBackgroundResource(R.drawable.login_button);
-                dontButt.setBackgroundResource(R.drawable.login_pressed);
+            switch (vote.getValue()) {
+                case GO:
+                    changeTexture(goButt, false);
+                    changeTexture(dontButt, true);
+                    changeTexture(maybeButt, true);
+                    break;
+                case DONT:
+                    changeTexture(goButt, true);
+                    changeTexture(dontButt, false);
+                    changeTexture(maybeButt, true);
+                    break;
+                case MAYBE:
+                    changeTexture(goButt, true);
+                    changeTexture(dontButt, true);
+                    changeTexture(maybeButt, false);
+                    break;
             }
         }
+    }
+
+    private void changeTexture(Button bt, boolean active) {
+        int id;
+
+        if (active)
+            id = R.drawable.login_button;
+        else
+            id = R.drawable.login_pressed;
+
+        bt.setBackgroundResource(id);
     }
 
     private void getVotes() {
         votes_ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                go = 0;
-                dont = 0;
                 votes.clear();
 
-                Adaptable localEvent;
+                Adaptable localEvent = null;
 
                 for (DataSnapshot x : dataSnapshot.getChildren()) {
                     Vote vote = x.getValue(Vote.class);
 
-                    if (event instanceof Ensaio && vote.getEnsaio() != null) {
+                    localEvent = null;
+
+                    if (event instanceof Ensaio && vote.getEnsaio() != null)
                         localEvent = vote.getEnsaio();
-                        handleVote(localEvent, vote, x);
-                    } else if ((event instanceof Concert && vote.getConcert() != null)) {
+                    else if (event instanceof Concert && vote.getConcert() != null)
                         localEvent = vote.getConcert();
+
+                    if (localEvent != null)
                         handleVote(localEvent, vote, x);
-                    }
                 }
 
                 getComps();
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
             }
         });
     }
 
     private void handleVote(Adaptable localEvent, Vote vote, DataSnapshot x) {
-        if (localEvent.equals(PollLogic.this.event)) {
-            if (vote.getValue() == GO)
-                go++;
-            else
-                dont++;
-
+        if (localEvent.equals(event)) {
             votes.add(vote);
 
             if (vote.getUser().equals(MainMethods.getInstance().getAuxUser())) {
-                PollLogic.this.voteSnap = x;
-                PollLogic.this.vote = vote;
+                this.voteSnap = x;
+                this.vote = vote;
             }
         }
     }

@@ -1,7 +1,5 @@
 package com.tiagofarinha.inmezzoapp.Adapter;
 
-import android.content.Context;
-import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,8 +14,8 @@ import java.util.ArrayList;
 
 public class VoteAdapter extends DefaultAdapter {
 
-    public VoteAdapter(@NonNull Context mContext, ArrayList<Adaptable> objects, int layoutId) {
-        super(mContext, objects, layoutId);
+    public VoteAdapter(ArrayList<Adaptable> objects, int layoutId) {
+        super(objects, layoutId);
     }
 
     @Override

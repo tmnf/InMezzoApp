@@ -11,7 +11,6 @@ import android.widget.ListView;
 
 import com.tiagofarinha.inmezzoapp.Adapter.UserAdapter;
 import com.tiagofarinha.inmezzoapp.Cache.ResourceLoader;
-import com.tiagofarinha.inmezzoapp.MainLogic.MainMethods;
 import com.tiagofarinha.inmezzoapp.R;
 
 public class MembersLogic extends Fragment {
@@ -32,7 +31,7 @@ public class MembersLogic extends Fragment {
     }
 
     private void getUsers() {
-        mAdapter = new UserAdapter(MainMethods.getInstance().getContext(), ResourceLoader.getInstance().getUsers(), R.layout.user_row);
+        mAdapter = new UserAdapter(ResourceLoader.getInstance().getUsers(), R.layout.user_row);
         listView.setAdapter(mAdapter);
     }
 }

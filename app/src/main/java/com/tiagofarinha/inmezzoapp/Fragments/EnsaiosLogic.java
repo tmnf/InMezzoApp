@@ -11,7 +11,6 @@ import android.widget.ListView;
 
 import com.tiagofarinha.inmezzoapp.Adapter.EnsaioAdapter;
 import com.tiagofarinha.inmezzoapp.Cache.ResourceLoader;
-import com.tiagofarinha.inmezzoapp.MainLogic.MainMethods;
 import com.tiagofarinha.inmezzoapp.R;
 
 public class EnsaiosLogic extends Fragment {
@@ -31,7 +30,7 @@ public class EnsaiosLogic extends Fragment {
     }
 
     private void getEnsaios() {
-        EnsaioAdapter ensaiosAdapter = new EnsaioAdapter(MainMethods.getInstance().getContext(), ResourceLoader.getInstance().getEnsaios(), R.layout.ensaio_row);
+        EnsaioAdapter ensaiosAdapter = new EnsaioAdapter(ResourceLoader.getInstance().getEnsaios(), R.layout.ensaio_row);
         listView.setAdapter(ensaiosAdapter);
     }
 }

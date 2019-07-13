@@ -1,8 +1,6 @@
 package com.tiagofarinha.inmezzoapp.Adapter;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,8 +18,8 @@ import java.util.ArrayList;
 
 public class ConcertsAdapter extends DefaultAdapter {
 
-    public ConcertsAdapter(@NonNull Context mContext, ArrayList<Adaptable> objects, int layoutId) {
-        super(mContext, objects, layoutId);
+    public ConcertsAdapter(ArrayList<Adaptable> objects, int layoutId) {
+        super(objects, layoutId);
     }
 
     @Override
@@ -52,7 +50,7 @@ public class ConcertsAdapter extends DefaultAdapter {
         aux = "Dia: " + datetime[0];
         holder.date.setText(aux);
 
-        aux = "Hora: " + datetime[1];
+        aux = "Hora: " + datetime[1] + "h";
         holder.hour.setText(aux);
 
         if (MainMethods.getInstance().isLoggedIn())

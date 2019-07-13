@@ -13,6 +13,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.tiagofarinha.inmezzoapp.Cache.FragHistory;
 import com.tiagofarinha.inmezzoapp.Cache.FragManager;
 import com.tiagofarinha.inmezzoapp.Fragments.AddConcert;
 import com.tiagofarinha.inmezzoapp.Fragments.AddEnsaio;
@@ -42,7 +43,9 @@ public class MainMethods {
     private NavigationView navigationView;
 
     private Button post_button;
+
     private Fragment currentFrag;
+    private int currentFragId;
 
     private User auxUser;
 
@@ -129,12 +132,20 @@ public class MainMethods {
     public void changeFrag(Fragment frag, int id, boolean found) {
         FragmentTransaction trans = mainActivity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, frag);
 
+        if (currentFragId == 0)
+            FragHistory.getInstance().addToHistory(R.id.menu_inicio);
+        else if (!mainActivity.getBackPressed()) {
+            FragHistory.getInstance().addToHistory(currentFragId);
+            mainActivity.setBackPressed(false);
+        }
+
         if (!found)
             FragManager.getInstance().addToFragList(frag, "Frag:" + id);
 
         trans.commit();
 
         currentFrag = frag;
+        currentFragId = id;
 
         navigationView.setCheckedItem(id);
         closeKeyboard();

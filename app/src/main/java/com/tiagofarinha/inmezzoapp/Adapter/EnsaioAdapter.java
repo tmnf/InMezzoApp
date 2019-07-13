@@ -1,8 +1,6 @@
 package com.tiagofarinha.inmezzoapp.Adapter;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,8 +18,8 @@ import java.util.ArrayList;
 /* This class handles member row fulfilling */
 public class EnsaioAdapter extends DefaultAdapter {
 
-    public EnsaioAdapter(@NonNull Context mContext, ArrayList<Adaptable> objects, int layoutId) {
-        super(mContext, objects, layoutId);
+    public EnsaioAdapter(ArrayList<Adaptable> objects, int layoutId) {
+        super(objects, layoutId);
     }
 
     @Override
@@ -42,7 +40,9 @@ public class EnsaioAdapter extends DefaultAdapter {
         String[] datetime = ensaio.getDate().split(",");
 
         holder.date.setText(datetime[0]);
-        holder.hour.setText(datetime[1]);
+
+        String hour = datetime[1] + "h";
+        holder.hour.setText(hour);
         holder.descr.setText(ensaio.getDescr());
 
         addListener(convertView, ensaio);

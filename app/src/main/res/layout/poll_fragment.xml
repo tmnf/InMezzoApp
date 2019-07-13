@@ -11,7 +11,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         android:fontFamily="@font/bookman_bold"
-        android:text="Vou"
+        android:text="@string/vote_go"
         android:textColor="@color/white"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -19,62 +19,20 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/nao_vou_lista"
+        android:id="@+id/maybe_texto"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="20dp"
-        android:fontFamily="@font/bookman_bold"
-        android:text="Não Vou"
-        android:textColor="@color/white"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/vou_lista_textp" />
-
-    <TextView
-        android:id="@+id/vou_lista_textp"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="20dp"
         android:fontFamily="@font/bookman_bold"
-        android:text="Vou"
+        android:text="@string/vote_maybe"
         android:textColor="@color/white"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/vou_button" />
-
-    <TextView
-        android:id="@+id/poll_vou_num"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="20dp"
-        android:fontFamily="@font/bookman_bold"
-        android:textColor="@color/white"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/vou_texto" />
-
-    <TextView
-        android:id="@+id/poll_nao_num"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="20dp"
-        android:fontFamily="@font/bookman_bold"
-        android:textColor="@color/white"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nao_vou_texto" />
+        app:layout_constraintTop_toBottomOf="@+id/poll_vou" />
 
     <TextView
         android:id="@+id/nao_vou_texto"
@@ -84,13 +42,13 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="20dp"
         android:fontFamily="@font/bookman_bold"
-        android:text="Não Vou"
+        android:text="@string/vote_dont"
         android:textColor="@color/white"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/poll_vou" />
+        app:layout_constraintTop_toBottomOf="@+id/poll_talvez" />
 
     <ProgressBar
         android:id="@+id/poll_vou"
@@ -105,6 +63,19 @@
         app:layout_constraintTop_toBottomOf="@+id/vou_texto" />
 
     <ProgressBar
+        android:id="@+id/poll_talvez"
+        style="@android:style/Widget.ProgressBar.Horizontal"
+        android:layout_width="0dp"
+        android:layout_height="15dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        app:layout_constraintEnd_toStartOf="@+id/poll_vou_num"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/maybe_texto" />
+
+    <ProgressBar
         android:id="@+id/poll_nao"
         style="@android:style/Widget.ProgressBar.Horizontal"
         android:layout_width="0dp"
@@ -116,6 +87,90 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nao_vou_texto" />
 
+    <TextView
+        android:id="@+id/vou_lista_textp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:fontFamily="@font/bookman_bold"
+        android:text="@string/vote_go"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/vou_button" />
+
+    <TextView
+        android:id="@+id/nao_vou_lista"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:fontFamily="@font/bookman_bold"
+        android:text="@string/vote_dont"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/poll_go_list" />
+
+    <TextView
+        android:id="@+id/maybe_lista"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:fontFamily="@font/bookman_bold"
+        android:text="@string/vote_maybe"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/poll_dont_list" />
+
+    <TextView
+        android:id="@+id/poll_vou_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="20dp"
+        android:fontFamily="@font/bookman_bold"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/vou_texto" />
+
+    <TextView
+        android:id="@+id/poll_maybe_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="20dp"
+        android:fontFamily="@font/bookman_bold"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/maybe_texto" />
+
+    <TextView
+        android:id="@+id/poll_nao_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="20dp"
+        android:fontFamily="@font/bookman_bold"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nao_vou_texto" />
+
     <Button
         android:id="@+id/vou_button"
         android:layout_width="103dp"
@@ -123,7 +178,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/login_button"
-        android:text="Vou"
+        android:text="@string/vote_go"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/poll_nao" />
 
@@ -134,36 +189,58 @@
         android:layout_marginStart="5dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/login_button"
-        android:text="Não Vou"
+        android:text="@string/vote_dont"
         app:layout_constraintStart_toEndOf="@+id/vou_button"
         app:layout_constraintTop_toBottomOf="@+id/poll_nao" />
+
+    <Button
+        android:id="@+id/maybe_button"
+        android:layout_width="103dp"
+        android:layout_height="41dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/login_button"
+        android:text="@string/vote_maybe"
+        app:layout_constraintStart_toEndOf="@+id/nao_button"
+        app:layout_constraintTop_toBottomOf="@+id/poll_nao" />
+
+    <ListView
+        android:id="@+id/poll_maybe_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="40dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/maybe_lista" />
 
     <ListView
         android:id="@+id/poll_go_list"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="40dp"
-        android:layout_marginBottom="8dp"
         android:divider="@null"
-        app:layout_constraintBottom_toTopOf="@+id/nao_vou_lista"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/vou_lista_textp" />
+        app:layout_constraintTop_toBottomOf="@+id/vou_lista_textp">
+
+    </ListView>
 
     <ListView
         android:id="@+id/poll_dont_list"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="40dp"
-        android:layout_marginBottom="20dp"
         android:divider="@null"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nao_vou_lista" />
+        app:layout_constraintTop_toBottomOf="@+id/nao_vou_lista">
+
+    </ListView>
 
 </android.support.constraint.ConstraintLayout>

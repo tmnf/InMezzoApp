@@ -26,6 +26,6 @@ public class Ensaio implements Votable {
     public boolean equals(Object obj) {
         Ensaio ensaio = (Ensaio) obj;
 
-        return ensaio.getDate().equals(this.date) && ensaio.getDescr().equals(this.descr);
+        return ensaio.getDate().equals(date) && ensaio.getDescr().equals(descr);
     }
 }
