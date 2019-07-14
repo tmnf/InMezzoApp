@@ -41,15 +41,22 @@ public class UserAdapter extends DefaultAdapter {
         /* Data Handle */
         LoginUtils.putInto(holder.user_pic, user);
 
-        // APAGAR ISTO //
-        if (user.getUser_mode() == 1)
-            holder.user_name.setTextColor(Color.YELLOW);
-        else if (user.getUser_mode() == 2)
-            holder.user_name.setTextColor(Color.BLUE);
-        else
-            holder.user_name.setTextColor(Color.WHITE);
+        String name = user.getUser_name();
+        switch (user.getUser_mode()) {
+            case User.COORD:
+                name += " (Coordenador)";
+                holder.user_name.setTextColor(Color.YELLOW);
+                break;
+            case User.ADMIN:
+                name += " (Admin)";
+                holder.user_name.setTextColor(Color.YELLOW);
+                break;
+            default:
+                holder.user_name.setTextColor(Color.WHITE);
+                break;
+        }
 
-        holder.user_name.setText(user.getUser_name());
+        holder.user_name.setText(name);
 
         String age = DateUtils.getAge(user.getUser_birthday()) + " Anos";
 

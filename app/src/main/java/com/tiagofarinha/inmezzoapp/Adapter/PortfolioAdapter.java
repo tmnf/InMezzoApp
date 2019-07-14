@@ -1,11 +1,15 @@
 package com.tiagofarinha.inmezzoapp.Adapter;
 
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.tiagofarinha.inmezzoapp.Configurations.MusicConfig;
 import com.tiagofarinha.inmezzoapp.Interfaces.Adaptable;
+import com.tiagofarinha.inmezzoapp.MainLogic.MainMethods;
 import com.tiagofarinha.inmezzoapp.Models.Music;
 import com.tiagofarinha.inmezzoapp.R;
 
@@ -31,7 +35,7 @@ public class PortfolioAdapter extends DefaultAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        Music music = (Music) obj;
+        final Music music = (Music) obj;
 
         /* DATA HANDLE */
         holder.title.setText(music.getName());
@@ -39,7 +43,27 @@ public class PortfolioAdapter extends DefaultAdapter {
         String artist = "- " + music.getArtist();
         holder.artist.setText(artist);
 
+        if (MainMethods.getInstance().isOp())
+            addListener(convertView, music);
+
         return convertView;
+    }
+
+    private void addListener(View convertView, final Music music) {
+        convertView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Fragment frag = new MusicConfig();
+
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("music", music);
+
+                frag.setArguments(bundle);
+
+                MainMethods.getInstance().changeFrag(frag, R.id.menu_portfolio, true);
+                return true;
+            }
+        });
     }
 
     private class ViewHolder {

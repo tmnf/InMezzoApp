@@ -54,6 +54,8 @@
     <string name="reserve_button"> Reservar </string>
     <string name="post_button"> Postar </string>
     <string name="add_button"> Adicionar </string>
+    <string name="remove_button"> Remover </string>
+    <string name="update_button"> Atualizar </string>
     <string name="password_reset_button"> Alterar Password </string>
     <string name="save_button"> Guardar </string>
 

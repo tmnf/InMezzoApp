@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.tiagofarinha.inmezzoapp.Configurations.EnsaioConfig;
 import com.tiagofarinha.inmezzoapp.Fragments.PollLogic;
 import com.tiagofarinha.inmezzoapp.Interfaces.Adaptable;
 import com.tiagofarinha.inmezzoapp.MainLogic.MainMethods;
@@ -58,10 +59,27 @@ public class EnsaioAdapter extends DefaultAdapter {
                 Bundle args = new Bundle();
                 args.putSerializable("event", ensaio);
                 frag.setArguments(args);
-                MainMethods.getInstance().changeFrag(frag, 0, true);
+                MainMethods.getInstance().changeFrag(frag, R.id.menu_ensaios, true);
             }
         });
+
+        if (MainMethods.getInstance().isOp())
+            convertView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    Fragment frag = new EnsaioConfig();
+
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("ensaio", ensaio);
+
+                    frag.setArguments(bundle);
+
+                    MainMethods.getInstance().changeFrag(frag, R.id.menu_ensaios, true);
+                    return true;
+                }
+            });
     }
+
 
     private class ViewHolder {
         TextView date, hour, descr;

@@ -308,19 +308,14 @@ public class ResourceLoader extends AsyncTask {
                         aux1 = (User) o1;
                         aux2 = (User) o2;
 
-                        if (aux1.getUser_mode() == 1 && (aux2.getUser_mode() == 0 || aux2.getUser_mode() == 2))
-                            return 1;
+                        String[] name1 = aux1.getUser_name().split(" ");
+                        String[] name2 = aux2.getUser_name().split(" ");
 
-                        if (aux1.getUser_mode() == 2)
-                            return -1;
+                        int checkFirst = name1[0].compareTo(name2[0]);
+                        if (checkFirst == 0)
+                            return name1[1].compareTo(name2[1]);
 
-                        if (aux1.getUser_mode() == 0 && aux2.getUser_mode() == 2)
-                            return 1;
-
-                        if (aux1.getUser_mode() == 0 && aux2.getUser_mode() == 1)
-                            return -1;
-
-                        return 0;
+                        return checkFirst;
                     }
                 });
 

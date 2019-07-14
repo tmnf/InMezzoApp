@@ -8,7 +8,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.FirebaseDatabase;
-import com.tiagofarinha.inmezzoapp.Fragments.ConfigLogic;
+import com.tiagofarinha.inmezzoapp.Configurations.ProfileConfig;
 
 public class ConfigHandler extends AsyncTask {
 
@@ -19,9 +19,9 @@ public class ConfigHandler extends AsyncTask {
     private String messages;
     private int operations;
 
-    private ConfigLogic cl;
+    private ProfileConfig cl;
 
-    public ConfigHandler(ConfigLogic cl, String name, String email, String bio) {
+    public ConfigHandler(ProfileConfig cl, String name, String email, String bio) {
         this.cl = cl;
         this.name = name;
         this.email = email;

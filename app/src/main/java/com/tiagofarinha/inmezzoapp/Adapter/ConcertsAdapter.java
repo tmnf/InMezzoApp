@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.tiagofarinha.inmezzoapp.Configurations.ConcertConfig;
 import com.tiagofarinha.inmezzoapp.Fragments.PollLogic;
 import com.tiagofarinha.inmezzoapp.Interfaces.Adaptable;
 import com.tiagofarinha.inmezzoapp.MainLogic.MainMethods;
@@ -70,6 +71,22 @@ public class ConcertsAdapter extends DefaultAdapter {
                 MainMethods.getInstance().changeFrag(frag, 0, true);
             }
         });
+
+        if (MainMethods.getInstance().isOp())
+            convertView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    Fragment frag = new ConcertConfig();
+
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("concert", concert);
+
+                    frag.setArguments(bundle);
+
+                    MainMethods.getInstance().changeFrag(frag, R.id.menu_concertos, true);
+                    return true;
+                }
+            });
     }
 
     private class ViewHolder {

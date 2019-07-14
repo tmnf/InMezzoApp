@@ -92,12 +92,23 @@
         android:id="@+id/ensaio_button"
         android:layout_width="159dp"
         android:layout_height="52dp"
-        android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
         android:background="@drawable/login_button"
         android:fontFamily="@font/bookman_bold"
         android:paddingBottom="5dp"
         android:text="@string/add_button"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ensaio_descr" />
+
+    <Button
+        android:id="@+id/ensaio_delete"
+        android:layout_width="159dp"
+        android:layout_height="52dp"
+        android:background="@drawable/login_button"
+        android:fontFamily="@font/bookman_bold"
+        android:paddingBottom="5dp"
+        android:text="@string/remove_button"
+        android:visibility="gone"
+        app:layout_constraintEnd_toStartOf="@+id/ensaio_button"
         app:layout_constraintTop_toBottomOf="@+id/ensaio_descr" />
 </android.support.constraint.ConstraintLayout>

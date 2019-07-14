@@ -1,8 +1,10 @@
 package com.tiagofarinha.inmezzoapp.Cache;
 
+import com.tiagofarinha.inmezzoapp.Utils.Utils;
+
 public class FragHistory {
 
-    private static final int MAX_HISTORY = 3;
+    private static final int MAX_HISTORY = 5;
 
     private static FragHistory INSTANCE;
 
@@ -28,17 +30,17 @@ public class FragHistory {
     }
 
     public int getLastFrag() {
-        return history[current--];
-    }
+        if (current == 0)
+            Utils.showMessage("Pressione voltar novamente para sair");
 
-    public int checkLastFrag() {
-        return history[current];
+        return history[current--];
     }
 
     private void deleteFirst() {
         current--;
-        history[0] = history[1];
-        history[1] = history[2];
+
+        for (int i = 0; i < MAX_HISTORY - 1; i++)
+            history[i] = history[i + 1];
     }
 
     public boolean isEmpty() {

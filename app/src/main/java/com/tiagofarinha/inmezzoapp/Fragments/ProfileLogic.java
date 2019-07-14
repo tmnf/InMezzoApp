@@ -19,6 +19,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.tiagofarinha.inmezzoapp.Configurations.ProfileConfig;
 import com.tiagofarinha.inmezzoapp.MainLogic.MainMethods;
 import com.tiagofarinha.inmezzoapp.Models.User;
 import com.tiagofarinha.inmezzoapp.R;
@@ -102,7 +103,7 @@ public class ProfileLogic extends Fragment {
                         break;
                     case MotionEvent.ACTION_UP:
                         settings.setTextColor(Color.WHITE);
-                        MainMethods.getInstance().changeFrag(new ConfigLogic(), R.id.menu_perfil, true);
+                        MainMethods.getInstance().changeFrag(new ProfileConfig(), R.id.menu_perfil, true);
                         break;
                 }
                 return true;

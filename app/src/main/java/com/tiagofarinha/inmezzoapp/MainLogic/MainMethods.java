@@ -125,19 +125,17 @@ public class MainMethods {
 
         fragment.setArguments(bundle);
 
-        fragment.setArguments(bundle);
         changeFrag(fragment, R.id.menu_perfil, true);
     }
 
     public void changeFrag(Fragment frag, int id, boolean found) {
         FragmentTransaction trans = mainActivity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, frag);
 
-        if (currentFragId == 0)
-            FragHistory.getInstance().addToHistory(R.id.menu_inicio);
-        else if (!mainActivity.getBackPressed()) {
-            FragHistory.getInstance().addToHistory(currentFragId);
-            mainActivity.setBackPressed(false);
-        }
+        if (currentFragId != 0)
+            if (mainActivity.getBackPressed())
+                mainActivity.setBackPressed(false);
+            else
+                FragHistory.getInstance().addToHistory(currentFragId);
 
         if (!found)
             FragManager.getInstance().addToFragList(frag, "Frag:" + id);
@@ -231,6 +229,10 @@ public class MainMethods {
 
     public DrawerLayout getDrawer() {
         return drawer;
+    }
+
+    public boolean isOp() {
+        return (auxUser.getUser_mode() == User.COORD || auxUser.getUser_mode() == User.ADMIN);
     }
 
     public boolean isLoggedIn() {

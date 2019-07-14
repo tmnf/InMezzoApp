@@ -1,4 +1,4 @@
-package com.tiagofarinha.inmezzoapp.Fragments;
+package com.tiagofarinha.inmezzoapp.Configurations;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -19,7 +19,7 @@ import com.tiagofarinha.inmezzoapp.UserClasses.ConfigHandler;
 import com.tiagofarinha.inmezzoapp.Utils.MenuUtils;
 import com.tiagofarinha.inmezzoapp.Utils.Utils;
 
-public class ConfigLogic extends Fragment {
+public class ProfileConfig extends Fragment {
 
     private String currName, currEmail, currBio;
     private FirebaseUser user;
