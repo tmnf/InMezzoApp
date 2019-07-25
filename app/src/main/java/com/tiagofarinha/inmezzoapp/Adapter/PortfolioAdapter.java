@@ -1,11 +1,12 @@
 package com.tiagofarinha.inmezzoapp.Adapter;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import androidx.fragment.app.Fragment;
 
 import com.tiagofarinha.inmezzoapp.Configurations.MusicConfig;
 import com.tiagofarinha.inmezzoapp.Interfaces.Adaptable;

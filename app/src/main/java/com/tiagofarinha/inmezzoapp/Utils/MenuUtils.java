@@ -1,6 +1,6 @@
 package com.tiagofarinha.inmezzoapp.Utils;
 
-import android.support.v4.app.Fragment;
+import androidx.fragment.app.Fragment;
 
 import com.tiagofarinha.inmezzoapp.AdminTools.AdminLogic;
 import com.tiagofarinha.inmezzoapp.Cache.FragManager;

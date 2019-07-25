@@ -1,8 +1,9 @@
 package com.tiagofarinha.inmezzoapp.UserClasses;
 
 import android.os.AsyncTask;
-import android.support.annotation.NonNull;
 import android.view.View;
+
+import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;

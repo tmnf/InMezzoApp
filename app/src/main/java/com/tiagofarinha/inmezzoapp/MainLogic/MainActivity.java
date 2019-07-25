@@ -1,12 +1,13 @@
 package com.tiagofarinha.inmezzoapp.MainLogic;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+
+import com.google.android.material.navigation.NavigationView;
 import com.tiagofarinha.inmezzoapp.Cache.FragHistory;
 import com.tiagofarinha.inmezzoapp.R;
 import com.tiagofarinha.inmezzoapp.Utils.MenuUtils;

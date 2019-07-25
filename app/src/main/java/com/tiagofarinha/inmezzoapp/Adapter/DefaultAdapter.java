@@ -1,11 +1,12 @@
 package com.tiagofarinha.inmezzoapp.Adapter;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.tiagofarinha.inmezzoapp.Interfaces.Adaptable;
 import com.tiagofarinha.inmezzoapp.MainLogic.MainMethods;
