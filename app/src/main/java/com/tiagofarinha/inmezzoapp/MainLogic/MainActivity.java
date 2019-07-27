@@ -28,14 +28,14 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
+        backPressed = true;
+
         if (mm.getDrawer().isDrawerOpen(GravityCompat.START))
             mm.getDrawer().closeDrawer(GravityCompat.START);
         else if (!FragHistory.getInstance().isEmpty())
             MenuUtils.filterMenuItem(FragHistory.getInstance().getLastFrag());
         else
-            super.onBackPressed();
-
-        backPressed = true;
+            moveTaskToBack(true);
     }
 
     @Override

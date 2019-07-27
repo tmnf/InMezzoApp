@@ -166,7 +166,7 @@ public class ResourceLoader extends AsyncTask {
         }
     }
 
-    private void deleteVotes(final Adaptable event) {
+    public void deleteVotes(final Adaptable event) {
         final DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("votes");
 
         ref.addListenerForSingleValueEvent(new ValueEventListener() {

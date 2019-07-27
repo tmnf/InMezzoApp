@@ -3,11 +3,11 @@ package com.tiagofarinha.inmezzoapp.MainLogic;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -75,7 +75,7 @@ public class MainMethods {
         updateGui();
     }
 
-    private void updateGui() {
+    public void updateGui() {
         LoginUtils.getInstance().updateGuiAccording(mAuth, navigationView);
     }
 
@@ -94,7 +94,7 @@ public class MainMethods {
             @Override
             public void onClick(View v) {
                 closeKeyboard();
-                drawer.openDrawer(Gravity.START);
+                drawer.openDrawer(GravityCompat.START);
             }
         });
 
@@ -233,6 +233,9 @@ public class MainMethods {
     }
 
     public boolean isOp() {
+        if (auxUser == null)
+            return false;
+
         return (auxUser.getUser_mode() == User.COORD || auxUser.getUser_mode() == User.ADMIN);
     }
 

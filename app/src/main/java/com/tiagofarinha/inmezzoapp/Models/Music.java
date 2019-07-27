@@ -1,5 +1,7 @@
 package com.tiagofarinha.inmezzoapp.Models;
 
+import androidx.annotation.Nullable;
+
 import com.tiagofarinha.inmezzoapp.Interfaces.Adaptable;
 
 public class Music implements Adaptable {
@@ -20,5 +22,12 @@ public class Music implements Adaptable {
 
     public String getArtist() {
         return artist;
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        Music aux = (Music) obj;
+
+        return aux.getArtist().equals(artist) && aux.getName().equals(name);
     }
 }

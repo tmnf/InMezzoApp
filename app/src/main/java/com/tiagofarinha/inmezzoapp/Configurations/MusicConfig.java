@@ -11,12 +11,22 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.tiagofarinha.inmezzoapp.MainLogic.MainMethods;
 import com.tiagofarinha.inmezzoapp.Models.Music;
 import com.tiagofarinha.inmezzoapp.R;
+import com.tiagofarinha.inmezzoapp.Utils.Utils;
 
 public class MusicConfig extends Fragment {
 
     private Music music;
+    private String key;
+    private DatabaseReference portfolio_ref;
 
     @Nullable
     @Override
@@ -24,8 +34,9 @@ public class MusicConfig extends Fragment {
         View view = inflater.inflate(R.layout.music_add, container, false);
 
         music = (Music) getArguments().getSerializable("music");
+        findKeyFor();
 
-        TextView tittle, name, artist;
+        final TextView tittle, name, artist;
 
         tittle = view.findViewById(R.id.music_add_title);
         name = view.findViewById(R.id.music_name);
@@ -48,7 +59,7 @@ public class MusicConfig extends Fragment {
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                updateMusic();
+                updateMusic(name.getText().toString(), artist.getText().toString());
             }
         });
 
@@ -62,11 +73,44 @@ public class MusicConfig extends Fragment {
         return view;
     }
 
+    private void findKeyFor() {
+        portfolio_ref = FirebaseDatabase.getInstance().getReference().child("portfolio");
+
+        portfolio_ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot x : dataSnapshot.getChildren()) {
+                    if (x.getValue(Music.class).equals(music)) {
+                        key = x.getKey();
+                        return;
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
+    }
+
     private void removeMusic() {
-
+        portfolio_ref.child(key).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Utils.showMessage(music.getName() + " de " + music.getArtist() + " apagada com sucesso!");
+                MainMethods.getInstance().getContext().onBackPressed();
+            }
+        });
     }
 
-    private void updateMusic() {
-
+    private void updateMusic(String name, String artist) {
+        portfolio_ref.child(key).setValue(new Music(name, artist)).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Utils.showMessage("Música Atualizada com Sucesso!");
+                MainMethods.getInstance().getContext().onBackPressed();
+            }
+        });
     }
+
 }
