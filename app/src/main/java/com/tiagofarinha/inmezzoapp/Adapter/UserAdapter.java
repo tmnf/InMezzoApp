@@ -8,7 +8,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.tiagofarinha.inmezzoapp.Interfaces.Adaptable;
-import com.tiagofarinha.inmezzoapp.MainLogic.MainMethods;
 import com.tiagofarinha.inmezzoapp.Models.User;
 import com.tiagofarinha.inmezzoapp.R;
 import com.tiagofarinha.inmezzoapp.Utils.DateUtils;
@@ -64,18 +63,7 @@ public class UserAdapter extends DefaultAdapter {
 
         holder.user_voice.setText(user.getUser_voice());
 
-        addListener(holder, user);
-
         return convertView;
-    }
-
-    private void addListener(final ViewHolder h, final User user) {
-        h.user_pic.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MainMethods.getInstance().goToProfilePage(user);
-            }
-        });
     }
 
     private class ViewHolder {

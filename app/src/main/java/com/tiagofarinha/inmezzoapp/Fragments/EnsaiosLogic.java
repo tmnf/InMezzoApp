@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
@@ -12,6 +13,8 @@ import androidx.fragment.app.Fragment;
 
 import com.tiagofarinha.inmezzoapp.Adapter.EnsaioAdapter;
 import com.tiagofarinha.inmezzoapp.Cache.ResourceLoader;
+import com.tiagofarinha.inmezzoapp.Configurations.EnsaioConfig;
+import com.tiagofarinha.inmezzoapp.MainLogic.MainMethods;
 import com.tiagofarinha.inmezzoapp.R;
 
 public class EnsaiosLogic extends Fragment {
@@ -33,5 +36,39 @@ public class EnsaiosLogic extends Fragment {
     private void getEnsaios() {
         EnsaioAdapter ensaiosAdapter = new EnsaioAdapter(ResourceLoader.getInstance().getEnsaios(), R.layout.ensaio_row);
         listView.setAdapter(ensaiosAdapter);
+
+        if (MainMethods.getInstance().isLoggedIn())
+            addListener();
+
     }
+
+    private void addListener() {
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Fragment frag = new PollLogic();
+                Bundle args = new Bundle();
+                args.putSerializable("event", ResourceLoader.getInstance().getEnsaios().get(i));
+                frag.setArguments(args);
+                MainMethods.getInstance().changeFrag(frag, R.id.menu_ensaios, true);
+            }
+        });
+
+        if (MainMethods.getInstance().isOp())
+            listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                @Override
+                public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    Fragment frag = new EnsaioConfig();
+
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("ensaio", ResourceLoader.getInstance().getEnsaios().get(i));
+
+                    frag.setArguments(bundle);
+
+                    MainMethods.getInstance().changeFrag(frag, R.id.menu_ensaios, true);
+                    return true;
+                }
+            });
+    }
+
 }

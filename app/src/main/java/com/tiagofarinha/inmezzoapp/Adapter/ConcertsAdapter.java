@@ -1,17 +1,11 @@
 package com.tiagofarinha.inmezzoapp.Adapter;
 
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import androidx.fragment.app.Fragment;
-
-import com.tiagofarinha.inmezzoapp.Configurations.ConcertConfig;
-import com.tiagofarinha.inmezzoapp.Fragments.PollLogic;
 import com.tiagofarinha.inmezzoapp.Interfaces.Adaptable;
-import com.tiagofarinha.inmezzoapp.MainLogic.MainMethods;
 import com.tiagofarinha.inmezzoapp.Models.Concert;
 import com.tiagofarinha.inmezzoapp.R;
 
@@ -55,40 +49,9 @@ public class ConcertsAdapter extends DefaultAdapter {
         aux = "Hora: " + datetime[1] + "h";
         holder.hour.setText(aux);
 
-        if (MainMethods.getInstance().isLoggedIn())
-            addListener(convertView, concert);
-
         return convertView;
     }
 
-    private void addListener(View convertView, final Concert concert) {
-        convertView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Fragment frag = new PollLogic();
-                Bundle args = new Bundle();
-                args.putSerializable("event", concert);
-                frag.setArguments(args);
-                MainMethods.getInstance().changeFrag(frag, 0, true);
-            }
-        });
-
-        if (MainMethods.getInstance().isOp())
-            convertView.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    Fragment frag = new ConcertConfig();
-
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable("concert", concert);
-
-                    frag.setArguments(bundle);
-
-                    MainMethods.getInstance().changeFrag(frag, R.id.menu_concertos, true);
-                    return true;
-                }
-            });
-    }
 
     private class ViewHolder {
 
