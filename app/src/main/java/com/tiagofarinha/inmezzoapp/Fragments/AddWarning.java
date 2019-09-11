@@ -1,6 +1,5 @@
 package com.tiagofarinha.inmezzoapp.Fragments;
 
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +20,8 @@ import com.tiagofarinha.inmezzoapp.R;
 import com.tiagofarinha.inmezzoapp.Utils.DateUtils;
 import com.tiagofarinha.inmezzoapp.Utils.MenuUtils;
 import com.tiagofarinha.inmezzoapp.Utils.Utils;
+
+import java.net.URL;
 
 public class AddWarning extends Fragment {
 
@@ -53,8 +54,10 @@ public class AddWarning extends Fragment {
 
                 if (!link.getText().toString().isEmpty()) {
                     try {
-                        Uri.parse(link.getText().toString());
+                        URL u = new URL(link.getText().toString()); // this would check for the protocol
+                        u.toURI();
                     } catch (Exception e) {
+                        Utils.showMessage("Link Inválido");
                         return;
                     }
                 }
