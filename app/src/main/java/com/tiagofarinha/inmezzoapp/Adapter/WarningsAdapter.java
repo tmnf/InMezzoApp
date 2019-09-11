@@ -1,5 +1,6 @@
 package com.tiagofarinha.inmezzoapp.Adapter;
 
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +35,13 @@ public class WarningsAdapter extends DefaultAdapter {
 
         Warning warning = (Warning) obj;
 
+        if (warning.getLink() != null)
+            if (!warning.getLink().isEmpty())
+                holder.warning_text.setTextColor(Color.BLUE);
+            else
+                holder.warning_text.setTextColor(Color.WHITE);
+        else
+            holder.warning_text.setTextColor(Color.WHITE);
         holder.warning_title.setText(warning.getTitle());
         holder.warning_text.setText(warning.getText());
 
