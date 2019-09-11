@@ -1,5 +1,6 @@
 package com.tiagofarinha.inmezzoapp.Fragments;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -49,6 +50,15 @@ public class AddWarning extends Fragment {
                     Utils.showMessage("Campos vazio!");
                     return;
                 }
+
+                if (!link.getText().toString().isEmpty()) {
+                    try {
+                        Uri.parse(link.getText().toString());
+                    } catch (Exception e) {
+                        return;
+                    }
+                }
+
                 addWarning(title.getText().toString(), text.getText().toString(), link.getText().toString());
             }
         });

@@ -37,11 +37,12 @@ public class WarningsAdapter extends DefaultAdapter {
 
         if (warning.getLink() != null)
             if (!warning.getLink().isEmpty())
-                holder.warning_text.setTextColor(Color.BLUE);
+                holder.warning_title.setTextColor(Color.YELLOW);
             else
-                holder.warning_text.setTextColor(Color.WHITE);
+                holder.warning_title.setTextColor(Color.WHITE);
         else
-            holder.warning_text.setTextColor(Color.WHITE);
+            holder.warning_title.setTextColor(Color.WHITE);
+
         holder.warning_title.setText(warning.getTitle());
         holder.warning_text.setText(warning.getText());
 
