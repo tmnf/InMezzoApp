@@ -10,7 +10,7 @@
         android:layout_width="0dp"
         android:layout_height="49dp"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="44dp"
+        android:layout_marginTop="40dp"
         android:layout_marginEnd="20dp"
         android:background="@drawable/field_background"
         android:ems="10"
@@ -27,17 +27,39 @@
         app:layout_constraintTop_toBottomOf="@+id/warning_add_title"
         tools:ignore="Autofill" />
 
+    <EditText
+        android:id="@+id/warning_add_link"
+        android:layout_width="0dp"
+        android:layout_height="49dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/field_background"
+        android:ems="10"
+        android:fontFamily="@font/bookman_bold"
+        android:hint="@string/link"
+        android:inputType="text"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingBottom="5dp"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/warning_add_text"
+        tools:ignore="Autofill" />
+
     <Button
         android:id="@+id/warning_button"
         android:layout_width="159dp"
         android:layout_height="52dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
         android:background="@drawable/login_button"
         android:fontFamily="@font/bookman_bold"
         android:paddingBottom="5dp"
         android:text="@string/post_button"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/warning_add_text" />
+        app:layout_constraintTop_toBottomOf="@+id/warning_add_link" />
 
     <EditText
         android:id="@+id/warning_add_text"

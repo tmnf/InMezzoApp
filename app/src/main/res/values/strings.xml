@@ -75,6 +75,7 @@
     <string name="artist"> Artista/Compositor </string>
     <string name="bio"> Biografia </string>
     <string name="titulo"> Título </string>
+    <string name="link"> URL (Opcional) </string>
 
     <string name="post_inserir"> Inserir Post </string>
     <string name="music_inserir"> Adicionar Música </string>
