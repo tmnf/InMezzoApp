@@ -1,5 +1,7 @@
 package com.tiagofarinha.inmezzoapp.Models;
 
+import androidx.annotation.Nullable;
+
 import com.tiagofarinha.inmezzoapp.Interfaces.Adaptable;
 import com.tiagofarinha.inmezzoapp.Utils.DateUtils;
 
@@ -33,5 +35,12 @@ public class Post implements Adaptable {
 
     public User getOwner() {
         return owner;
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        Post p = (Post) obj;
+
+        return p.getOwner().equals(owner) && p.getPost_text().equals(post_text) && p.getDate_pub().equals(date_pub) && p.getUrl().equals(url);
     }
 }

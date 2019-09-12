@@ -24,6 +24,11 @@ public class MenuUtils {
     public static void filterMenuItem(int id) {
         Fragment frag = FragManager.getInstance().findFragment("Frag:" + id);
 
+        if (id == R.id.menu_admin) {
+            Utils.showMessage("Não tem permissão para entrar. Se o menu se encontra com erros, reinicie a aplicação.");
+            return;
+        }
+
         if (frag == null) {
             switch (id) {
                 case R.id.menu_inicio:

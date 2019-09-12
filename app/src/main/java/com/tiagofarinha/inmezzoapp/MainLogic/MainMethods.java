@@ -239,6 +239,10 @@ public class MainMethods {
         return (auxUser.getUser_mode() == User.COORD || auxUser.getUser_mode() == User.ADMIN);
     }
 
+    public boolean isMember() {
+        return auxUser != null;
+    }
+
     public boolean isLoggedIn() {
         return auxUser != null;
     }
