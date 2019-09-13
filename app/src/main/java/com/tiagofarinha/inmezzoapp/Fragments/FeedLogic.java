@@ -24,7 +24,6 @@ import com.tiagofarinha.inmezzoapp.Cache.ResourceLoader;
 import com.tiagofarinha.inmezzoapp.MainLogic.MainMethods;
 import com.tiagofarinha.inmezzoapp.Models.Post;
 import com.tiagofarinha.inmezzoapp.R;
-import com.tiagofarinha.inmezzoapp.Utils.MenuUtils;
 import com.tiagofarinha.inmezzoapp.Utils.Utils;
 
 public class FeedLogic extends Fragment {
@@ -96,7 +95,7 @@ public class FeedLogic extends Fragment {
             @Override
             public void onSuccess(Void aVoid) {
                 Utils.showMessage("Publicação Removido com Sucesso!");
-                MenuUtils.filterMenuItem(R.id.menu_inicio);
+                postAdapter.notifyDataSetChanged();
             }
         });
     }

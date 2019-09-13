@@ -26,7 +26,6 @@ import com.tiagofarinha.inmezzoapp.Cache.ResourceLoader;
 import com.tiagofarinha.inmezzoapp.MainLogic.MainMethods;
 import com.tiagofarinha.inmezzoapp.Models.Warning;
 import com.tiagofarinha.inmezzoapp.R;
-import com.tiagofarinha.inmezzoapp.Utils.MenuUtils;
 import com.tiagofarinha.inmezzoapp.Utils.Utils;
 
 public class WarningLogic extends Fragment {
@@ -102,7 +101,7 @@ public class WarningLogic extends Fragment {
             @Override
             public void onSuccess(Void aVoid) {
                 Utils.showMessage("Aviso Removido com Sucesso!");
-                MenuUtils.filterMenuItem(R.id.menu_inicio);
+                wa.notifyDataSetChanged();
             }
         });
     }
