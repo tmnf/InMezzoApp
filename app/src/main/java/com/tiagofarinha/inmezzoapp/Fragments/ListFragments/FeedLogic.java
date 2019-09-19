@@ -1,17 +1,11 @@
-package com.tiagofarinha.inmezzoapp.Fragments;
+package com.tiagofarinha.inmezzoapp.Fragments.ListFragments;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ListView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
@@ -26,26 +20,17 @@ import com.tiagofarinha.inmezzoapp.Models.Post;
 import com.tiagofarinha.inmezzoapp.R;
 import com.tiagofarinha.inmezzoapp.Utils.Utils;
 
-public class FeedLogic extends Fragment {
+public class FeedLogic extends DefaultListFragment {
 
-    private ListView listView;
     private PostAdapter postAdapter;
     private DatabaseReference post_ref;
 
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.feed_fragment, container, false);
-
-        listView = view.findViewById(R.id.post_list);
-        listView.setEmptyView(view.findViewById(R.id.failed_view));
-
-        getPosts();
-
-        return view;
+    public FeedLogic() {
+        super(R.string.feed_title);
     }
 
-    private void getPosts() {
+    @Override
+    protected void inflateList() {
         postAdapter = new PostAdapter(ResourceLoader.getInstance().getPosts(), R.layout.post_row);
         listView.setAdapter(postAdapter);
 

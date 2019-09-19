@@ -1,40 +1,28 @@
-package com.tiagofarinha.inmezzoapp.Fragments;
+package com.tiagofarinha.inmezzoapp.Fragments.ListFragments;
 
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ListView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.tiagofarinha.inmezzoapp.Adapter.ConcertsAdapter;
 import com.tiagofarinha.inmezzoapp.Cache.ResourceLoader;
 import com.tiagofarinha.inmezzoapp.Configurations.ConcertConfig;
+import com.tiagofarinha.inmezzoapp.Fragments.PollLogic;
 import com.tiagofarinha.inmezzoapp.MainLogic.MainMethods;
 import com.tiagofarinha.inmezzoapp.R;
 
-public class ConcertsLogic extends Fragment {
+public class ConcertsLogic extends DefaultListFragment {
 
-    private ListView listView;
     private ConcertsAdapter concertsAdapter;
 
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.concerts_fragment, container, false);
-
-        listView = view.findViewById(R.id.concerts_list);
-
-        getConcerts();
-
-        return view;
+    public ConcertsLogic() {
+        super(R.string.concerts_title);
     }
 
-    private void getConcerts() {
+    @Override
+    protected void inflateList() {
         concertsAdapter = new ConcertsAdapter(ResourceLoader.getInstance().getConcerts(), R.layout.concert_row);
         listView.setAdapter(concertsAdapter);
 

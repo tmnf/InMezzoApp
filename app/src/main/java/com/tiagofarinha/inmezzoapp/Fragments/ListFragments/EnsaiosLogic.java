@@ -1,39 +1,26 @@
-package com.tiagofarinha.inmezzoapp.Fragments;
+package com.tiagofarinha.inmezzoapp.Fragments.ListFragments;
 
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ListView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.tiagofarinha.inmezzoapp.Adapter.EnsaioAdapter;
 import com.tiagofarinha.inmezzoapp.Cache.ResourceLoader;
 import com.tiagofarinha.inmezzoapp.Configurations.EnsaioConfig;
+import com.tiagofarinha.inmezzoapp.Fragments.PollLogic;
 import com.tiagofarinha.inmezzoapp.MainLogic.MainMethods;
 import com.tiagofarinha.inmezzoapp.R;
 
-public class EnsaiosLogic extends Fragment {
+public class EnsaiosLogic extends DefaultListFragment {
 
-    private ListView listView;
-
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.ensaios_fragment, container, false);
-
-        listView = view.findViewById(R.id.concerts_list);
-
-        getEnsaios();
-
-        return view;
+    public EnsaiosLogic() {
+        super(R.string.ensaios_title);
     }
 
-    private void getEnsaios() {
+    @Override
+    protected void inflateList() {
         EnsaioAdapter ensaiosAdapter = new EnsaioAdapter(ResourceLoader.getInstance().getEnsaios(), R.layout.ensaio_row);
         listView.setAdapter(ensaiosAdapter);
 

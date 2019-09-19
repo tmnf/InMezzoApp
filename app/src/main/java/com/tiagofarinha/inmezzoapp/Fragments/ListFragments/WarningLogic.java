@@ -1,19 +1,13 @@
-package com.tiagofarinha.inmezzoapp.Fragments;
+package com.tiagofarinha.inmezzoapp.Fragments.ListFragments;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ListView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
@@ -28,26 +22,19 @@ import com.tiagofarinha.inmezzoapp.Models.Warning;
 import com.tiagofarinha.inmezzoapp.R;
 import com.tiagofarinha.inmezzoapp.Utils.Utils;
 
-public class WarningLogic extends Fragment {
+public class WarningLogic extends DefaultListFragment {
 
-    private ListView listView;
     private WarningsAdapter wa;
     private DatabaseReference warning_ref;
 
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.warning_fragment, container, false);
-
-        getWarnings(view);
-
-        return view;
+    public WarningLogic() {
+        super(R.string.warning_title);
     }
 
-    private void getWarnings(View view) {
+    @Override
+    protected void inflateList() {
         wa = new WarningsAdapter(ResourceLoader.getInstance().getWarnings(), R.layout.warning_row);
 
-        listView = view.findViewById(R.id.warning_list);
         listView.setAdapter(wa);
 
         addListner();
