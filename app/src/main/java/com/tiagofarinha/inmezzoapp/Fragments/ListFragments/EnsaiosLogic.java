@@ -21,8 +21,8 @@ public class EnsaiosLogic extends DefaultListFragment {
 
     @Override
     protected void inflateList() {
-        EnsaioAdapter ensaiosAdapter = new EnsaioAdapter(ResourceLoader.getInstance().getEnsaios(), R.layout.ensaio_row);
-        listView.setAdapter(ensaiosAdapter);
+        adapter = new EnsaioAdapter(ResourceLoader.getInstance().getEnsaios(), R.layout.ensaio_row);
+        listView.setAdapter(adapter);
 
         if (MainMethods.getInstance().isLoggedIn())
             addListener();

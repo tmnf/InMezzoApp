@@ -183,9 +183,9 @@ public class PollLogic extends Fragment {
         int id;
 
         if (active)
-            id = R.drawable.login_button;
+            id = R.drawable.button;
         else
-            id = R.drawable.login_pressed;
+            id = R.drawable.button_pressed;
 
         bt.setBackgroundResource(id);
     }

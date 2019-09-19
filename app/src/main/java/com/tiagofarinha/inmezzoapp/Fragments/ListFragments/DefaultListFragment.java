@@ -11,11 +11,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.tiagofarinha.inmezzoapp.Adapter.DefaultAdapter;
 import com.tiagofarinha.inmezzoapp.R;
 
 public abstract class DefaultListFragment extends Fragment {
 
     protected ListView listView;
+    protected DefaultAdapter adapter;
+
     private int titleId;
 
     public DefaultListFragment(int titleId) {
@@ -38,5 +41,9 @@ public abstract class DefaultListFragment extends Fragment {
     }
 
     protected abstract void inflateList();
+
+    public void refreshList() {
+        adapter.notifyDataSetChanged();
+    }
 
 }

@@ -15,16 +15,14 @@ import com.tiagofarinha.inmezzoapp.R;
 
 public class ConcertsLogic extends DefaultListFragment {
 
-    private ConcertsAdapter concertsAdapter;
-
     public ConcertsLogic() {
         super(R.string.concerts_title);
     }
 
     @Override
     protected void inflateList() {
-        concertsAdapter = new ConcertsAdapter(ResourceLoader.getInstance().getConcerts(), R.layout.concert_row);
-        listView.setAdapter(concertsAdapter);
+        adapter = new ConcertsAdapter(ResourceLoader.getInstance().getConcerts(), R.layout.concert_row);
+        listView.setAdapter(adapter);
 
         if (MainMethods.getInstance().isLoggedIn())
             addListener();

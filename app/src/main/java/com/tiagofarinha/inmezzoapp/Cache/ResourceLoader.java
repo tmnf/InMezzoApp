@@ -14,8 +14,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.tiagofarinha.inmezzoapp.Fragments.ListFragments.DefaultListFragment;
 import com.tiagofarinha.inmezzoapp.Interfaces.Adaptable;
 import com.tiagofarinha.inmezzoapp.Interfaces.Votable;
+import com.tiagofarinha.inmezzoapp.MainLogic.MainMethods;
 import com.tiagofarinha.inmezzoapp.MainLogic.SplashScreen;
 import com.tiagofarinha.inmezzoapp.Models.Concert;
 import com.tiagofarinha.inmezzoapp.Models.Ensaio;
@@ -79,14 +81,6 @@ public class ResourceLoader extends AsyncTask {
     protected void onCancelled() {
         super.onCancelled();
 
-        posts.clear();
-        users.clear();
-        portfolio.clear();
-        concerts.clear();
-        ensaios.clear();
-        pic_info.clear();
-        videos.clear();
-        warnings.clear();
         active = true;
         ss.ready();
         ss = null;
@@ -197,6 +191,9 @@ public class ResourceLoader extends AsyncTask {
         if (!active) {
             tasks_remaining--;
             notify();
+        } else {
+            if (MainMethods.getInstance().getCurrentFrag() instanceof DefaultListFragment)
+                ((DefaultListFragment) MainMethods.getInstance().getCurrentFrag()).refreshList();
         }
     }
 

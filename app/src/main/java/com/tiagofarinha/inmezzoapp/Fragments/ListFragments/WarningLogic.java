@@ -24,7 +24,6 @@ import com.tiagofarinha.inmezzoapp.Utils.Utils;
 
 public class WarningLogic extends DefaultListFragment {
 
-    private WarningsAdapter wa;
     private DatabaseReference warning_ref;
 
     public WarningLogic() {
@@ -33,9 +32,9 @@ public class WarningLogic extends DefaultListFragment {
 
     @Override
     protected void inflateList() {
-        wa = new WarningsAdapter(ResourceLoader.getInstance().getWarnings(), R.layout.warning_row);
+        adapter = new WarningsAdapter(ResourceLoader.getInstance().getWarnings(), R.layout.warning_row);
 
-        listView.setAdapter(wa);
+        listView.setAdapter(adapter);
 
         addListner();
     }
@@ -88,7 +87,6 @@ public class WarningLogic extends DefaultListFragment {
             @Override
             public void onSuccess(Void aVoid) {
                 Utils.showMessage("Aviso Removido com Sucesso!");
-                wa.notifyDataSetChanged();
             }
         });
     }

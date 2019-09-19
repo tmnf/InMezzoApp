@@ -14,16 +14,14 @@ import com.tiagofarinha.inmezzoapp.R;
 
 public class PortfolioLogic extends DefaultListFragment {
 
-    private PortfolioAdapter portfolioAdapter;
-
     public PortfolioLogic() {
         super(R.string.portfolio_title);
     }
 
     @Override
     protected void inflateList() {
-        portfolioAdapter = new PortfolioAdapter(ResourceLoader.getInstance().getPortfolio(), R.layout.portfolio_row);
-        listView.setAdapter(portfolioAdapter);
+        adapter = new PortfolioAdapter(ResourceLoader.getInstance().getPortfolio(), R.layout.portfolio_row);
+        listView.setAdapter(adapter);
 
         if (MainMethods.getInstance().isOp())
             addListener();

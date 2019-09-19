@@ -22,7 +22,6 @@ import com.tiagofarinha.inmezzoapp.Utils.Utils;
 
 public class FeedLogic extends DefaultListFragment {
 
-    private PostAdapter postAdapter;
     private DatabaseReference post_ref;
 
     public FeedLogic() {
@@ -31,8 +30,8 @@ public class FeedLogic extends DefaultListFragment {
 
     @Override
     protected void inflateList() {
-        postAdapter = new PostAdapter(ResourceLoader.getInstance().getPosts(), R.layout.post_row);
-        listView.setAdapter(postAdapter);
+        adapter = new PostAdapter(ResourceLoader.getInstance().getPosts(), R.layout.post_row);
+        listView.setAdapter(adapter);
 
         addListener();
     }
@@ -80,7 +79,6 @@ public class FeedLogic extends DefaultListFragment {
             @Override
             public void onSuccess(Void aVoid) {
                 Utils.showMessage("Publicação Removido com Sucesso!");
-                postAdapter.notifyDataSetChanged();
             }
         });
     }

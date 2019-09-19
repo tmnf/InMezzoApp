@@ -11,16 +11,14 @@ import com.tiagofarinha.inmezzoapp.R;
 
 public class MembersLogic extends DefaultListFragment {
 
-    private UserAdapter mAdapter;
-
     public MembersLogic() {
         super(R.string.members_title);
     }
 
     @Override
     protected void inflateList() {
-        mAdapter = new UserAdapter(ResourceLoader.getInstance().getUsers(), R.layout.user_row);
-        listView.setAdapter(mAdapter);
+        adapter = new UserAdapter(ResourceLoader.getInstance().getUsers(), R.layout.user_row);
+        listView.setAdapter(adapter);
 
         addListener();
     }

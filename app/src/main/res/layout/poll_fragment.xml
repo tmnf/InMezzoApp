@@ -181,7 +181,7 @@
         android:layout_height="41dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
-        android:background="@drawable/login_button"
+        android:background="@drawable/button"
         android:text="@string/vote_go"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/poll_nao" />
@@ -192,7 +192,7 @@
         android:layout_height="41dp"
         android:layout_marginStart="5dp"
         android:layout_marginTop="20dp"
-        android:background="@drawable/login_button"
+        android:background="@drawable/button"
         android:text="@string/vote_dont"
         app:layout_constraintStart_toEndOf="@+id/vou_button"
         app:layout_constraintTop_toBottomOf="@+id/poll_nao" />
@@ -203,7 +203,7 @@
         android:layout_height="41dp"
         android:layout_marginStart="5dp"
         android:layout_marginTop="20dp"
-        android:background="@drawable/login_button"
+        android:background="@drawable/button"
         android:text="@string/vote_maybe"
         app:layout_constraintStart_toEndOf="@+id/nao_button"
         app:layout_constraintTop_toBottomOf="@+id/poll_nao" />
