@@ -33,12 +33,11 @@ public abstract class DefaultListFragment extends Fragment {
 
         listView = view.findViewById(R.id.default_list);
 
-
         TextView error = view.findViewById(R.id.failed_view);
         if (ResourceLoader.getInstance().isOnline())
             error.setText(R.string.empty_list);
-        else error.setText(R.string.connection_failed);
-
+        else
+            error.setText(R.string.connection_failed);
 
         listView.setEmptyView(view.findViewById(R.id.failed_view));
 
