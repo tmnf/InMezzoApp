@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.tiagofarinha.inmezzoapp.Adapter.DefaultAdapter;
+import com.tiagofarinha.inmezzoapp.Cache.ResourceLoader;
 import com.tiagofarinha.inmezzoapp.R;
 
 public abstract class DefaultListFragment extends Fragment {
@@ -31,6 +32,14 @@ public abstract class DefaultListFragment extends Fragment {
         View view = inflater.inflate(R.layout.default_list_layout, container, false);
 
         listView = view.findViewById(R.id.default_list);
+
+
+        TextView error = view.findViewById(R.id.failed_view);
+        if (ResourceLoader.getInstance().isOnline())
+            error.setText(R.string.empty_list);
+        else error.setText(R.string.connection_failed);
+
+
         listView.setEmptyView(view.findViewById(R.id.failed_view));
 
         ((TextView) view.findViewById(R.id.default_title)).setText(titleId);

@@ -13,7 +13,7 @@ import com.tiagofarinha.inmezzoapp.R;
 
 public class SplashScreen extends AppCompatActivity {
 
-    private static final int TIMEOUT = 20000;
+    private static final int TIMEOUT = 25000;
 
     public void ready() {
         Intent it = new Intent(this, MainActivity.class);

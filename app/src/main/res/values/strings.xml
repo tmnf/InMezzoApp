@@ -104,6 +104,7 @@
 
     ====== Warnings ======
 
+    <string name="empty_list"> Sem Eventos/Publicações de Momento </string>
     <string name="connection_failed"> Ups. Parece haver um problema com a sua conexão à rede. Pode usar a aplicação na mesma, mas algumas paginas poderão estar em branco. Por favor, ligue os dados moveis ou o wifi e reinicie a aplicação. </string>
 
     ====== Users To Add ======

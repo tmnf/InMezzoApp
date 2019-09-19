@@ -59,7 +59,7 @@ public class ResourceLoader extends AsyncTask {
     private static ResourceLoader INSTANCE;
 
     // CONTROL VARIABLES
-    private boolean active;
+    private boolean active, offline;
     private int tasks_remaining, pics_remaining;
 
     public ResourceLoader(SplashScreen ss) {
@@ -82,6 +82,7 @@ public class ResourceLoader extends AsyncTask {
         super.onCancelled();
 
         active = true;
+        offline = true;
         ss.ready();
         ss = null;
     }
@@ -110,6 +111,10 @@ public class ResourceLoader extends AsyncTask {
         }
 
         return null;
+    }
+
+    public boolean isOnline() {
+        return !offline;
     }
 
     public static ResourceLoader getInstance() {
