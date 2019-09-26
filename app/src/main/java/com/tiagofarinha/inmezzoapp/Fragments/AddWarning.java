@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 
 import androidx.annotation.NonNull;
@@ -33,7 +34,7 @@ public class AddWarning extends Fragment {
         return view;
     }
 
-    private void getComps(View view) {
+    private void getComps(final View view) {
         final EditText text, title;
 
         text = view.findViewById(R.id.warning_add_text);
@@ -49,13 +50,17 @@ public class AddWarning extends Fragment {
                     return;
                 }
 
-                addWarning(title.getText().toString(), text.getText().toString());
+                addWarning(title.getText().toString(), text.getText().toString(), checkIfImportant(view));
             }
         });
     }
 
-    private void addWarning(String title, String text) {
-        Warning warning = new Warning(title, text, DateUtils.getCurrentDateInText(), MainMethods.getInstance().getAuxUser());
+    private boolean checkIfImportant(View view) {
+        return ((CheckBox) view.findViewById(R.id.warning_important)).isChecked();
+    }
+
+    private void addWarning(String title, String text, boolean is_important) {
+        Warning warning = new Warning(title, text, DateUtils.getCurrentDateInText(), MainMethods.getInstance().getAuxUser(), is_important);
 
         DatabaseReference warningRef = FirebaseDatabase.getInstance().getReference().child("warnings");
         warningRef.push().setValue(warning).addOnSuccessListener(new OnSuccessListener<Void>() {

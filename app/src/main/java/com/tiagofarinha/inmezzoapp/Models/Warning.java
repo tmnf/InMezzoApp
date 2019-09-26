@@ -9,14 +9,17 @@ public class Warning implements Adaptable {
     private String text, title, pub_date;
     private User user;
 
+    private boolean important;
+
     public Warning() {
     }
 
-    public Warning(String title, String text, String pub_date, User user) {
+    public Warning(String title, String text, String pub_date, User user, boolean is_important) {
         this.title = title;
         this.text = text;
         this.pub_date = pub_date;
         this.user = user;
+        this.important = is_important;
     }
 
     public String getText() {
@@ -33,6 +36,10 @@ public class Warning implements Adaptable {
 
     public User getUser() {
         return user;
+    }
+
+    public boolean isImportant() {
+        return important;
     }
 
     @Override
