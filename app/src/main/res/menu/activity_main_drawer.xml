@@ -58,6 +58,10 @@
                     android:icon="@drawable/ensaio_icon"
                     android:title="@string/menu_ensaios" />
                 <item
+                    android:id="@+id/menu_chat"
+                    android:icon="@drawable/chat_icon"
+                    android:title="@string/menu_chat" />
+                <item
                     android:id="@+id/menu_logout"
                     android:icon="@drawable/logout_icon"
                     android:title="@string/menu_logout" />

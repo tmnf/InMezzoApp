@@ -29,7 +29,7 @@ public class LoginUtils {
 
     private static LoginUtils INSTANCE;
 
-    private MenuItem login, perfil, logout, admin, ensaios, warnings;
+    private MenuItem login, perfil, logout, admin, ensaios, warnings, chat;
     private Menu menu;
     private View header;
 
@@ -69,6 +69,7 @@ public class LoginUtils {
             admin = menu.findItem(R.id.menu_admin);
             ensaios = menu.findItem(R.id.menu_ensaios);
             warnings = menu.findItem(R.id.menu_warnings);
+            chat = menu.findItem(R.id.menu_chat);
 
             user_name = header.findViewById(R.id.menu_name);
             pic = header.findViewById(R.id.menu_pic);
@@ -83,6 +84,7 @@ public class LoginUtils {
             admin.setVisible(false);
             ensaios.setVisible(false);
             warnings.setVisible(false);
+            chat.setVisible(false);
 
             user_name.setText("Menu");
             pic.setVisibility(View.INVISIBLE);
@@ -93,6 +95,7 @@ public class LoginUtils {
             logout.setVisible(true);
             ensaios.setVisible(true);
             warnings.setVisible(true);
+            chat.setVisible(true);
 
             user_name.setText(currentUser.getDisplayName());
             pic.setVisibility(View.VISIBLE);

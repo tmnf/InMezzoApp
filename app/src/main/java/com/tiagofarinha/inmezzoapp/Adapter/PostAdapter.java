@@ -10,8 +10,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.constraintlayout.widget.ConstraintLayout;
-
 import com.tiagofarinha.inmezzoapp.Cache.ResourceLoader;
 import com.tiagofarinha.inmezzoapp.Interfaces.Adaptable;
 import com.tiagofarinha.inmezzoapp.MainLogic.MainMethods;
@@ -111,7 +109,6 @@ public class PostAdapter extends DefaultAdapter {
     private class ViewHolder {
         TextView post_name, post_pub_date, post_text;
         ImageView pic, thumb, play;
-        ConstraintLayout container;
 
         ViewHolder(View convertView) {
             pic = convertView.findViewById(R.id.post_pic);
@@ -120,8 +117,6 @@ public class PostAdapter extends DefaultAdapter {
             post_text = convertView.findViewById(R.id.post_message);
             thumb = convertView.findViewById(R.id.youtube_tumbnail);
             play = convertView.findViewById(R.id.play_button);
-
-            container = convertView.findViewById(R.id.post_container);
         }
     }
 
