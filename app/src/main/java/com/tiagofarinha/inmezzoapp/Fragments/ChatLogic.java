@@ -74,6 +74,8 @@ public class ChatLogic extends Fragment {
     private void inflateList() {
         adapter = new ChatAdapter(ResourceLoader.getInstance().getChat_messages(), R.layout.chat_row);
         listView.setAdapter(adapter);
+
+        listView.setSelection(adapter.getCount() - 1);
     }
 
     public void refreshList() {
