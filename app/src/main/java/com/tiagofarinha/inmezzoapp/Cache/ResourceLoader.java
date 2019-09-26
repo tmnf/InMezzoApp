@@ -198,6 +198,7 @@ public class ResourceLoader extends AsyncTask {
                 for (String key : keysToDelete)
                     ref.child(key).removeValue();
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
             }
@@ -208,11 +209,10 @@ public class ResourceLoader extends AsyncTask {
         if (!active) {
             tasks_remaining--;
             notify();
-        } else
-            if (MainMethods.getInstance().getCurrentFrag() instanceof DefaultListFragment)
-                ((DefaultListFragment) MainMethods.getInstance().getCurrentFrag()).refreshList();
-            else if (MainMethods.getInstance().getCurrentFrag() instanceof ChatLogic)
-                ((ChatLogic) MainMethods.getInstance().getCurrentFrag()).refreshList();
+        } else if (MainMethods.getInstance().getCurrentFrag() instanceof DefaultListFragment)
+            ((DefaultListFragment) MainMethods.getInstance().getCurrentFrag()).refreshList();
+        else if (MainMethods.getInstance().getCurrentFrag() instanceof ChatLogic)
+            ((ChatLogic) MainMethods.getInstance().getCurrentFrag()).refreshList();
     }
 
     /* ================ Load Profile Pics ================ */
@@ -392,6 +392,7 @@ public class ResourceLoader extends AsyncTask {
 
                 taskOver();
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
             }
@@ -412,6 +413,7 @@ public class ResourceLoader extends AsyncTask {
 
                 taskOver();
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
             }
@@ -518,6 +520,7 @@ public class ResourceLoader extends AsyncTask {
                 deleteExciding(posts, MAX_POSTS, "posts");
                 taskOver();
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
             }
