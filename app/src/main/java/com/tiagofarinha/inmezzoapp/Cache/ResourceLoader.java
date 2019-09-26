@@ -14,11 +14,13 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.tiagofarinha.inmezzoapp.Fragments.ChatLogic;
 import com.tiagofarinha.inmezzoapp.Fragments.ListFragments.DefaultListFragment;
 import com.tiagofarinha.inmezzoapp.Interfaces.Adaptable;
 import com.tiagofarinha.inmezzoapp.Interfaces.Votable;
 import com.tiagofarinha.inmezzoapp.MainLogic.MainMethods;
 import com.tiagofarinha.inmezzoapp.MainLogic.SplashScreen;
+import com.tiagofarinha.inmezzoapp.Models.ChatMessage;
 import com.tiagofarinha.inmezzoapp.Models.Concert;
 import com.tiagofarinha.inmezzoapp.Models.Ensaio;
 import com.tiagofarinha.inmezzoapp.Models.MezzoDate;
@@ -39,21 +41,17 @@ import java.util.Comparator;
 public class ResourceLoader extends AsyncTask {
 
     // CLASS CONSTANTS
-    private static final int TOTAL_TASKS = 7;
-    private static final int MAX_POSTS = 15, MAX_WARNINGS = 20;
+    private static final int TOTAL_TASKS = 8;
+    private static final int MAX_POSTS = 15, MAX_WARNINGS = 20, MAX_MESSAGES = 100;
 
     private SplashScreen ss;
 
     // OBJECT LISTS
-    private ArrayList<Adaptable> posts = new ArrayList<>();
-    private ArrayList<Adaptable> users = new ArrayList<>();
-    private ArrayList<Adaptable> portfolio = new ArrayList<>();
-    private ArrayList<Adaptable> concerts = new ArrayList<>();
-    private ArrayList<Adaptable> ensaios = new ArrayList<>();
-    private ArrayList<PicInfo> pic_info = new ArrayList<>();
+    private ArrayList<Adaptable> posts, users, portfolio, concerts, ensaios, warnings, chat_messages;
 
-    private ArrayList<YoutubeVideo> videos = new ArrayList<>();
-    private ArrayList<Adaptable> warnings = new ArrayList<>();
+    private ArrayList<PicInfo> pic_info;
+
+    private ArrayList<YoutubeVideo> videos;
 
     // CLASS INSTANCE
     private static ResourceLoader INSTANCE;
@@ -67,7 +65,21 @@ public class ResourceLoader extends AsyncTask {
 
         INSTANCE = this;
 
+        initLists();
+
         this.ss = ss;
+    }
+
+    private void initLists() {
+        posts = new ArrayList<>();
+        users = new ArrayList<>();
+        portfolio = new ArrayList<>();
+        concerts = new ArrayList<>();
+        ensaios = new ArrayList<>();
+        pic_info = new ArrayList<>();
+        videos = new ArrayList<>();
+        warnings = new ArrayList<>();
+        chat_messages = new ArrayList<>();
     }
 
     @Override
@@ -196,10 +208,11 @@ public class ResourceLoader extends AsyncTask {
         if (!active) {
             tasks_remaining--;
             notify();
-        } else {
+        } else
             if (MainMethods.getInstance().getCurrentFrag() instanceof DefaultListFragment)
                 ((DefaultListFragment) MainMethods.getInstance().getCurrentFrag()).refreshList();
-        }
+            else if (MainMethods.getInstance().getCurrentFrag() instanceof ChatLogic)
+                ((ChatLogic) MainMethods.getInstance().getCurrentFrag()).refreshList();
     }
 
     /* ================ Load Profile Pics ================ */
@@ -252,6 +265,37 @@ public class ResourceLoader extends AsyncTask {
         loadPortfolio();
         loadVideos();
         loadWarnings();
+        loadChatMessages();
+    }
+
+    private void loadChatMessages() {
+        DatabaseReference user_ref = FirebaseDatabase.getInstance().getReference().child("messages");
+
+        user_ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                chat_messages.clear();
+
+                int i = 0;
+                for (DataSnapshot x : dataSnapshot.getChildren()) {
+                    if (i == MAX_MESSAGES)
+                        break;
+                    chat_messages.add(x.getValue(ChatMessage.class));
+                    i++;
+                }
+
+                ArrayList<Adaptable> aux = new ArrayList<>();
+                aux.addAll(warnings);
+                Collections.reverse(aux);
+                deleteExciding(aux, MAX_MESSAGES, "messages");
+
+                taskOver();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
     }
 
     /* ================ Load Videos ================ */
@@ -506,5 +550,9 @@ public class ResourceLoader extends AsyncTask {
 
     public ArrayList<Adaptable> getWarnings() {
         return warnings;
+    }
+
+    public ArrayList<Adaptable> getChat_messages() {
+        return chat_messages;
     }
 }
