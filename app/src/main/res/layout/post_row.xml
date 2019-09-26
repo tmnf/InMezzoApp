@@ -5,7 +5,7 @@
     android:id="@+id/post_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/post_background"
+    android:background="@drawable/boxes_background"
     android:paddingBottom="10dp">
 
     <de.hdodenhof.circleimageview.CircleImageView
@@ -59,7 +59,7 @@
         android:fontFamily="@font/bookman_old_style"
         android:textColor="@color/white"
         android:textSize="18sp"
-        android:autoLink="web"
+        android:autoLink="all"
         android:textColorLink="#bbb"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

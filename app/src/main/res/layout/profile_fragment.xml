@@ -75,7 +75,7 @@
         android:text="@string/bio_dummy"
         android:textColor="@color/white"
         android:textSize="18sp"
-        android:autoLink="web"
+        android:autoLink="all"
         android:textColorLink="#bbb"
         app:layout_constraintBottom_toTopOf="@+id/profile_configs"
         app:layout_constraintEnd_toEndOf="parent"
