@@ -1,9 +1,9 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
     <gradient
         android:angle="270"
-        android:centerColor="@color/chat_input"
-        android:endColor="@color/chat_input"
-        android:startColor="@color/chat_input" />
+        android:centerColor="@color/field_background"
+        android:endColor="@color/field_background"
+        android:startColor="@color/field_background" />
     <corners android:radius="20dp" />
     <padding
         android:bottom="10dp"

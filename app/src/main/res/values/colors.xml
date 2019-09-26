@@ -8,4 +8,5 @@
     <color name="post_background">#59888888</color>
     <color name="about_background">#59555555</color>
     <color name="chat_input">#aa333333</color>
+    <color name="field_background">#aa999999</color>
 </resources>
