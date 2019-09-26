@@ -69,7 +69,7 @@
     <string name="mensagem_must"> Mensagem </string>
     <string name="data"> Data (dd/mm/yyyy) </string>
     <string name="hour"> Hora (hh:mm) </string>
-    <string name="youtube"> Youtube Url </string>
+    <string name="youtube"> Youtube Url (Opcional) </string>
     <string name="configs"> Configurações </string>
     <string name="warning"> Aviso </string>
     <string name="descr"> Descrição </string>

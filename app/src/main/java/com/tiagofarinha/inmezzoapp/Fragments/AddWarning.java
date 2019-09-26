@@ -21,8 +21,6 @@ import com.tiagofarinha.inmezzoapp.Utils.DateUtils;
 import com.tiagofarinha.inmezzoapp.Utils.MenuUtils;
 import com.tiagofarinha.inmezzoapp.Utils.Utils;
 
-import java.net.URL;
-
 public class AddWarning extends Fragment {
 
     @Nullable
@@ -36,11 +34,10 @@ public class AddWarning extends Fragment {
     }
 
     private void getComps(View view) {
-        final EditText text, title, link;
+        final EditText text, title;
 
         text = view.findViewById(R.id.warning_add_text);
         title = view.findViewById(R.id.warning_add_title_field);
-        link = view.findViewById(R.id.warning_add_link);
 
         Button warningButton = view.findViewById(R.id.warning_button);
 
@@ -52,23 +49,13 @@ public class AddWarning extends Fragment {
                     return;
                 }
 
-                if (!link.getText().toString().isEmpty()) {
-                    try {
-                        URL u = new URL(link.getText().toString()); // this would check for the protocol
-                        u.toURI();
-                    } catch (Exception e) {
-                        Utils.showMessage("Link Inválido");
-                        return;
-                    }
-                }
-
-                addWarning(title.getText().toString(), text.getText().toString(), link.getText().toString());
+                addWarning(title.getText().toString(), text.getText().toString());
             }
         });
     }
 
-    private void addWarning(String title, String text, String link) {
-        Warning warning = new Warning(title, text, DateUtils.getCurrentDateInText(), MainMethods.getInstance().getAuxUser(), link);
+    private void addWarning(String title, String text) {
+        Warning warning = new Warning(title, text, DateUtils.getCurrentDateInText(), MainMethods.getInstance().getAuxUser());
 
         DatabaseReference warningRef = FirebaseDatabase.getInstance().getReference().child("warnings");
         warningRef.push().setValue(warning).addOnSuccessListener(new OnSuccessListener<Void>() {

@@ -2,8 +2,6 @@ package com.tiagofarinha.inmezzoapp.Fragments.ListFragments;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.net.Uri;
 import android.view.View;
 import android.widget.AdapterView;
 
@@ -40,17 +38,6 @@ public class WarningLogic extends DefaultListFragment {
     }
 
     private void addListner() {
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Warning warn = (Warning) ResourceLoader.getInstance().getWarnings().get(i);
-
-                if (warn.getLink() != null)
-                    if (!warn.getLink().isEmpty())
-                        openLink(warn.getLink());
-            }
-        });
-
         if (MainMethods.getInstance().isOp())
             listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
                 @Override
@@ -108,11 +95,5 @@ public class WarningLogic extends DefaultListFragment {
             public void onCancelled(@NonNull DatabaseError databaseError) {
             }
         });
-    }
-
-    private void openLink(String link) {
-        Intent i = new Intent(Intent.ACTION_VIEW);
-        i.setData(Uri.parse(link));
-        startActivity(i);
     }
 }

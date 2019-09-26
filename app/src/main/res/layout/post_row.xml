@@ -59,6 +59,8 @@
         android:fontFamily="@font/bookman_old_style"
         android:textColor="@color/white"
         android:textSize="18sp"
+        android:autoLink="web"
+        android:textColorLink="#bbb"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/post_pic" />
