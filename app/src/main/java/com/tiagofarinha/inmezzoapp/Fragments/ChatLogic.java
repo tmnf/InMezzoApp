@@ -82,8 +82,8 @@ public class ChatLogic extends Fragment {
             ref.push().setValue(toSend).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void aVoid) {
-                    msgInput.setText("");
                     MainMethods.getInstance().closeKeyboard();
+                    msgInput.setText("");
                 }
             });
         }
