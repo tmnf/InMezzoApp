@@ -1,10 +1,11 @@
 package com.tiagofarinha.inmezzoapp.Fragments;
 
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
@@ -46,12 +47,29 @@ public class ChatLogic extends Fragment {
 
     private void monitorMessageInput(View view) {
         final EditText msgInput = view.findViewById(R.id.chat_input_msg);
-        Button sendMsg = view.findViewById(R.id.chat_send_button);
 
-        sendMsg.setOnClickListener(new View.OnClickListener() {
+        msgInput.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onClick(View v) {
-                saveMessage(msgInput);
+            public boolean onTouch(View v, MotionEvent event) {
+                final int DRAWABLE_RIGHT = 2;
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    if (event.getRawX() >= (msgInput.getRight() - msgInput.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+                        saveMessage(msgInput);
+                        return true;
+                    }
+                }
+                return false;
+            }
+        });
+
+        msgInput.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                    saveMessage(msgInput);
+                    return true;
+                }
+                return false;
             }
         });
     }

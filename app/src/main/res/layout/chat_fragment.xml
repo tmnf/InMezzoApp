@@ -24,8 +24,10 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/field_background_test"
+        android:drawableRight="@drawable/send_icon"
         android:fontFamily="@font/bookman_old_style"
         android:hint="Clique para escrever"
         android:inputType="textCapSentences"
@@ -34,19 +36,8 @@
         android:textColorLink="#0027FF"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/chat_send_button"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/chat_send_button"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="10dp"
-        android:background="@drawable/chat_button"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
 
     <ListView
         android:id="@+id/chat_list"
@@ -55,13 +46,15 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
-        android:layout_marginBottom="60dp"
+        android:layout_marginBottom="30dp"
         android:divider="@android:color/transparent"
         android:dividerHeight="10.0sp"
         android:stackFromBottom="true"
         app:layout_constraintBottom_toTopOf="@+id/chat_input_msg"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/chat_title" />
+        app:layout_constraintTop_toBottomOf="@+id/chat_title">
+
+    </ListView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
