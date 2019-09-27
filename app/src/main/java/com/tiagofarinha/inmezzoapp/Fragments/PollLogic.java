@@ -183,7 +183,7 @@ public class PollLogic extends Fragment {
         int id;
 
         if (active)
-            id = R.drawable.button;
+            id = R.drawable.button_default;
         else
             id = R.drawable.button_pressed;
 

@@ -29,7 +29,7 @@ public class LoginUtils {
 
     private static LoginUtils INSTANCE;
 
-    private MenuItem login, perfil, logout, admin, ensaios, warnings, chat;
+    private MenuItem login, perfil, logout, ensaios, warnings, chat;
     private Menu menu;
     private View header;
 
@@ -66,7 +66,6 @@ public class LoginUtils {
             login = menu.findItem(R.id.menu_login);
             perfil = menu.findItem(R.id.menu_perfil);
             logout = menu.findItem(R.id.menu_logout);
-            admin = menu.findItem(R.id.menu_admin);
             ensaios = menu.findItem(R.id.menu_ensaios);
             warnings = menu.findItem(R.id.menu_warnings);
             chat = menu.findItem(R.id.menu_chat);
@@ -81,7 +80,6 @@ public class LoginUtils {
             login.setVisible(true);
             perfil.setVisible(false);
             logout.setVisible(false);
-            admin.setVisible(false);
             ensaios.setVisible(false);
             warnings.setVisible(false);
             chat.setVisible(false);
@@ -100,20 +98,16 @@ public class LoginUtils {
             user_name.setText(currentUser.getDisplayName());
             pic.setVisibility(View.VISIBLE);
 
-            getPicAndTools(currentUser, admin, pic);
+            getPicAndTools(currentUser, pic);
         }
     }
 
-    private void getPicAndTools(FirebaseUser currentUser, final MenuItem admin, final ImageView pic) {
+    private void getPicAndTools(FirebaseUser currentUser, final ImageView pic) {
         FirebaseDatabase.getInstance().getReference().child("users").child(currentUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
                 putInto(pic, user);
-
-                if (user.getUser_mode() == User.ADMIN)
-                    admin.setVisible(true);
-                else admin.setVisible(false);
 
                 MainMethods.getInstance().setAuxUser(user);
                 MenuUtils.filterMenuItem(R.id.menu_inicio);

@@ -100,7 +100,6 @@
     <string name="reservas_title"> Reservas </string>
     <string name="login_title"> Login </string>
     <string name="ensaios_title"> Ensaios </string>
-    <string name="admin_title"> Admin Tools </string>
     <string name="warning_title"> Avisos </string>
     <string name="chat_title"> Sala de Reuniões </string>
 
@@ -108,43 +107,5 @@
 
     <string name="empty_list"> Sem Eventos/Publicações de Momento </string>
     <string name="connection_failed"> Ups. Parece haver um problema com a sua conexão à rede. Pode usar a aplicação na mesma, mas algumas paginas poderão estar em branco. Por favor, ligue os dados moveis ou o wifi e reinicie a aplicação. </string>
-
-    ====== Users To Add ======
-
-    <string-array name="usersAdded">
-        <item> andre.martins.nunes@gmail.com-André Nunes-16/10/2000-Baixo-910037578-0 </item>
-        <item> sara.martins.nunes@gmail.com-Sara Nunes-30/03/1999-Soprano-916898778-0 </item>
-        <item> beatrizgomesfarias@gmail.com-Beatriz Farias-02/09/2003-Alto-968952167-0 </item>
-        <item> beatrizmateus99@hotmail.com-Beatriz Mateus-23/10/1999-Soprano-961545121-0 </item>
-        <item> carolina0poliveira@gmail.com-Carolina Oliveira-08/02/2003-Alto-926117720-0 </item>
-        <item> catarina.far.marques2001@gmail.com-Catarina Marques-03/05/2001-Soprano-928057254-0 </item>
-        <item> constancaalmor@gmail.com-Constança Moreira-20/06/2000-Alto-966197064-0 </item>
-        <item> cris-liberato98@hotmail.com-Cristiana Liberato-07/07/1998-Alto-969136999-0 </item>
-        == nao usar ==
-        <item> dantas.cristina3@gmail.com-Cristina Dantas-05/04/1999-Soprano-926682071-2 </item>
-        <item> davidjlaiahenriques@gmail.com-David Henriques-27/02/2000-Baixo-966943498-0 </item>
-        <item> eduardaddias28@gmail.com-Eduarda Dias-28/08/2003-Soprano-968865777-0 </item>
-        <item> kika.m.s.d.kika@gmail.com-Francisca Djacabi-29/07/2003-Alto-924276595-0 </item>
-        <item> dantas.helena15@gmail.com-Helena Dantas-24/12/2000-Soprano-962839465-0 </item>
-        <item> ines.a.goncalves.629@gmail.com-Inês Gonçalves-06/02/1999-Alto-966835196-0 </item>
-        <item> inesserranolopes21@gmail.com-Inês Lopes-21/10/2003-Soprano-926299614-0 </item>
-        <item> dantas.isabel78@gmail.com-Isabel Dantas-15/10/1997-Alto-926682095-0 </item>
-        <item> joaofndias@gmail.com-João Dias-17/02/2003-Baixo-968945188-0 </item>
-        <item> marci.fernandes22@gmail.com-Márcia Fernandes-07/09/1999-Soprano-962629521-0 </item>
-        <item> mtabd22@gmail.com-Maria Diniz-08/01/2001-Soprano-963806265-0 </item>
-        <item> mariaaaaesteves@gmail.com-Maria Esteves-05/07/2001-Alto-969065093-0 </item>
-        <item> antonio.carvalhinho@gmail.com-António Carvalhinho-24/01/1999-Baixo-964878875-0 </item>
-        <item> inespires.99@gmail.com-Maria Inês Pires-01/01/1999-Soprano-968818284-2 </item>
-        <item> raquel_cabecas@hotmail.com-Raquel Cabeças-28/04/2001-Alto-961225080-0 </item>
-        <item> marianams2000.mms@gmail.com-Mariana Santos-15/08/2000-Alto-924236803-0 </item>
-        <item> henriquecarvalhinho@gmail.com-Henrique Carvalhinho-24/05/2000-Baixo-966081412-0 </item>
-        <item> tiago_pl_94@hotmail.com-Tiago Lobato-17/12/1994-Baixo-924161161-0 </item>
-        <item> lobatomariana426@gmail.com-Mariana Lobato-27/06/2005-Alto-968268478-0</item>
-    </string-array>
-
-    <string-array name="usersToAdd">
-
-    </string-array>
-
 
 </resources>

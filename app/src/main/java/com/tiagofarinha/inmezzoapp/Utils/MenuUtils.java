@@ -2,7 +2,6 @@ package com.tiagofarinha.inmezzoapp.Utils;
 
 import androidx.fragment.app.Fragment;
 
-import com.tiagofarinha.inmezzoapp.AdminTools.AdminLogic;
 import com.tiagofarinha.inmezzoapp.Cache.FragManager;
 import com.tiagofarinha.inmezzoapp.Fragments.AboutLogic;
 import com.tiagofarinha.inmezzoapp.Fragments.CandidaturasLogic;
@@ -24,11 +23,6 @@ public class MenuUtils {
 
     public static void filterMenuItem(int id) {
         Fragment frag = FragManager.getInstance().findFragment("Frag:" + id);
-
-        if (id == R.id.menu_admin) {
-            Utils.showMessage("Não tem permissão para entrar. Se o menu se encontra com erros, reinicie a aplicação.");
-            return;
-        }
 
         if (frag == null) {
             switch (id) {
@@ -67,9 +61,6 @@ public class MenuUtils {
                     break;
                 case R.id.menu_ensaios:
                     frag = new EnsaiosLogic();
-                    break;
-                case R.id.menu_admin:
-                    frag = new AdminLogic();
                     break;
                 case R.id.menu_warnings:
                     frag = new WarningLogic();
