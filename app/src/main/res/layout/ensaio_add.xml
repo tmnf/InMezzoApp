@@ -82,8 +82,8 @@
 
     <Button
         android:id="@+id/ensaio_button"
-        android:layout_width="159dp"
-        android:layout_height="52dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
         android:background="@drawable/button"
@@ -95,8 +95,10 @@
 
     <Button
         android:id="@+id/ensaio_delete"
-        android:layout_width="159dp"
-        android:layout_height="52dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="10dp"
         android:background="@drawable/button"
         android:fontFamily="@font/bookman_bold"
         android:paddingBottom="5dp"

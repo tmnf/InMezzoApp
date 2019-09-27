@@ -177,8 +177,8 @@
 
     <Button
         android:id="@+id/vou_button"
-        android:layout_width="103dp"
-        android:layout_height="41dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/button"
@@ -188,8 +188,8 @@
 
     <Button
         android:id="@+id/nao_button"
-        android:layout_width="103dp"
-        android:layout_height="41dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/button"
@@ -199,8 +199,8 @@
 
     <Button
         android:id="@+id/maybe_button"
-        android:layout_width="103dp"
-        android:layout_height="41dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/button"
