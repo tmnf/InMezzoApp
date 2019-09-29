@@ -60,6 +60,7 @@ public class ProfileLogic extends Fragment {
             settings.setVisibility(View.GONE);
 
             User user = (User) getArguments().getSerializable("user");
+            checkModButton(user);
             refreshGUI(user);
         }
 
@@ -97,8 +98,6 @@ public class ProfileLogic extends Fragment {
         bio.setText(user.getUser_bio());
 
         addConfigListener();
-
-        checkModButton(user);
     }
 
     private void checkModButton(final User user) {
