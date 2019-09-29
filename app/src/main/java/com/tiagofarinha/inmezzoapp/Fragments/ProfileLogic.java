@@ -38,6 +38,7 @@ public class ProfileLogic extends Fragment {
     private TextView name, age, voice, settings, bio;
 
     private Button mod_strikes;
+    private int buff;
 
     @Nullable
     @Override
@@ -136,7 +137,7 @@ public class ProfileLogic extends Fragment {
         };
 
         AlertDialog.Builder builder = new AlertDialog.Builder(MainMethods.getInstance().getContext());
-        builder.setMessage("Faltas: " + user.getStrikes()).setPositiveButton("Adicionar Falta", dialogClickListener)
+        builder.setMessage("Faltas: " + (user.getStrikes() + buff)).setPositiveButton("Adicionar Falta", dialogClickListener)
                 .setNegativeButton("Remover Falta", dialogClickListener).setNeutralButton("Cancelar", dialogClickListener).show();
     }
 
@@ -179,7 +180,13 @@ public class ProfileLogic extends Fragment {
                     return;
                 }
 
+                if (aux.getStrikes() == 10 && value == 1) {
+                    Utils.showMessage("Máximo de Faltas Atingido - Reunião de Decisão Sugerida");
+                    return;
+                }
+
                 ref.setValue(aux.getStrikes() + value);
+                buff += value;
                 Utils.showMessage("Faltas Modificadas com Sucesso Para Utilizador: " + user.getUser_name());
             }
 
