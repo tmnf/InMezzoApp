@@ -136,7 +136,7 @@ public class ProfileLogic extends Fragment {
         };
 
         AlertDialog.Builder builder = new AlertDialog.Builder(MainMethods.getInstance().getContext());
-        builder.setMessage("Modificar Faltas").setPositiveButton("Adicionar Falta", dialogClickListener)
+        builder.setMessage("Faltas: " + user.getStrikes()).setPositiveButton("Adicionar Falta", dialogClickListener)
                 .setNegativeButton("Remover Falta", dialogClickListener).setNeutralButton("Cancelar", dialogClickListener).show();
     }
 
