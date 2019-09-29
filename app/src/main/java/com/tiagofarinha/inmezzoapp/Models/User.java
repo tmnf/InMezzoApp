@@ -7,7 +7,7 @@ public class User implements Adaptable {
     public static final int ADMIN = 1, COORD = 2;
 
     private String user_name, user_birthday, user_voice, user_pic, user_bio;
-    private int user_phone, user_mode;
+    private int user_phone, user_mode, strikes;
 
     public User() {
     }
@@ -20,6 +20,7 @@ public class User implements Adaptable {
         this.user_pic = user_pic;
         this.user_mode = user_mode;
         this.user_bio = "";
+        this.strikes = 0;
     }
 
     public String getUser_name() {
@@ -50,6 +51,10 @@ public class User implements Adaptable {
         return user_mode;
     }
 
+    public int getStrikes() {
+        return strikes;
+    }
+
     public String toString() {
         return user_name + user_birthday + user_voice + user_phone + user_mode;
     }
@@ -57,5 +62,24 @@ public class User implements Adaptable {
     @Override
     public boolean equals(Object obj) {
         return user_phone == ((User) obj).getUser_phone();
+    }
+
+    public void addStrike(int value) {
+        strikes += value;
+    }
+
+    public int checkBehavior() {
+        int res = 1;
+
+        if (strikes >= 2 && strikes <= 4)
+            res = 2;
+        if (strikes > 4 && strikes <= 6)
+            res = 3;
+        if (strikes > 6 && strikes <= 8)
+            res = 4;
+        if (strikes > 8)
+            res = 5;
+
+        return res;
     }
 }

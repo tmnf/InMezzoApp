@@ -2,7 +2,8 @@
 
     <solid android:color="@color/post_background" />
 
-    <corners android:radius="10dp" />
+    <corners android:radius="20dp" />
+
     <padding
         android:bottom="10dp"
         android:left="10dp"
