@@ -1,5 +1,6 @@
 package com.tiagofarinha.inmezzoapp.MainLogic;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -10,6 +11,7 @@ import androidx.core.view.GravityCompat;
 import com.google.android.material.navigation.NavigationView;
 import com.tiagofarinha.inmezzoapp.Cache.FragHistory;
 import com.tiagofarinha.inmezzoapp.R;
+import com.tiagofarinha.inmezzoapp.Services.NotificationService;
 import com.tiagofarinha.inmezzoapp.Utils.MenuUtils;
 
 public class MainActivity extends AppCompatActivity
@@ -24,6 +26,14 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
         mm = new MainMethods(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        if (MainMethods.getInstance().isMember())
+            startService(new Intent(this, NotificationService.class));
     }
 
     @Override
