@@ -14,7 +14,6 @@
         <service
             android:name=".Services.NotificationService"
             android:exported="false"
-            android:isolatedProcess="true"
             android:stopWithTask="false" />
 
         <activity
