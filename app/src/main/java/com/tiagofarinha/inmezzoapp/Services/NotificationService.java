@@ -13,7 +13,6 @@ import android.os.IBinder;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
-import com.tiagofarinha.inmezzoapp.MainLogic.MainActivity;
 import com.tiagofarinha.inmezzoapp.R;
 
 public class NotificationService extends Service {
@@ -25,15 +24,14 @@ public class NotificationService extends Service {
     private int not_id;
 
     public void sendNotification(String msg) {
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
+        // Intent intent = new Intent(this, SplashScreen.class);
+        // intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        // PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setContentTitle("InMezzzo Aviso")
                 .setContentText(msg)
                 .setPriority(NotificationCompat.PRIORITY_MAX)
-                .setContentIntent(pendingIntent)
                 .setAutoCancel(true);
 
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
