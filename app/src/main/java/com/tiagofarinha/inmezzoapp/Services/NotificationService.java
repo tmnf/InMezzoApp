@@ -1,41 +1,74 @@
 package com.tiagofarinha.inmezzoapp.Services;
 
+import android.app.AlarmManager;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.IBinder;
 
 import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
-import com.tiagofarinha.inmezzoapp.Cache.BackgroundResourceLoader;
+import com.tiagofarinha.inmezzoapp.MainLogic.MainActivity;
 import com.tiagofarinha.inmezzoapp.R;
 
 public class NotificationService extends Service {
 
     private final static String CHANNEL_ID = "1", CHANNEL_NAME = "InMezzoNots", CHANNEL_DESCR = "InMezzo Notificações";
+
     private BackgroundResourceLoader rl;
+
     private int not_id;
 
     public void sendNotification(String msg) {
-        NotificationManager mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getApplicationContext(), CHANNEL_ID);
-        mBuilder.setContentTitle("InMezzo Notificação");
-        mBuilder.setContentText(msg);
-        mBuilder.setSmallIcon(R.drawable.emoji_happy);
-        mBuilder.setAutoCancel(true);
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
 
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            int importance = NotificationManager.IMPORTANCE_HIGH;
-            NotificationChannel notificationChannel = new NotificationChannel(CHANNEL_ID, CHANNEL_NAME, importance);
-            mBuilder.setChannelId(CHANNEL_ID);
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
+                .setContentTitle("InMezzzo Aviso")
+                .setContentText(msg)
+                .setPriority(NotificationCompat.PRIORITY_MAX)
+                .setContentIntent(pendingIntent)
+                .setAutoCancel(true);
 
-            assert mNotificationManager != null;
-            mNotificationManager.createNotificationChannel(notificationChannel);
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            builder.setSmallIcon(R.drawable.ensaio_icon);
+        } else {
+            builder.setSmallIcon(R.mipmap.inmezzo_icon);
         }
 
-        assert mNotificationManager != null;
-        mNotificationManager.notify(not_id++, mBuilder.build());
+        createNotificationChannel();
+        showNotification(builder);
+    }
+
+    private void showNotification(NotificationCompat.Builder builder) {
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+        notificationManager.notify(not_id++, builder.build());
+    }
+
+    private void createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+
+            CharSequence name = CHANNEL_NAME;
+            String description = CHANNEL_DESCR;
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
+            channel.setDescription(description);
+
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
     }
 
     @Override
@@ -49,15 +82,24 @@ public class NotificationService extends Service {
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public void onTaskRemoved(Intent rootIntent) {
+        super.onTaskRemoved(rootIntent);
 
-        rl = null;
+        triggerReactivation();
+    }
+
+    private void triggerReactivation() {
+        PendingIntent service = PendingIntent.getService(getApplicationContext(),
+                1001,
+                new Intent(getApplicationContext(), NotificationService.class),
+                PendingIntent.FLAG_ONE_SHOT);
+
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, 1000, service);
     }
 
     @Override
     public IBinder onBind(Intent intent) {
-        // TODO: Return the communication channel to the service.
-        throw new UnsupportedOperationException("Not yet implemented");
+        return null;
     }
 }
