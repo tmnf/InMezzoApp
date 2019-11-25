@@ -14,7 +14,12 @@
         <service
             android:name=".Services.NotificationService"
             android:exported="false"
-            android:stopWithTask="false" />
+            android:stopWithTask="false">
+            <intent-filter>
+                <action android:name="com.tiagofarinha.inmezzoapp.Services.NotificationService" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </service>
 
         <activity
             android:name=".MainLogic.YoutubeActivity"

@@ -1,11 +1,8 @@
 package com.tiagofarinha.inmezzoapp.Services;
 
-import android.app.AlarmManager;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.IBinder;
@@ -29,7 +26,7 @@ public class NotificationService extends Service {
         // PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
-                .setContentTitle("InMezzzo Aviso")
+                .setContentTitle("InMezzo Aviso")
                 .setContentText(msg)
                 .setPriority(NotificationCompat.PRIORITY_MAX)
                 .setAutoCancel(true);
@@ -65,11 +62,6 @@ public class NotificationService extends Service {
     }
 
     @Override
-    public void onCreate() {
-        super.onCreate();
-    }
-
-    @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         super.onStartCommand(intent, flags, startId);
 
@@ -77,21 +69,6 @@ public class NotificationService extends Service {
         rl.execute();
 
         return START_STICKY;
-    }
-
-    @Override
-    public void onTaskRemoved(Intent rootIntent) {
-        triggerReactivation();
-    }
-
-    private void triggerReactivation() {
-        PendingIntent service = PendingIntent.getService(getApplicationContext(),
-                1001,
-                new Intent(getApplicationContext(), NotificationService.class),
-                PendingIntent.FLAG_ONE_SHOT);
-
-        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, 1000, service);
     }
 
     @Override

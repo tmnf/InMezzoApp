@@ -21,7 +21,7 @@ public class ChildListener implements ChildEventListener {
 
     @Override
     public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-        if (brl.isActive() && (System.currentTimeMillis() - time) > 5000)
+        if (brl.isActive() && (System.currentTimeMillis() - time) > 1000)
             brl.sendNotification(msg);
     }
 
