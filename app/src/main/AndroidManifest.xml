@@ -12,14 +12,18 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <service
-            android:name=".Services.NotificationService"
-            android:exported="false"
-            android:stopWithTask="false">
+            android:name="com.tiagofarinha.inmezzoapp.Services.NotificationService"
+            android:enabled="true"></service>
+
+        <receiver
+            android:name="com.tiagofarinha.inmezzoapp.Services.RestartServiceBroadcast"
+            android:enabled="true"
+            android:exported="true"
+            android:label="RestartServiceWhenStopped">
             <intent-filter>
-                <action android:name="com.tiagofarinha.inmezzoapp.Services.NotificationService" />
-                <category android:name="android.intent.category.DEFAULT" />
+                <action android:name="restartservice" />
             </intent-filter>
-        </service>
+        </receiver>
 
         <activity
             android:name=".MainLogic.YoutubeActivity"
