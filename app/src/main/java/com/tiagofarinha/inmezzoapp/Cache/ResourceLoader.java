@@ -5,8 +5,6 @@ import android.os.AsyncTask;
 
 import androidx.annotation.NonNull;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -36,7 +34,6 @@ import com.tiagofarinha.inmezzoapp.Utils.DateUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 
 public class ResourceLoader extends AsyncTask {
 
@@ -230,17 +227,7 @@ public class ResourceLoader extends AsyncTask {
             pics_remaining = users.size();
 
             ref = pic_ref.child(user_pic);
-            ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                @Override
-                public void onSuccess(Uri uri) {
-                    addPic(uri, aux.getUser_phone());
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    PicFailed();
-                }
-            });
+            ref.getDownloadUrl().addOnSuccessListener(uri -> addPic(uri, aux.getUser_phone())).addOnFailureListener(e -> PicFailed());
         }
     }
 
@@ -348,22 +335,19 @@ public class ResourceLoader extends AsyncTask {
                 for (DataSnapshot x : dataSnapshot.getChildren())
                     users.add(x.getValue(User.class));
 
-                Collections.sort(users, new Comparator<Adaptable>() {
-                    @Override
-                    public int compare(Adaptable o1, Adaptable o2) {
-                        User aux1, aux2;
-                        aux1 = (User) o1;
-                        aux2 = (User) o2;
+                Collections.sort(users, (o1, o2) -> {
+                    User aux1, aux2;
+                    aux1 = (User) o1;
+                    aux2 = (User) o2;
 
-                        String[] name1 = aux1.getUser_name().split(" ");
-                        String[] name2 = aux2.getUser_name().split(" ");
+                    String[] name1 = aux1.getUser_name().split(" ");
+                    String[] name2 = aux2.getUser_name().split(" ");
 
-                        int checkFirst = name1[0].compareTo(name2[0]);
-                        if (checkFirst == 0)
-                            return name1[1].compareTo(name2[1]);
+                    int checkFirst = name1[0].compareTo(name2[0]);
+                    if (checkFirst == 0)
+                        return name1[1].compareTo(name2[1]);
 
-                        return checkFirst;
-                    }
+                    return checkFirst;
                 });
 
                 taskOver();
@@ -462,30 +446,27 @@ public class ResourceLoader extends AsyncTask {
     }
 
     private void orderList(ArrayList<Adaptable> list) {
-        Collections.sort(list, new Comparator<Adaptable>() {
-            @Override
-            public int compare(Adaptable o1, Adaptable o2) {
-                Votable v1, v2;
-                v1 = (Votable) o1;
-                v2 = (Votable) o2;
-                MezzoDate date1 = DateUtils.parseToDate(v1.getDate().split(",")[0]);
-                MezzoDate date2 = DateUtils.parseToDate(v2.getDate().split(",")[0]);
+        Collections.sort(list, (o1, o2) -> {
+            Votable v1, v2;
+            v1 = (Votable) o1;
+            v2 = (Votable) o2;
+            MezzoDate date1 = DateUtils.parseToDate(v1.getDate().split(",")[0]);
+            MezzoDate date2 = DateUtils.parseToDate(v2.getDate().split(",")[0]);
 
-                if (date1.getYear() > date2.getYear())
-                    return 1;
-                if (date1.getYear() < date2.getYear())
-                    return -1;
-                if (date1.getMonth() > date2.getMonth())
-                    return 1;
-                if (date1.getMonth() < date2.getMonth())
-                    return -1;
-                if (date1.getDay() > date2.getDay())
-                    return 1;
-                if (date1.getDay() < date2.getDay())
-                    return -1;
+            if (date1.getYear() > date2.getYear())
+                return 1;
+            if (date1.getYear() < date2.getYear())
+                return -1;
+            if (date1.getMonth() > date2.getMonth())
+                return 1;
+            if (date1.getMonth() < date2.getMonth())
+                return -1;
+            if (date1.getDay() > date2.getDay())
+                return 1;
+            if (date1.getDay() < date2.getDay())
+                return -1;
 
-                return 0;
-            }
+            return 0;
         });
     }
 

@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.tiagofarinha.inmezzoapp.Dialogs.CalendarAux;
 import com.tiagofarinha.inmezzoapp.Models.Ensaio;
 import com.tiagofarinha.inmezzoapp.R;
 import com.tiagofarinha.inmezzoapp.Utils.MenuUtils;
@@ -45,14 +46,10 @@ public class AddEnsaio extends Fragment {
         fields.add(hour);
         fields.add(descr);
 
-        Button add = view.findViewById(R.id.ensaio_button);
+        Button add = view.findViewById(R.id.ensaio_button), calendar = view.findViewById(R.id.ensaio_callendar_button);
 
-        add.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                addInfo(fields);
-            }
-        });
+        add.setOnClickListener((v) -> addInfo(fields));
+        calendar.setOnClickListener((v) -> CalendarAux.openDatePicker(date, hour));
     }
 
     private void addInfo(ArrayList<EditText> fields) {
@@ -61,7 +58,7 @@ public class AddEnsaio extends Fragment {
                 Utils.showMessage("Por favor preencha todos os campos");
                 return;
             }
-        
+
         String date_formated = date.getText().toString().replace(".", "/") + "," + hour.getText().toString();
 
         Ensaio ensaio = new Ensaio(date_formated, descr.getText().toString());

@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.tiagofarinha.inmezzoapp.Dialogs.CalendarAux;
 import com.tiagofarinha.inmezzoapp.Models.Concert;
 import com.tiagofarinha.inmezzoapp.R;
 import com.tiagofarinha.inmezzoapp.Utils.MenuUtils;
@@ -41,7 +42,7 @@ public class AddConcert extends Fragment {
         local = view.findViewById(R.id.concert_local);
         descr = view.findViewById(R.id.concert_descr);
 
-        Button add = view.findViewById(R.id.concert_button);
+        Button add = view.findViewById(R.id.concert_button), calendar = view.findViewById(R.id.concert_callendar_button);
 
         final ArrayList<EditText> info = new ArrayList<>();
         info.add(date);
@@ -49,13 +50,8 @@ public class AddConcert extends Fragment {
         info.add(local);
         info.add(descr);
 
-
-        add.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                addInfo(info);
-            }
-        });
+        calendar.setOnClickListener((v) -> CalendarAux.openDatePicker(date, hour));
+        add.setOnClickListener(v -> addInfo(info));
     }
 
     private void addInfo(ArrayList<EditText> info) {
