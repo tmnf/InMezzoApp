@@ -61,18 +61,8 @@ public class AddEnsaio extends Fragment {
                 Utils.showMessage("Por favor preencha todos os campos");
                 return;
             }
-
-        if (!date.getText().toString().contains("/")) {
-            Utils.showMessage("Dia, Mês e Ano devem ser divididos por /");
-            return;
-        }
-
-        if (!hour.getText().toString().contains(":")) {
-            Utils.showMessage("Hora e Minutos devem ser divididos por :");
-            return;
-        }
-
-        String date_formated = date.getText().toString() + "," + hour.getText().toString();
+        
+        String date_formated = date.getText().toString().replace(".", "/") + "," + hour.getText().toString();
 
         Ensaio ensaio = new Ensaio(date_formated, descr.getText().toString());
 
