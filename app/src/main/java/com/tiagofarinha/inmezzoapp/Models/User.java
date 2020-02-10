@@ -4,7 +4,7 @@ import com.tiagofarinha.inmezzoapp.Interfaces.Adaptable;
 
 public class User implements Adaptable {
 
-    public static final int ADMIN = 1, COORD = 2;
+    public static final int ADMIN = 1, COORD = 2, SUSP = 3;
 
     private String user_name, user_birthday, user_voice, user_pic, user_bio;
     private int user_phone, user_mode, strikes;

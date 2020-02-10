@@ -332,8 +332,13 @@ public class ResourceLoader extends AsyncTask {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 users.clear();
-                for (DataSnapshot x : dataSnapshot.getChildren())
-                    users.add(x.getValue(User.class));
+                for (DataSnapshot x : dataSnapshot.getChildren()) {
+                    User us = x.getValue(User.class);
+
+                    if (!(us.getUser_mode() == User.SUSP))
+                        users.add(x.getValue(User.class));
+                }
+
 
                 Collections.sort(users, (o1, o2) -> {
                     User aux1, aux2;

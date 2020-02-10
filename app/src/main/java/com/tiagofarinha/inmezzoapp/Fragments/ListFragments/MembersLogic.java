@@ -1,8 +1,5 @@
 package com.tiagofarinha.inmezzoapp.Fragments.ListFragments;
 
-import android.view.View;
-import android.widget.AdapterView;
-
 import com.tiagofarinha.inmezzoapp.Adapter.UserAdapter;
 import com.tiagofarinha.inmezzoapp.Cache.ResourceLoader;
 import com.tiagofarinha.inmezzoapp.MainLogic.MainMethods;
@@ -24,12 +21,7 @@ public class MembersLogic extends DefaultListFragment {
     }
 
     private void addListener() {
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                MainMethods.getInstance().goToProfilePage((User) ResourceLoader.getInstance().getUsers().get(i));
-            }
-        });
+        listView.setOnItemClickListener((adapterView, view, i, l) -> MainMethods.getInstance().goToProfilePage((User) ResourceLoader.getInstance().getUsers().get(i)));
     }
 }
 
