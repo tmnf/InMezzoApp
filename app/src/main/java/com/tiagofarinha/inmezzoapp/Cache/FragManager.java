@@ -15,7 +15,7 @@ public class FragManager {
 
     private int current;
 
-    public FragManager() {
+    private FragManager() {
         INSTANCE = this;
 
         current = 0;

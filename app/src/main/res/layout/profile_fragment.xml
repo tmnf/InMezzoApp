@@ -50,6 +50,20 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
+        android:id="@+id/profile_notifications"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="10dp"
+        android:drawableStart="@drawable/notifications_icon"
+        android:fontFamily="@font/bookman_bold"
+        android:text="@string/notifications"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/profile_configs"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
         android:id="@+id/profile_voice"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -71,13 +85,13 @@
         android:layout_marginTop="40dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="40dp"
+        android:autoLink="all"
         android:fontFamily="@font/bookman_old_style"
         android:text="@string/bio_dummy"
         android:textColor="@color/white"
-        android:textSize="18sp"
-        android:autoLink="all"
         android:textColorLink="#bbb"
-        app:layout_constraintBottom_toTopOf="@+id/profile_configs"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/profile_notifications"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"

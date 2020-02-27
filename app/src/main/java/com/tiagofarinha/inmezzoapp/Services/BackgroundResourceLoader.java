@@ -10,15 +10,15 @@ public class BackgroundResourceLoader extends AsyncTask {
     // CLASS INSTANCE
     private static BackgroundResourceLoader INSTANCE;
 
-    private NotificationService ns;
+    // private NotificationService ns;
 
     private boolean active;
 
-    BackgroundResourceLoader(NotificationService ns) {
-        this.ns = ns;
-
-        INSTANCE = this;
-    }
+    // BackgroundResourceLoader(NotificationService ns) {
+    //     this.ns = ns;
+//
+    //     INSTANCE = this;
+    // }
 
     public static BackgroundResourceLoader getInstance() {
         return INSTANCE;
@@ -84,7 +84,7 @@ public class BackgroundResourceLoader extends AsyncTask {
         post_ref.addChildEventListener(new ChildListener("Nova Publicação!", this));
     }
 
-    public void sendNotification(String msg) {
-        ns.sendNotification(msg);
-    }
+    //public void sendNotification(String msg) {
+    //    ns.sendNotification(msg);
+//  }
 }

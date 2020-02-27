@@ -54,12 +54,7 @@ public class ChatAdapter extends DefaultAdapter {
     }
 
     private void addUserListener(final ViewHolder h, final ChatMessage message) {
-        h.pic.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MainMethods.getInstance().goToProfilePage(message.getUser());
-            }
-        });
+        h.pic.setOnClickListener(v -> MainMethods.getInstance().goToProfilePage(message.getUser()));
     }
 
     /* Caching Views */

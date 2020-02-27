@@ -71,6 +71,7 @@
     <string name="hour"> Hora (hh:mm) </string>
     <string name="youtube"> Youtube Url (Opcional) </string>
     <string name="configs"> Configurações </string>
+    <string name="notifications"> Ativar Notificações </string>
     <string name="warning"> Aviso </string>
     <string name="descr"> Descrição </string>
     <string name="artist"> Artista/Compositor </string>

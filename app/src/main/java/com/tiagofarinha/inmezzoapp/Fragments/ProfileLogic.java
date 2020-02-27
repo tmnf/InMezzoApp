@@ -67,7 +67,7 @@ public class ProfileLogic extends Fragment {
         return view;
     }
 
-    public void getUser() {
+    private void getUser() {
         FirebaseUser aut = FirebaseAuth.getInstance().getCurrentUser();
         if (aut != null) {
             FirebaseDatabase.getInstance().getReference().child("users").child(aut.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -83,7 +83,7 @@ public class ProfileLogic extends Fragment {
         }
     }
 
-    public void refreshGUI(User user) {
+    private void refreshGUI(User user) {
         LoginUtils.putInto(pic, user);
         name.setText(user.getUser_name());
 
@@ -107,31 +107,23 @@ public class ProfileLogic extends Fragment {
         }
 
         mod_strikes.setVisibility(View.VISIBLE);
-        mod_strikes.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openPopup(user);
-            }
-        });
+        mod_strikes.setOnClickListener(v -> openPopup(user));
     }
 
     private void openPopup(final User user) {
-        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                switch (which) {
-                    case DialogInterface.BUTTON_POSITIVE:
-                        modStrike(user, 1);
-                        dialog.dismiss();
-                        break;
-                    case DialogInterface.BUTTON_NEUTRAL:
-                        dialog.dismiss();
-                        break;
-                    case DialogInterface.BUTTON_NEGATIVE:
-                        modStrike(user, -1);
-                        dialog.dismiss();
-                        break;
-                }
+        DialogInterface.OnClickListener dialogClickListener = (dialog, which) -> {
+            switch (which) {
+                case DialogInterface.BUTTON_POSITIVE:
+                    modStrike(user, 1);
+                    dialog.dismiss();
+                    break;
+                case DialogInterface.BUTTON_NEUTRAL:
+                    dialog.dismiss();
+                    break;
+                case DialogInterface.BUTTON_NEGATIVE:
+                    modStrike(user, -1);
+                    dialog.dismiss();
+                    break;
             }
         };
 
@@ -142,20 +134,17 @@ public class ProfileLogic extends Fragment {
 
     @SuppressLint("ClickableViewAccessibility")
     private void addConfigListener() {
-        settings.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        settings.setTextColor(Color.BLACK);
-                        break;
-                    case MotionEvent.ACTION_UP:
-                        settings.setTextColor(Color.WHITE);
-                        MainMethods.getInstance().changeFrag(new ProfileConfig(), R.id.menu_perfil, true);
-                        break;
-                }
-                return true;
+        settings.setOnTouchListener((v, event) -> {
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    settings.setTextColor(Color.BLACK);
+                    break;
+                case MotionEvent.ACTION_UP:
+                    settings.setTextColor(Color.WHITE);
+                    MainMethods.getInstance().changeFrag(new ProfileConfig(), R.id.menu_perfil, true);
+                    break;
             }
+            return true;
         });
     }
 
@@ -173,6 +162,7 @@ public class ProfileLogic extends Fragment {
                         break;
                     }
                 }
+
 
                 if (aux.getStrikes() == 0 && value == -1) {
                     Utils.showMessage("Limite de Faltas Mínimo Atingido");

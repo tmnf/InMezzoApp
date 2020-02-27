@@ -9,7 +9,7 @@ public class FragHistory {
     private int[] history;
     private int current;
 
-    public FragHistory() {
+    private FragHistory() {
         history = new int[MAX_HISTORY];
         current = -1;
     }
