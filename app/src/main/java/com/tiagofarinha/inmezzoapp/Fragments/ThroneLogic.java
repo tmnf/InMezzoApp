@@ -20,7 +20,6 @@ import com.tiagofarinha.inmezzoapp.Utils.LoginUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 
 public class ThroneLogic extends Fragment {
 
@@ -41,12 +40,7 @@ public class ThroneLogic extends Fragment {
 
         usersByVotes = new ArrayList<>(ResourceLoader.getInstance().getUsers());
 
-        Collections.sort(usersByVotes, new Comparator<Adaptable>() {
-            @Override
-            public int compare(Adaptable o1, Adaptable o2) {
-                return ((User) o2).getVotes() - ((User) o1).getVotes();
-            }
-        });
+        Collections.sort(usersByVotes, (o1, o2) -> ((User) o2).getVotes() - ((User) o1).getVotes());
 
         ListView lv = view.findViewById(R.id.throne_list);
         lv.setAdapter(new ThroneAdapter(usersByVotes, R.layout.throne_row));
