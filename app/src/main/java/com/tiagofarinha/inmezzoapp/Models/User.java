@@ -7,12 +7,12 @@ public class User implements Adaptable {
     public static final int ADMIN = 1, COORD = 2, SUSP = 3;
 
     private String user_name, user_birthday, user_voice, user_pic, user_bio;
-    private int user_phone, user_mode, strikes;
+    private int user_phone, user_mode, strikes, votes;
 
     public User() {
     }
 
-    public User(String user_name, String user_birthday, String user_voice, int user_phone, String user_pic, int user_mode) {
+    public User(String user_name, String user_birthday, String user_voice, int user_phone, String user_pic, int user_mode, int votes) {
         this.user_name = user_name;
         this.user_birthday = user_birthday;
         this.user_voice = user_voice;
@@ -21,6 +21,7 @@ public class User implements Adaptable {
         this.user_mode = user_mode;
         this.user_bio = "";
         this.strikes = 0;
+        this.votes = 0;
     }
 
     public String getUser_name() {
@@ -53,6 +54,10 @@ public class User implements Adaptable {
 
     public int getStrikes() {
         return strikes;
+    }
+
+    public int getVotes() {
+        return votes;
     }
 
     public String toString() {

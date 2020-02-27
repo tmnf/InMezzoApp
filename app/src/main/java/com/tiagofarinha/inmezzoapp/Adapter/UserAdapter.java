@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.firebase.database.DatabaseReference;
 import com.squareup.picasso.Picasso;
 import com.tiagofarinha.inmezzoapp.Interfaces.Adaptable;
 import com.tiagofarinha.inmezzoapp.MainLogic.MainMethods;
@@ -21,9 +20,6 @@ import java.util.ArrayList;
 /* This class handles member row fulfilling */
 
 public class UserAdapter extends DefaultAdapter {
-
-    private String key;
-    private DatabaseReference user_ref;
 
     public UserAdapter(ArrayList<Adaptable> objects, int layoutId) {
         super(objects, layoutId);

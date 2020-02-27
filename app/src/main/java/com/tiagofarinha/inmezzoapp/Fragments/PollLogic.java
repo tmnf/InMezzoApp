@@ -25,6 +25,7 @@ import com.tiagofarinha.inmezzoapp.Models.Concert;
 import com.tiagofarinha.inmezzoapp.Models.Ensaio;
 import com.tiagofarinha.inmezzoapp.Models.Vote;
 import com.tiagofarinha.inmezzoapp.R;
+import com.tiagofarinha.inmezzoapp.Utils.Utils;
 
 import java.util.ArrayList;
 
@@ -214,6 +215,7 @@ public class PollLogic extends Fragment {
 
                 getComps();
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
             }
@@ -239,11 +241,13 @@ public class PollLogic extends Fragment {
                 return;
         }
 
+        Utils.changeVote(MainMethods.getInstance().getAuxUser(), Utils.ADD_VOTE);
         votes_ref.push().setValue(new Vote(event, MainMethods.getInstance().getAuxUser(), value));
     }
 
     private void removeVote() {
         votes_ref.child(voteSnap.getKey()).removeValue();
+        Utils.changeVote(MainMethods.getInstance().getAuxUser(), Utils.DELETE_VOTE);
         voteSnap = null;
         vote = null;
     }

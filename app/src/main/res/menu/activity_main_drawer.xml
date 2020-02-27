@@ -7,7 +7,7 @@
         <item
             android:id="@+id/menu_inicio"
             android:icon="@drawable/home_icon"
-            android:title="@string/menu_inicio"/>
+            android:title="@string/menu_inicio" />
         <item
             android:id="@+id/menu_portfolio"
             android:icon="@drawable/portfolio_icon"
@@ -61,6 +61,10 @@
                     android:id="@+id/menu_chat"
                     android:icon="@drawable/chat_icon"
                     android:title="@string/menu_chat" />
+                <item
+                    android:id="@+id/menu_top"
+                    android:icon="@drawable/chat_icon"
+                    android:title="@string/top_title" />
                 <item
                     android:id="@+id/menu_logout"
                     android:icon="@drawable/logout_icon"

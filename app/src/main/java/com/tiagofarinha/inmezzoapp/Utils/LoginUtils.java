@@ -29,7 +29,7 @@ public class LoginUtils {
 
     private static LoginUtils INSTANCE;
 
-    private MenuItem login, perfil, logout, ensaios, warnings, chat;
+    private MenuItem login, perfil, logout, ensaios, warnings, chat, top;
     private Menu menu;
     private View header;
 
@@ -69,9 +69,11 @@ public class LoginUtils {
             ensaios = menu.findItem(R.id.menu_ensaios);
             warnings = menu.findItem(R.id.menu_warnings);
             chat = menu.findItem(R.id.menu_chat);
+            top = menu.findItem(R.id.menu_top);
 
             user_name = header.findViewById(R.id.menu_name);
             pic = header.findViewById(R.id.menu_pic);
+
         }
 
         FirebaseUser currentUser = mAuth.getCurrentUser();
@@ -83,6 +85,7 @@ public class LoginUtils {
             ensaios.setVisible(false);
             warnings.setVisible(false);
             chat.setVisible(false);
+            top.setVisible(false);
 
             user_name.setText("Menu");
             pic.setVisibility(View.INVISIBLE);
@@ -94,6 +97,7 @@ public class LoginUtils {
             ensaios.setVisible(true);
             warnings.setVisible(true);
             chat.setVisible(true);
+            top.setVisible(true);
 
             user_name.setText(currentUser.getDisplayName());
             pic.setVisibility(View.VISIBLE);

@@ -544,4 +544,11 @@ public class ResourceLoader extends AsyncTask {
     public ArrayList<Adaptable> getChat_messages() {
         return chat_messages;
     }
+
+    public int getTotalVotes() {
+        int total = 0;
+        for (Adaptable x : users)
+            total += ((User) x).getVotes();
+        return total;
+    }
 }
