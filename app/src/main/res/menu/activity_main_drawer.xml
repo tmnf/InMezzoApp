@@ -63,7 +63,7 @@
                     android:title="@string/menu_chat" />
                 <item
                     android:id="@+id/menu_top"
-                    android:icon="@drawable/chat_icon"
+                    android:icon="@drawable/ic_success"
                     android:title="@string/top_title" />
                 <item
                     android:id="@+id/menu_logout"
