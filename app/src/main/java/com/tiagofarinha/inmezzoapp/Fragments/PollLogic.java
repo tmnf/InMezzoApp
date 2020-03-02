@@ -36,6 +36,9 @@ public class PollLogic extends Fragment {
     private Adaptable event;
     private DatabaseReference votes_ref;
 
+    private long userVotes;
+    private DatabaseReference user;
+
     private DataSnapshot voteSnap;
     private Vote vote;
 
@@ -73,25 +76,11 @@ public class PollLogic extends Fragment {
         dontList = view.findViewById(R.id.poll_dont_list);
         maybeList = view.findViewById(R.id.poll_maybe_list);
 
-        goButt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                addVote(GO);
-            }
-        });
-        dontButt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                addVote(DONT);
-            }
-        });
-        maybeButt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                addVote(MAYBE);
-            }
-        });
+        goButt.setOnClickListener(v -> addVote(GO));
+        dontButt.setOnClickListener(v -> addVote(DONT));
+        maybeButt.setOnClickListener(v -> addVote(MAYBE));
 
+        getUser();
         getVotes();
 
         return view;
@@ -138,8 +127,6 @@ public class PollLogic extends Fragment {
         }
 
         setNumbers(go.size(), dont.size(), maybe.size());
-
-        VoteAdapter adapt = null;
 
         // GO
         VoteAdapter ad1 = new VoteAdapter(go, R.layout.vote_row);
@@ -191,13 +178,25 @@ public class PollLogic extends Fragment {
         bt.setBackgroundResource(id);
     }
 
+    private void getUser() {
+        Utils.getUser(MainMethods.getInstance().getAuxUser(), this);
+    }
+
+    public void setUserInfo(long userVotes) {
+        this.userVotes = userVotes;
+    }
+
+    public void setUser(DatabaseReference user) {
+        this.user = user;
+    }
+
     private void getVotes() {
         votes_ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 votes.clear();
 
-                Adaptable localEvent = null;
+                Adaptable localEvent;
 
                 for (DataSnapshot x : dataSnapshot.getChildren()) {
                     Vote vote = x.getValue(Vote.class);
@@ -241,13 +240,14 @@ public class PollLogic extends Fragment {
                 return;
         }
 
-        Utils.changeVote(MainMethods.getInstance().getAuxUser(), Utils.ADD_VOTE);
         votes_ref.push().setValue(new Vote(event, MainMethods.getInstance().getAuxUser(), value));
+        Utils.changeVote(user, ++userVotes);
     }
 
     private void removeVote() {
+        Utils.changeVote(user, --userVotes);
         votes_ref.child(voteSnap.getKey()).removeValue();
-        Utils.changeVote(MainMethods.getInstance().getAuxUser(), Utils.DELETE_VOTE);
+
         voteSnap = null;
         vote = null;
     }
