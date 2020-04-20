@@ -174,7 +174,7 @@ public class ResourceLoader extends AsyncTask {
         }
     }
 
-    public void deleteVotes(final Adaptable event) {
+    public void deleteVotes(final String eventKey) {
         final DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("votes");
 
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -182,15 +182,9 @@ public class ResourceLoader extends AsyncTask {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 ArrayList<String> keysToDelete = new ArrayList<>();
 
-                for (DataSnapshot x : dataSnapshot.getChildren()) {
-                    Vote aux = x.getValue(Vote.class);
-
-                    if (event instanceof Concert) {
-                        if (aux.getConcert() != null && aux.getConcert().equals(event))
-                            keysToDelete.add(x.getKey());
-                    } else if (aux.getEnsaio() != null && aux.getEnsaio().equals(event))
+                for (DataSnapshot x : dataSnapshot.getChildren())
+                    if (eventKey.equals(x.getValue(Vote.class).getEventKey()))
                         keysToDelete.add(x.getKey());
-                }
 
                 for (String key : keysToDelete)
                     ref.child(key).removeValue();
@@ -430,8 +424,9 @@ public class ResourceLoader extends AsyncTask {
                     String[] date = aux.getDate().split(",");
 
                     if (DateUtils.hasPassed(date[0])) {
-                        keysToDelete.add(x.getKey());
-                        deleteVotes(aux);
+                        String key = x.getKey();
+                        keysToDelete.add(key);
+                        deleteVotes(key);
                     } else
                         list.add(aux);
                 }

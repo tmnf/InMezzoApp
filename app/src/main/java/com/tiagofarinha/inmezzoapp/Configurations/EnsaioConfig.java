@@ -80,7 +80,7 @@ public class EnsaioConfig extends Fragment {
     }
 
     private void update(String datetime, String descr) {
-        ResourceLoader.getInstance().deleteVotes(ensaio);
+        ResourceLoader.getInstance().deleteVotes(key);
         ensaios_ref.child(key).setValue(new Ensaio(datetime, descr)).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
@@ -91,7 +91,7 @@ public class EnsaioConfig extends Fragment {
     }
 
     private void remove() {
-        ResourceLoader.getInstance().deleteVotes(ensaio);
+        ResourceLoader.getInstance().deleteVotes(key);
         ensaios_ref.child(key).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {

@@ -73,6 +73,10 @@ public class User implements Adaptable {
         strikes += value;
     }
 
+    public void addVote(int value) {
+        votes += value;
+    }
+
     public int checkBehavior() {
         int res = 1;
 

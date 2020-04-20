@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -23,6 +24,7 @@ import com.tiagofarinha.inmezzoapp.Interfaces.Adaptable;
 import com.tiagofarinha.inmezzoapp.MainLogic.MainMethods;
 import com.tiagofarinha.inmezzoapp.Models.Concert;
 import com.tiagofarinha.inmezzoapp.Models.Ensaio;
+import com.tiagofarinha.inmezzoapp.Models.User;
 import com.tiagofarinha.inmezzoapp.Models.Vote;
 import com.tiagofarinha.inmezzoapp.R;
 import com.tiagofarinha.inmezzoapp.Utils.Utils;
@@ -31,188 +33,151 @@ import java.util.ArrayList;
 
 public class PollLogic extends Fragment {
 
+    // Different Types of Vote
     public static final int GO = 0, DONT = 1, MAYBE = 2;
 
-    private Adaptable event;
-    private DatabaseReference votes_ref;
+    // Main View
+    private View view;
 
-    private long userVotes;
-    private DatabaseReference user;
+    // All Votes From This Event
+    private ArrayList<Vote> votes = new ArrayList<>();
 
+    // Reference to User's Vote
     private DataSnapshot voteSnap;
-    private Vote vote;
 
-    private Button goButt, dontButt, maybeButt;
-    private TextView goNum, dontNum, maybeNum;
-    private ProgressBar progGo, progDont, progMaybe;
+    // Event Key
+    private String eventKey = "";
 
+    // Reference to Votes Table
+    private DatabaseReference votesRef;
+
+    // Components
+    private Button goBt, dontBt, maybeBt;
     private ListView goList, dontList, maybeList;
-
-    private ArrayList<Vote> votes;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.poll_fragment, container, false);
+        view = inflater.inflate(R.layout.poll_fragment, container, false);
 
-        event = (Adaptable) getArguments().getSerializable("event");
-        votes_ref = FirebaseDatabase.getInstance().getReference().child("votes");
+        getComps(view);
 
-        votes = new ArrayList<>();
+        votesRef = FirebaseDatabase.getInstance().getReference().child("votes");
+        getEventKey(((Adaptable) getArguments().getSerializable("event")));
 
-        goNum = view.findViewById(R.id.poll_vou_num);
-        dontNum = view.findViewById(R.id.poll_nao_num);
-        maybeNum = view.findViewById(R.id.poll_maybe_num);
-
-        goButt = view.findViewById(R.id.vou_button);
-        dontButt = view.findViewById(R.id.nao_button);
-        maybeButt = view.findViewById(R.id.maybe_button);
-
-        progGo = view.findViewById(R.id.poll_vou);
-        progDont = view.findViewById(R.id.poll_nao);
-        progMaybe = view.findViewById(R.id.poll_talvez);
-
-        goList = view.findViewById(R.id.poll_go_list);
-        dontList = view.findViewById(R.id.poll_dont_list);
-        maybeList = view.findViewById(R.id.poll_maybe_list);
-
-        goButt.setOnClickListener(v -> addVote(GO));
-        dontButt.setOnClickListener(v -> addVote(DONT));
-        maybeButt.setOnClickListener(v -> addVote(MAYBE));
-
-        getUser();
-        getVotes();
+        addListeners();
 
         return view;
     }
 
-    private void getComps() {
-        generateLists();
-        checkTextures();
+    private void addListeners() {
+        goBt.setOnClickListener(v -> vote(GO));
+        dontBt.setOnClickListener(v -> vote(DONT));
+        maybeBt.setOnClickListener(v -> vote(MAYBE));
     }
 
-    private void setNumbers(int go, int dont, int maybe) {
-        int max = go + dont + maybe;
+    // Handles User Input Vote
+    private void vote(int mode) {
 
-        progGo.setMax(max);
-        progDont.setMax(max);
-        progMaybe.setMax(max);
+        if (voteSnap != null) {
+            int vote = voteSnap.getValue(Vote.class).getValue();
 
-        progGo.setProgress(go);
-        progDont.setProgress(dont);
-        progMaybe.setProgress(maybe);
+            votesRef.child(voteSnap.getKey()).removeValue();
+            voteSnap = null;
 
-        goNum.setText(go + "");
-        maybeNum.setText(maybe + "");
-        dontNum.setText(dont + "");
-    }
+            if (vote == mode) {
+                updateLeaderBoard(-1);
 
-    private void generateLists() {
-        ArrayList<Adaptable> go = new ArrayList<>();
-        ArrayList<Adaptable> maybe = new ArrayList<>();
-        ArrayList<Adaptable> dont = new ArrayList<>();
-
-        for (Vote x : votes) {
-            switch (x.getValue()) {
-                case GO:
-                    go.add(x.getUser());
-                    break;
-                case DONT:
-                    dont.add(x.getUser());
-                    break;
-                case MAYBE:
-                    maybe.add(x.getUser());
-                    break;
+                Utils.showMessage("Voto Removido");
+                return;
             }
+        } else
+            updateLeaderBoard(1);
+
+        votesRef.push().setValue(new Vote(eventKey, MainMethods.getInstance().getAuxUser(), mode));
+        Utils.showMessage("Voto Adicionado");
+    }
+
+    // Updates Current Votes on Current User
+    private void updateLeaderBoard(int value) {
+        User currUser = MainMethods.getInstance().getAuxUser();
+        currUser.addVote(value);
+        Utils.changeVotesOfUser(FirebaseAuth.getInstance().getUid(), currUser.getVotes());
+    }
+
+    // Updates Button Textures
+    private void updateButtons() {
+        boolean[] states = new boolean[3];
+
+        if (voteSnap != null)
+            states[voteSnap.getValue(Vote.class).getValue()] = true;
+
+        goBt.setPressed(states[0]);
+        dontBt.setPressed(states[1]);
+        maybeBt.setPressed(states[2]);
+    }
+
+    // Updates Vote Count and Progress
+    private void updateInfo(int mode, int max, int value) {
+        int num_id = 0, prog_id = 0;
+
+        switch (mode) {
+            case GO:
+                num_id = R.id.poll_vou_num;
+                prog_id = R.id.poll_vou;
+                break;
+            case DONT:
+                num_id = R.id.poll_nao_num;
+                prog_id = R.id.poll_nao;
+                break;
+            case MAYBE:
+                num_id = R.id.poll_maybe_num;
+                prog_id = R.id.poll_talvez;
+                break;
+            default:
+                break;
         }
 
-        setNumbers(go.size(), dont.size(), maybe.size());
-
-        // GO
-        VoteAdapter ad1 = new VoteAdapter(go, R.layout.vote_row);
-        goList.setAdapter(ad1);
-
-        // DONT
-        VoteAdapter ad2 = new VoteAdapter(dont, R.layout.vote_row);
-        dontList.setAdapter(ad2);
-
-        //Maybe
-        VoteAdapter ad3 = new VoteAdapter(maybe, R.layout.vote_row);
-        maybeList.setAdapter(ad3);
+        ((TextView) view.findViewById(num_id)).setText(value + "");
+        ((ProgressBar) view.findViewById(prog_id)).setMax(max);
+        ((ProgressBar) view.findViewById(prog_id)).setProgress(value);
     }
 
-    private void checkTextures() {
-        if (vote == null) {
-            changeTexture(goButt, true);
-            changeTexture(dontButt, true);
-            changeTexture(maybeButt, true);
-        } else {
-            switch (vote.getValue()) {
-                case GO:
-                    changeTexture(goButt, false);
-                    changeTexture(dontButt, true);
-                    changeTexture(maybeButt, true);
-                    break;
-                case DONT:
-                    changeTexture(goButt, true);
-                    changeTexture(dontButt, false);
-                    changeTexture(maybeButt, true);
-                    break;
-                case MAYBE:
-                    changeTexture(goButt, true);
-                    changeTexture(dontButt, true);
-                    changeTexture(maybeButt, false);
-                    break;
-            }
-        }
+    // Gets a Reference to the Components
+    private void getComps(View view) {
+        goBt = view.findViewById(R.id.vou_button);
+        dontBt = view.findViewById(R.id.nao_button);
+        maybeBt = view.findViewById(R.id.maybe_button);
+
+        goList = view.findViewById(R.id.poll_go_list);
+        dontList = view.findViewById(R.id.poll_dont_list);
+        maybeList = view.findViewById(R.id.poll_maybe_list);
     }
 
-    private void changeTexture(Button bt, boolean active) {
-        int id;
+    // Gets the Event Key
+    private void getEventKey(Adaptable event) {
+        String eventType = "ensaios";
 
-        if (active)
-            id = R.drawable.button_default;
-        else
-            id = R.drawable.button_pressed;
+        if (event instanceof Concert)
+            eventType = "concerts";
 
-        bt.setBackgroundResource(id);
-    }
-
-    private void getUser() {
-        Utils.getUser(MainMethods.getInstance().getAuxUser(), this);
-    }
-
-    public void setUserInfo(long userVotes) {
-        this.userVotes = userVotes;
-    }
-
-    public void setUser(DatabaseReference user) {
-        this.user = user;
-    }
-
-    private void getVotes() {
-        votes_ref.addValueEventListener(new ValueEventListener() {
+        FirebaseDatabase.getInstance().getReference().child(eventType).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                votes.clear();
-
-                Adaptable localEvent;
-
                 for (DataSnapshot x : dataSnapshot.getChildren()) {
-                    Vote vote = x.getValue(Vote.class);
+                    Adaptable aux_event = null;
 
-                    localEvent = null;
+                    if (event instanceof Concert)
+                        aux_event = x.getValue(Concert.class);
+                    else
+                        aux_event = x.getValue(Ensaio.class);
 
-                    if (event instanceof Ensaio && vote.getEnsaio() != null)
-                        localEvent = vote.getEnsaio();
-                    else if (event instanceof Concert && vote.getConcert() != null)
-                        localEvent = vote.getConcert();
-
-                    if (localEvent != null)
-                        handleVote(localEvent, vote, x);
+                    if (aux_event.equals(event)) {
+                        eventKey = x.getKey();
+                        break;
+                    }
                 }
-
-                getComps();
+                generateLists();
             }
 
             @Override
@@ -221,34 +186,44 @@ public class PollLogic extends Fragment {
         });
     }
 
-    private void handleVote(Adaptable localEvent, Vote vote, DataSnapshot x) {
-        if (localEvent.equals(event)) {
-            votes.add(vote);
+    // Gets All Votes
+    private void generateLists() {
+        votesRef.orderByChild("eventKey").equalTo(eventKey).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                votes.clear();
 
-            if (vote.getUser().equals(MainMethods.getInstance().getAuxUser())) {
-                this.voteSnap = x;
-                this.vote = vote;
+                for (DataSnapshot x : dataSnapshot.getChildren()) {
+                    Vote v = x.getValue(Vote.class);
+                    votes.add(x.getValue(Vote.class));
+
+                    if (v.getUser().equals(MainMethods.getInstance().getAuxUser()))
+                        voteSnap = x;
+                }
+
+                goList.setAdapter(new VoteAdapter(getAllVotesOf(votes, GO), R.layout.vote_row));
+                dontList.setAdapter(new VoteAdapter(getAllVotesOf(votes, DONT), R.layout.vote_row));
+                maybeList.setAdapter(new VoteAdapter(getAllVotesOf(votes, MAYBE), R.layout.vote_row));
+
+                updateButtons();
             }
-        }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
     }
 
-    private void addVote(int value) {
-        if (voteSnap != null) {
-            int voteValue = vote.getValue();
-            removeVote();
-            if (voteValue == value)
-                return;
-        }
+    // Gets Votes From a Certain Type
+    public ArrayList<Adaptable> getAllVotesOf(ArrayList<Vote> votes, int mode) {
+        ArrayList<Adaptable> res = new ArrayList<>();
 
-        votes_ref.push().setValue(new Vote(event, MainMethods.getInstance().getAuxUser(), value));
-        Utils.changeVote(user, ++userVotes);
-    }
+        for (Vote x : votes)
+            if (x.getValue() == mode)
+                res.add(x.getUser());
 
-    private void removeVote() {
-        Utils.changeVote(user, --userVotes);
-        votes_ref.child(voteSnap.getKey()).removeValue();
+        updateInfo(mode, votes.size(), res.size());
 
-        voteSnap = null;
-        vote = null;
+        return res;
     }
 }

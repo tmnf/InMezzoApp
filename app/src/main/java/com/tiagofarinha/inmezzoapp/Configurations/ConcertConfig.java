@@ -81,7 +81,7 @@ public class ConcertConfig extends Fragment {
     }
 
     private void update(String datetime, String local, String descr) {
-        ResourceLoader.getInstance().deleteVotes(concert);
+        ResourceLoader.getInstance().deleteVotes(key);
         concerts_ref.child(key).setValue(new Concert(datetime, local, descr)).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
@@ -92,7 +92,7 @@ public class ConcertConfig extends Fragment {
     }
 
     private void remove() {
-        ResourceLoader.getInstance().deleteVotes(concert);
+        ResourceLoader.getInstance().deleteVotes(key);
         concerts_ref.child(key).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
