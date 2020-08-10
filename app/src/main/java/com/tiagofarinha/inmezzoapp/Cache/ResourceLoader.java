@@ -12,6 +12,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
 import com.tiagofarinha.inmezzoapp.Fragments.ChatLogic;
 import com.tiagofarinha.inmezzoapp.Fragments.ListFragments.DefaultListFragment;
 import com.tiagofarinha.inmezzoapp.Interfaces.Adaptable;
@@ -31,6 +32,7 @@ import com.tiagofarinha.inmezzoapp.Models.Warning;
 import com.tiagofarinha.inmezzoapp.Models.YoutubeContainer;
 import com.tiagofarinha.inmezzoapp.Models.YoutubeVideo;
 import com.tiagofarinha.inmezzoapp.Utils.DateUtils;
+import com.tiagofarinha.inmezzoapp.Utils.Utils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -115,6 +117,8 @@ public class ResourceLoader extends AsyncTask {
 
             while (pics_remaining != 0)
                 wait();
+
+            preLoadImages();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -225,6 +229,11 @@ public class ResourceLoader extends AsyncTask {
         }
     }
 
+    private void preLoadImages() {
+        for (PicInfo x : pic_info)
+            Picasso.get().load(x.getUri()).resize(150, 150).centerCrop().fetch();
+    }
+
     private synchronized void addPic(Uri uri, int num) {
         pic_info.add(new PicInfo(uri, num));
         pics_remaining--;
@@ -332,7 +341,6 @@ public class ResourceLoader extends AsyncTask {
                     if (!(us.getUser_mode() == User.SUSP))
                         users.add(x.getValue(User.class));
                 }
-
 
                 Collections.sort(users, (o1, o2) -> {
                     User aux1, aux2;
@@ -545,5 +553,16 @@ public class ResourceLoader extends AsyncTask {
         for (Adaptable x : users)
             total += ((User) x).getVotes();
         return total;
+    }
+
+    public User getUserByPhone(int phone) {
+        User res = null;
+        for (Adaptable x : users)
+            if (((User) x).getUser_phone() == phone) {
+                res = (User) x;
+                break;
+            }
+
+        return res;
     }
 }

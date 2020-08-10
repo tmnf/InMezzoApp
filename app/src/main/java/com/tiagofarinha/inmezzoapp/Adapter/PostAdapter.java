@@ -15,6 +15,7 @@ import com.tiagofarinha.inmezzoapp.Interfaces.Adaptable;
 import com.tiagofarinha.inmezzoapp.MainLogic.MainMethods;
 import com.tiagofarinha.inmezzoapp.MainLogic.YoutubeActivity;
 import com.tiagofarinha.inmezzoapp.Models.Post;
+import com.tiagofarinha.inmezzoapp.Models.User;
 import com.tiagofarinha.inmezzoapp.Models.YoutubeVideo;
 import com.tiagofarinha.inmezzoapp.R;
 import com.tiagofarinha.inmezzoapp.Utils.LoginUtils;
@@ -97,12 +98,9 @@ public class PostAdapter extends DefaultAdapter {
     }
 
     private void addUserListener(final ViewHolder h, final Post post) {
-        h.pic.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MainMethods.getInstance().goToProfilePage(post.getOwner());
-            }
-        });
+        User user = ResourceLoader.getInstance().getUserByPhone(post.getOwner().getUser_phone());
+        if (user != null)
+            h.pic.setOnClickListener(v -> MainMethods.getInstance().goToProfilePage(user));
     }
 
     /* Caching Views */

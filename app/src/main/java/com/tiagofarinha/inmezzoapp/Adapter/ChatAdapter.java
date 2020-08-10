@@ -7,9 +7,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.tiagofarinha.inmezzoapp.Cache.ResourceLoader;
 import com.tiagofarinha.inmezzoapp.Interfaces.Adaptable;
 import com.tiagofarinha.inmezzoapp.MainLogic.MainMethods;
 import com.tiagofarinha.inmezzoapp.Models.ChatMessage;
+import com.tiagofarinha.inmezzoapp.Models.User;
 import com.tiagofarinha.inmezzoapp.R;
 import com.tiagofarinha.inmezzoapp.Utils.LoginUtils;
 
@@ -54,7 +56,9 @@ public class ChatAdapter extends DefaultAdapter {
     }
 
     private void addUserListener(final ViewHolder h, final ChatMessage message) {
-        h.pic.setOnClickListener(v -> MainMethods.getInstance().goToProfilePage(message.getUser()));
+        User user = ResourceLoader.getInstance().getUserByPhone(message.getUser().getUser_phone());
+        if (user != null)
+            h.pic.setOnClickListener(v -> MainMethods.getInstance().goToProfilePage(user));
     }
 
     /* Caching Views */

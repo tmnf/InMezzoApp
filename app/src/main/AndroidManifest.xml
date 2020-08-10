@@ -11,7 +11,11 @@
         android:roundIcon="@mipmap/inmezzo_icon_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
+        <activity
+            android:name=".MainLogic.PicView"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_pic_view"
+            android:theme="@style/FullscreenTheme"></activity>
         <activity
             android:name=".MainLogic.YoutubeActivity"
             android:configChanges="orientation|screenSize|keyboardHidden" />

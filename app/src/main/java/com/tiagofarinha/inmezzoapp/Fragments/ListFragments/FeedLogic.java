@@ -37,14 +37,11 @@ public class FeedLogic extends DefaultListFragment {
     }
 
     private void addListener() {
-        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-                if (MainMethods.getInstance().isMember())
-                    checkPermission((Post) ResourceLoader.getInstance().getPosts().get(i));
+        listView.setOnItemLongClickListener((adapterView, view, i, l) -> {
+            if (MainMethods.getInstance().isMember())
+                checkPermission((Post) ResourceLoader.getInstance().getPosts().get(i));
 
-                return true;
-            }
+            return true;
         });
     }
 

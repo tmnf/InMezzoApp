@@ -3,6 +3,7 @@ package com.tiagofarinha.inmezzoapp.Fragments;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -24,8 +25,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 import com.tiagofarinha.inmezzoapp.Configurations.ProfileConfig;
 import com.tiagofarinha.inmezzoapp.MainLogic.MainMethods;
+import com.tiagofarinha.inmezzoapp.MainLogic.PicView;
 import com.tiagofarinha.inmezzoapp.Models.User;
 import com.tiagofarinha.inmezzoapp.R;
 import com.tiagofarinha.inmezzoapp.Utils.DateUtils;
@@ -64,6 +67,7 @@ public class ProfileLogic extends Fragment {
             refreshGUI(user);
         }
 
+
         return view;
     }
 
@@ -96,6 +100,14 @@ public class ProfileLogic extends Fragment {
         voice.setText(voice_text);
 
         bio.setText(user.getUser_bio());
+
+        pic.setOnClickListener(view -> {
+            Intent intent = new Intent(MainMethods.getInstance().getContext(), PicView.class);
+            Bundle b = new Bundle();
+            b.putSerializable("user", user);
+            intent.putExtras(b);
+            startActivity(intent);
+        });
 
         addConfigListener();
     }
