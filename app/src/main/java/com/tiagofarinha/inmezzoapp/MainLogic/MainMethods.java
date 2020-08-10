@@ -54,7 +54,6 @@ public class MainMethods {
 
     private FirebaseAuth mAuth;
 
-
     public MainMethods(MainActivity mainActivity) {
         this.mainActivity = mainActivity;
 

@@ -2,7 +2,7 @@ package com.tiagofarinha.inmezzoapp.Cache;
 
 public class FragHistory {
 
-    private static final int MAX_HISTORY = 5;
+    private static final int MAX_HISTORY = 3;
 
     private static FragHistory INSTANCE;
 
