@@ -21,10 +21,15 @@ public class PicView extends AppCompatActivity {
 
         setContentView(R.layout.activity_pic_view);
 
-        User user = (User) getIntent().getExtras().getSerializable("user");
         ImageView pic = findViewById(R.id.pic_view);
 
-        LoginUtils.putInto(pic, user);
+        User user = (User) getIntent().getExtras().getSerializable("user");
+
+        if (user == null) {
+            int image_id = getIntent().getExtras().getInt("img_id");
+            Picasso.get().load(image_id).fit().centerInside().into(pic);
+        } else
+            LoginUtils.putInto(pic, user);
     }
 
 

@@ -134,7 +134,6 @@ public class LoginUtils {
     }
 
     public static void fillView(ImageView view, Uri uri) {
-        Picasso.get().setIndicatorsEnabled(true);
         Picasso.get().load(uri).noFade().networkPolicy(NetworkPolicy.OFFLINE).into(view);
     }
 
