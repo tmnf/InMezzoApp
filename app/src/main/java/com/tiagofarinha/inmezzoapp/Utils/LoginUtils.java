@@ -16,6 +16,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 import com.tiagofarinha.inmezzoapp.Cache.ResourceLoader;
@@ -134,7 +135,17 @@ public class LoginUtils {
     }
 
     public static void fillView(ImageView view, Uri uri) {
-        Picasso.get().load(uri).noFade().networkPolicy(NetworkPolicy.OFFLINE).into(view);
+        Picasso.get().load(uri).noFade().networkPolicy(NetworkPolicy.OFFLINE).into(view, new Callback() {
+            @Override
+            public void onSuccess() {
+
+            }
+
+            @Override
+            public void onError(Exception e) {
+                Picasso.get().load(uri).resize(150, 150).centerCrop().noFade().into(view);
+            }
+        });
     }
 
     public static void fillView(ImageView view, int resourceID) {
