@@ -130,11 +130,15 @@ public class LoginUtils {
                 fillView(view, x.getUri());
                 return;
             }
-        view.setImageResource(R.drawable.empty_photo);
+        view.setImageResource(R.drawable.profile_default);
     }
 
     public static void fillView(ImageView view, Uri uri) {
         Picasso.get().setIndicatorsEnabled(true);
         Picasso.get().load(uri).noFade().networkPolicy(NetworkPolicy.OFFLINE).into(view);
+    }
+
+    public static void fillView(ImageView view, int resourceID) {
+        Picasso.get().load(resourceID).fit().into(view);
     }
 }

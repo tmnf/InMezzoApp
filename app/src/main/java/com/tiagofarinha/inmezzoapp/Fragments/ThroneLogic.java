@@ -37,6 +37,7 @@ public class ThroneLogic extends Fragment {
 
     private void getComponents(View view) {
         ImageView top1 = view.findViewById(R.id.throne_pic1), top2 = view.findViewById(R.id.throne_pic2), top3 = view.findViewById(R.id.throne_pic3);
+        ImageView crown = view.findViewById(R.id.crown), podium = view.findViewById(R.id.throne);
 
         usersByVotes = new ArrayList<>(ResourceLoader.getInstance().getUsers());
 
@@ -44,6 +45,9 @@ public class ThroneLogic extends Fragment {
 
         ListView lv = view.findViewById(R.id.throne_list);
         lv.setAdapter(new ThroneAdapter(usersByVotes, R.layout.throne_row));
+
+        crown.setImageResource(R.drawable.ic_crown);
+        LoginUtils.fillView(podium, R.drawable.podium);
 
         LoginUtils.putInto(top1, ((User) usersByVotes.get(1)));
         LoginUtils.putInto(top2, ((User) usersByVotes.get(0)));
